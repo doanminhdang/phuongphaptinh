@@ -1,4 +1,5 @@
-%% Huong dan cach ve do thi
+%% Huong dan cach ve do thi voi Octave
+% Doan Minh Dang - 2014.09.12
 
 % Lenh plot(), dung de ve do thi cua ham so 1 bien 
 t=[-pi:0.1:pi]; % tao mot vector t, gom cac gia tri tu -pi den pi, moi gia tri cach nhau 0.1

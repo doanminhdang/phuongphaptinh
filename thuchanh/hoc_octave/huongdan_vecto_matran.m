@@ -1,10 +1,10 @@
 %auto
 %default_mode octave
 
-
 %% Huong dan co ban ve Octave
+% Doan Minh Dang - 2014.09.12
 
-%% Thao tac voi ien so
+%% Thao tac voi bien so
 a=1
 b=2
 % ans: ket qua o phep tinh gan nhat
