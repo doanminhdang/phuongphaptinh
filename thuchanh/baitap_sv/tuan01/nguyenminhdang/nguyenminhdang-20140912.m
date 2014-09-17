@@ -1,0 +1,32 @@
+a=2
+b=3
+c=4
+d=a*c/b^3
+v=[a,b;b,c;c,a]
+v1=v*4
+matran=v1[1:2]
+matrandep=magic(4)
+sum(matrandep(1:3,1)
+sum(matrandep(1:3,1))
+sum(matrandep(1:4,1))
+sum(matrandep(1:4,2))
+sum(matrandep(1:4,3))
+matran2=matrandep'
+matranghep=(matran2;matran2)
+matranghep=[matran2;matran2]
+repmat(matran2,3,2)
+tao vec to tu mot hang cua ma tran
+v3=matran2(1,2:3)
+v4=matran2(2,1:3)
+v5=matran2(2,1:2)
+% plot
+t=[-e:0:e]
+t1=[-2e:0:2e];
+t=[-pi:0.1:pi];
+plot(t,sin(t))
+y=sin(t);
+v=cos(t)';
+z=tan(t);
+plot(t,y)
+plot(t,v)
+plot(t,z)
