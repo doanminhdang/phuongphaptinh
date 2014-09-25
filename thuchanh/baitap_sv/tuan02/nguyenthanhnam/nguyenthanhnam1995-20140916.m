@@ -1,0 +1,17 @@
+x=4
+sosanh1
+x=-3
+sosanh1
+x=3
+y=0
+sosanh2
+x=5
+y=3
+sosanh2
+x=4
+y=0
+sosanh3
+x=-2
+y=1
+sosanh3
+bp

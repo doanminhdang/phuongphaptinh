@@ -1,0 +1,17 @@
+x=6
+sosanh1
+x=-4
+sosanh1
+x=5
+y=0
+sosanh2
+x=5
+y=2
+sosanh2
+x=6
+y=0
+sosanh3
+x=-5
+y=1
+sosanh3
+bp
