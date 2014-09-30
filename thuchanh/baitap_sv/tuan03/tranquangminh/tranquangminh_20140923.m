@@ -1,0 +1,9 @@
+a=4
+b=7
+eps=10^(-6)
+test_nargin(a,b,eps)
+test_nargin(335235235,23523523434)
+a=222
+b=43434
+eps=10^(-6)
+test_nargin(a,b,eps)

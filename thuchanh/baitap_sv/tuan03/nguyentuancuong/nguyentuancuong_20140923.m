@@ -1,0 +1,11 @@
+test_nargin
+clc
+bisect(1,2,10)
+test_nargin(1,2,4)
+test_nargin(1,2,3)
+test_nargin(1,2,3)
+test_nargin(1,2,3)
+test_nargin(1,2,3)
+test_nargin(2,2)
+test_nargin(1,2)
+test_nargin(1,2,3)

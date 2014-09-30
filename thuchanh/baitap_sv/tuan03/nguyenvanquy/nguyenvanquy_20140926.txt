@@ -1,0 +1,21 @@
+hoc_nargin(x1,x2,a1,a2,z)
+hoc_nargin(1,2,3)
+# Octave 3.8.2, Fri Sep 26 21:02:24 2014 SE Asia Standard Time <unknown@LENOVO-PC>
+hoc_nargin(1,2,3)
+# Octave 3.8.2, Fri Sep 26 21:02:45 2014 SE Asia Standard Time <unknown@LENOVO-PC>
+hoc_nargin(1,2,3)
+# Octave 3.8.2, Fri Sep 26 21:04:05 2014 SE Asia Standard Time <unknown@LENOVO-PC>
+hoc_gargin(1,2,3)
+hoc_gargin(1,2)
+hoc_gargin(1,2)
+hoc_gargin(1)
+hoc_gargin(1,2,3,4,5)
+hoc_gargin(1,2,3,4)
+hoc_gargin(1,2,3)
+hoc_gargin
+hoc_gargin(1)
+hoc_gargin(1,2,3)
+hoc_gargin(1,2,3,4)
+bisect(1,3,1e-6,50)
+bisect(f,1,3,1e-6,50)
+bisect(1,8,8,1e-6,50)
