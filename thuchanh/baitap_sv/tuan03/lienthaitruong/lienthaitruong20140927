@@ -1,0 +1,41 @@
+if nargin < 5
+clc
+>>
+clc
+output = x1
+output=a1
+clc
+hoc_nargin(1, 2, 3)
+hoc_nargin ( 1, 2,3 )
+hoc_nargin ( 1,2)
+hoc_nargin ( 1,2)
+hoc_nargin ( 1,2 )
+hoc_nargin ( 1,2 )
+hoc_nargin ( 1,2)
+hoc_nargin (1,2)
+hoc_nargin(1,2)
+hoc_nargin(1,2)
+hoc_nargin(1,2,3,4)
+hoc_nargin(1,2,3)
+hoc_nargin(1,2,3)
+hoc_nargin(1,2,3)
+hoc_nargin(1,2,3)
+# Octave 3.8.2, Mon Mar 02 15:10:18 2015 SE Asia Standard Time <unknown@M15>
+hoc_nargin(1,2,3)
+hoc_nargin(1,2,3)
+hoc_nargin(1,2,3)
+hoc_nargin(1,2,3)
+hoc_nargin (1,2,3,4)
+hoc_nargin (1,2,3,4)
+hoc_nargin (1,2,3,4)
+clc
+hoc_nargin(1,2,3,4)
+hoc_nargin(1,2,3,4)
+hoc_nargin(1,2)
+[x,fx,n]=bisect (@hamso, 0,1,5e-4,20)
+# Octave 3.8.2, Mon Mar 02 15:32:33 2015 SE Asia Standard Time <unknown@M15>
+hoc_nagin (1,2,3)
+# Octave 3.8.2, Mon Mar 09 14:56:48 2015 SE Asia Standard Time <unknown@M15>
+# Octave 3.8.2, Mon Mar 09 14:57:31 2015 SE Asia Standard Time <unknown@M15>
+# Octave 3.8.2, Mon Mar 09 14:57:42 2015 SE Asia Standard Time <unknown@M15>
+# Octave 3.8.2, Mon Mar 09 14:58:54 2015 SE Asia Standard Time <unknown@M15>

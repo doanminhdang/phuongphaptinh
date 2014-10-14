@@ -1,0 +1,5 @@
+function y=hamsosanh1(x)
+if x>0
+y=x-1;
+else y=x+1;
+end
