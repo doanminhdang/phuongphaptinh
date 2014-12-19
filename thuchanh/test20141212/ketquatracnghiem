@@ -1,0 +1,2405 @@
+# Created by Octave 3.8.1, Fri Dec 19 14:34:41 2014 ICT <dang@FS-kubuntu>
+# name: B
+# type: matrix
+# rows: 3
+# columns: 3
+ 8 1 6
+ 3 5 7
+ 4 9 2
+
+
+# name: ans
+# type: matrix
+# rows: 1
+# columns: 2
+ 18 10
+
+
+# name: bangthoigian
+# type: matrix
+# rows: 18
+# columns: 10
+ 5.5625 14.484375 10.640625 33.46875 15.34375 63.34375 51 9.234375 72.484375 89.484375
+ 15.9375 32.109375 26.328125 202.15625 91.515625 24.171875 19.65625 25.125 37.4375 19.59375
+ 26.84375 60.4375 141.15625 137.015625 150.890625 24.609375 10.96875 25.5625 27.34375 18.6875
+ 2.875 14.1875 6.15625 23.015625 110.625 68.25 24 35.28125 32.75 45.90625
+ 3.203125 3.078125 5.53125 9.359375 12.484375 2.765625 4.359375 2.21875 6.328125 4.78125
+ 12.640625 32.984375 16.5625 35.40625 40.734375 5.125 81.6875 42.515625 9.6875 40.5
+ 25.9375 36.765625 31.875 127.46875 100.375 8.34375 14.53125 27.375 7.046875 243.75
+ 40.046875 34.65625 64.65625 116.828125 176.703125 197.03125 71.9375 54.265625 32.609375 99.625
+ 16.671875 20 19.84375 154.03125 82.6875 5.765625 90.765625 37.015625 43.421875 51.703125
+ 13.3125 35.203125 29.140625 126.5625 29.3125 16.171875 69.359375 106.578125 42.390625 42.015625
+ 15.015625 54.9375 37.15625 203.90625 51.3125 9.515625 29.203125 10.890625 267.984375 309.3125
+ 4.65625 3.4375 5.359375 16.84375 33.875 22.9375 14.0625 17.515625 58.828125 26
+ 1.328125 41.4375 7.046875 13.25 7.8125 3.109375 5.453125 6.15625 6.296875 8.359375
+ 47.96875 23.640625 41.1875 107.84375 45.21875 8.484375 8.0625 70.734375 91.609375 19.96875
+ 4.015625 4.140625 4.171875 111.90625 7.25 11.90625 15.015625 26.59375 14.703125 46.359375
+ 2.453125 2.140625 1.96875 136.453125 20.703125 13.5625 1.140625 20.421875 21.75 8.140625
+ 6.890625 5.078125 15.234375 32.640625 15.984375 5.671875 7.84375 18.921875 13.140625 3.703125
+ 23.28125 39.515625 30.1875 46.625 41.8125 18.90625 24.703125 33.625 184.609375 31.265625
+
+
+# name: bangthoigiandung
+# type: matrix
+# rows: 18
+# columns: 10
+ 0 0 10.640625 0 0 0 0 0 0 0
+ 15.9375 32.109375 26.328125 202.15625 91.515625 24.171875 19.65625 25.125 37.4375 19.59375
+ 0 0 141.15625 137.015625 150.890625 24.609375 10.96875 25.5625 27.34375 18.6875
+ 2.875 14.1875 6.15625 0 110.625 0 24 35.28125 0 0
+ 0 0 5.53125 0 0 2.765625 0 0 0 0
+ 0 32.984375 16.5625 0 40.734375 5.125 0 42.515625 9.6875 40.5
+ 25.9375 0 31.875 127.46875 100.375 0 0 27.375 7.046875 0
+ 0 0 64.65625 116.828125 0 197.03125 0 0 0 0
+ 16.671875 20 19.84375 0 0 5.765625 0 0 0 0
+ 13.3125 35.203125 29.140625 0 0 16.171875 0 0 0 0
+ 0 54.9375 0 0 0 9.515625 0 0 267.984375 0
+ 4.65625 0 0 0 33.875 22.9375 14.0625 17.515625 58.828125 26
+ 1.328125 0 0 0 0 3.109375 5.453125 6.15625 6.296875 8.359375
+ 0 23.640625 41.1875 107.84375 0 0 0 0 0 0
+ 4.015625 4.140625 0 0 7.25 11.90625 15.015625 26.59375 14.703125 46.359375
+ 2.453125 2.140625 0 0 20.703125 13.5625 1.140625 20.421875 21.75 8.140625
+ 0 0 0 0 0 5.671875 0 18.921875 13.140625 3.703125
+ 23.28125 0 30.1875 46.625 41.8125 18.90625 0 33.625 0 0
+
+
+# name: cauhoi
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 62
+Octave la moi truong tinh toan su dung ngon ngu lap trinh nao?
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 117
+Mot doan code chung ta can su dung nhieu lan, moi lan co tham so khac nhau, thi chung ta viet doan code do o dang gi?
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 33
+So nay co y nghia gi: 1.2345e+09?
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 85
+Cho lenh khai bao ma tran A=diag([1,2,3,4]), thuc hien lenh A(2,1) cho ket qua la gi?
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 72
+Ma tran B duoc cho nhu tren. Thuc hien lenh B(1,2:3) cho ket qua la gi? 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 31
+Lenh B(2,2) cho ket qua la gi? 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 33
+Lenh B(1,end) cho ket qua la gi? 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 33
+Lenh B(1,:)*2 cho ket qua la gi? 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 32
+Lenh diag(B) cho ket qua la gi? 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 42
+Lenh B(1,:)==ones(1,3) cho ket qua la gi? 
+
+
+
+
+
+# name: diem
+# type: matrix
+# rows: 18
+# columns: 10
+ 0 0 1 0 0 0 0 0 0 0
+ 1 1 1 1 1 1 1 1 1 1
+ 0 0 1 1 1 1 1 1 1 1
+ 1 1 1 0 1 0 1 1 0 0
+ 0 0 1 0 0 1 0 0 0 0
+ 0 1 1 0 1 1 0 1 1 1
+ 1 0 1 1 1 0 0 1 1 0
+ 0 0 1 1 0 1 0 0 0 0
+ 1 1 1 0 0 1 0 0 0 0
+ 1 1 1 0 0 1 0 0 0 0
+ 0 1 0 0 0 1 0 0 1 0
+ 1 0 0 0 1 1 1 1 1 1
+ 1 0 0 0 0 1 1 1 1 1
+ 0 1 1 1 0 0 0 0 0 0
+ 1 1 0 0 1 1 1 1 1 1
+ 1 1 0 0 1 1 1 1 1 1
+ 0 0 0 0 0 1 0 1 1 1
+ 1 0 1 1 1 1 0 1 0 0
+
+
+# name: dshoten
+# type: cell
+# rows: 1
+# columns: 18
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 14
+Dang Minh Nhut
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 13
+Do Hoang Minh
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 13
+tran thanh tu
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 15
+cao binh nguyen
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 16
+thach thanh binh
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 13
+Thi Minh Nhut
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 10
+phanvanduy
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 14
+le van minh ly
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 13
+tran quoc qui
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 20
+pham huynh thien phu
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 14
+Tran Ngoc Vinh
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 14
+nguyen ba vong
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 14
+huynh huu tai 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 12
+nguyencaoduy
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 13
+le thanh dong
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 15
+huynh duy khanh
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 18
+Nguyen Thanh Trong
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 11
+Do Minh Tri
+
+
+
+
+
+# name: dsmssv
+# type: cell
+# rows: 1
+# columns: 18
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350210
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350328
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350394
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350412
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350263
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350366
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350383
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350472
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350345
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350315
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350293
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350321
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350255
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350300
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350382
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350352
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1350198
+
+
+
+
+
+# name: dsthoigian
+# type: cell
+# rows: 1
+# columns: 18
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 5.5625 14.484375 10.640625 33.46875 15.34375 63.34375 51 9.234375 72.484375 89.484375
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 15.9375 32.109375 26.328125 202.15625 91.515625 24.171875 19.65625 25.125 37.4375 19.59375
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 26.84375 60.4375 141.15625 137.015625 150.890625 24.609375 10.96875 25.5625 27.34375 18.6875
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 2.875 14.1875 6.15625 23.015625 110.625 68.25 24 35.28125 32.75 45.90625
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 3.203125 3.078125 5.53125 9.359375 12.484375 2.765625 4.359375 2.21875 6.328125 4.78125
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 12.640625 32.984375 16.5625 35.40625 40.734375 5.125 81.6875 42.515625 9.6875 40.5
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 25.9375 36.765625 31.875 127.46875 100.375 8.34375 14.53125 27.375 7.046875 243.75
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 40.046875 34.65625 64.65625 116.828125 176.703125 197.03125 71.9375 54.265625 32.609375 99.625
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 16.671875 20 19.84375 154.03125 82.6875 5.765625 90.765625 37.015625 43.421875 51.703125
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 13.3125 35.203125 29.140625 126.5625 29.3125 16.171875 69.359375 106.578125 42.390625 42.015625
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 15.015625 54.9375 37.15625 203.90625 51.3125 9.515625 29.203125 10.890625 267.984375 309.3125
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 4.65625 3.4375 5.359375 16.84375 33.875 22.9375 14.0625 17.515625 58.828125 26
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 1.328125 41.4375 7.046875 13.25 7.8125 3.109375 5.453125 6.15625 6.296875 8.359375
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 47.96875 23.640625 41.1875 107.84375 45.21875 8.484375 8.0625 70.734375 91.609375 19.96875
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 4.015625 4.140625 4.171875 111.90625 7.25 11.90625 15.015625 26.59375 14.703125 46.359375
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 2.453125 2.140625 1.96875 136.453125 20.703125 13.5625 1.140625 20.421875 21.75 8.140625
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 6.890625 5.078125 15.234375 32.640625 15.984375 5.671875 7.84375 18.921875 13.140625 3.703125
+
+
+
+# name: <cell-element>
+# type: matrix
+# rows: 1
+# columns: 10
+ 23.28125 39.515625 30.1875 46.625 41.8125 18.90625 24.703125 33.625 184.609375 31.265625
+
+
+
+
+
+# name: dstraloi
+# type: cell
+# rows: 1
+# columns: 18
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1 1 2 3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+ 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 2
+15
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 2
+30
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+1 1 2 3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+ 16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+[8 5 2]'
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+[8;5;2]
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+8 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+8 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 18
+8 1 6, 8 1 6,8 1 6
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+B=[6 7]'
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+B=5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 21
+B=[8 1 6;3 5 7;4 9 2]
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 23
+B=[16 2 12;3 5 7;4 9 2]
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 21
+B=[1 1 1;1 1 1;1 1 1]
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+3 4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 3 4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 6
+16 6 8
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 19
+8 0 0; 0 5 0; 0 0 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+3 4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8;3;4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 6
+16;6;8
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 19
+8 0 0; 0 5 0; 0 0 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+6,7
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 2
+16
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8,5,2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 2
+16
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+o
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+9
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+2 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 12
+khonghienthi
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 16
+khai bao ma tran
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 3
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 6
+1 2  3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+4
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+16 2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 5 2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+0 1 0
+
+
+
+
+
+
+# name: <cell-element>
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 8
+16  2 12
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+8 1 6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+
+
+
+
+
+# name: i
+# type: scalar
+10
+
+
+# name: luachon
+# type: cell
+# rows: 1
+# columns: 4
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 34
+1. C++. 2. Matlab. 3. C. 4. Java. 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 60
+1. Bien so (variable). 2. Chuoi (array). 3. Ham (function). 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 81
+1. 1234500009. 2. 1234500000. 3. Mot so xap xi 1234500000. 4. Mot gia tri error. 
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 10
+0 1 2 3 4 
+
+
+
+
+
+# name: performance
+# type: matrix
+# rows: 18
+# columns: 1
+ 3285.421875
+ 0
+ 1247.03125
+ 1452.1875
+ 432.875
+ 953.53125
+ 2493.875
+ 6218.515625
+ 3131.4375
+ 3060.28125
+ 6924.640625
+ 610.546875
+ 401
+ 3253.03125
+ 492.125
+ 457.46875
+ 750.65625
+ 1898.125
+
+
+# name: sansang
+# type: sq_string
+# elements: 1
+# length: 1
+1
+
+
+# name: socau
+# type: scalar
+10
+
+
+# name: sv
+# type: scalar
+18
+
+
+# name: svmax
+# type: scalar
+18
+
+
+# name: tchuanmax
+# type: matrix
+# rows: 1
+# columns: 10
+ 25.9375 54.9375 141.15625 202.15625 150.890625 197.03125 24 42.515625 267.984375 46.359375
+
+
+# name: thoigian
+# type: matrix
+# rows: 1
+# columns: 10
+ 23.28125 39.515625 30.1875 46.625 41.8125 18.90625 24.703125 33.625 184.609375 31.265625
+
+
+# name: tongdiem
+# type: matrix
+# rows: 18
+# columns: 1
+ 1
+ 10
+ 8
+ 6
+ 2
+ 7
+ 6
+ 3
+ 4
+ 4
+ 3
+ 7
+ 6
+ 3
+ 8
+ 8
+ 4
+ 6
+
+
+# name: tongthoigian
+# type: scalar
+474.53125
+
+
+# name: traloidung
+# type: cell
+# rows: 1
+# columns: 10
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+2
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+3
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+0
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 5
+[1 6]
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+5
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 1
+6
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 9
+[16 2 12]
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+[8 5 2]
+
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 7
+[0 1 0]
+
+
+
+
+
