@@ -1,0 +1,548 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 3: Hệ phương trình đại số tuyến tính}
+
+\enu{
+\item Đặt bài toán
+\item Các phương pháp khử Gauss
+\item Phương pháp lặp Jacobi
+\item Phương pháp lặp Gauss-Seidel
+\item Bài tập
+% \item Lập trình giải thuật
+}
+
+\newpage\titls{Đặt bài toán}
+
+Phát biểu một bài toán hệ phương trình tuyến tính:
+% \begin{sagesilent}
+% var('a11 a12 a1n a21 a22 a2n')
+%  
+% \end{sagesilent}
+\begin{align}\label{eq_hepttt}
+\left\lbrace \begin{array}{ccccccccc}
+a_{11}x_1 &+& a_{12}x_2 &+& \cdots &+& a_{1n}x_n &=& b_1 \\
+a_{21}x_1 &+& a_{22}x_2 &+& \cdots &+& a_{2n}x_n &=& b_2 \\
+\cdots & & & & &&&&\\
+a_{n1}x_1 &+& a_{n2}x_2 &+& \cdots &+& a_{nn}x_n &=& b_n 
+        \end{array}
+\right.
+\end{align}
+trong đó $a_{ij}, i, j \in \{1,\cdots,n\}$ và $b_i, i \in \{1,\cdots,n\}$ là các hằng số thực. Ta cần giải hệ phương trình tuyến tính (bậc nhất) này để tìm các ẩn số $x_1, x_2, \cdots, x_n \in \R$.
+
+\newpage\titls{Đặt bài toán}
+
+Hệ phương trình \eqref{eq_hepttt} được viết gọn lại thành phương trình sau:
+\begin{align}\label{eq_pttt}
+ AX = B, \quad A \in \R^{n \times n}, X \in \R^{n}, B \in \R^{n}, 
+\end{align}
+với:
+\begin{align*}
+ A = \left[\begin{array}{cccc}
+            a_{11} & a_{12} & \cdots & a_{1n}\\
+            a_{21} & a_{22} & \cdots & a_{2n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            a_{n1} & a_{n2} & \cdots & a_{nn}
+           \end{array}\right], \quad
+ X = \left[\begin{array}{c}
+            x_1\\
+            x_2\\
+            \vdots\\
+            x_n
+           \end{array}\right], \quad
+ B = \left[\begin{array}{c}
+            b_1\\
+            b_2\\
+            \vdots\\
+            b_n
+           \end{array}\right]
+\end{align*}
+
+Phương trình này có nghiệm duy nhất khi $\bf{det(A) \neq 0}$. Trong chương này, ta tìm nghiệm số của \eqref{eq_pttt}, chỉ xét ở trường hợp này.
+
+\newpage\titls{Ứng dụng của hệ phương trình tuyến tính}
+
+Nhiều bài toán thường gặp trong kỹ thuật liên quan đến việc giải hệ phương trình tuyến tính.
+
+Một số ví dụ:
+\itemi{
+\item Tính các giá trị U, I trong một mạch điện, điện tử
+\item Xác định giá của các mặt hàng trên thị trường
+\item Phân bổ nguồn lực để đầu tư cho trồng trọt, chăn nuôi...
+}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+Khái niệm ma trận đường chéo:
+\begin{align*}
+A = \left[\begin{array}{cccc}
+            a_{11} & 0 & \cdots & 0\\
+            0 & a_{22} & \cdots & 0\\
+            \vdots & \vdots & \ddots & \vdots\\
+            0 & 0 & \cdots & a_{nn}
+           \end{array}\right]
+\end{align*} 
+
+Ma trận tam giác trên, tam giác dưới:
+\begin{align*}
+A = \left[\begin{array}{cccc}
+            a_{11} & a_{12} & \cdots & a_{1n}\\
+            0 & a_{22} & \cdots & a_{2n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            0 & 0 & \cdots & a_{nn}
+           \end{array}\right], \quad
+A = \left[\begin{array}{cccc}
+            a_{11} & 0 & \cdots & 0\\
+            a_{21} & a_{22} & \cdots & 0\\
+            \vdots & \vdots & \ddots & \vdots\\
+            a_{n1} & a_{n2} & \cdots & a_{nn}
+           \end{array}\right]
+\end{align*}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+\begin{sagesilent}
+latex.matrix_delimiters("[", "]")
+Adiag=matrix([[1,0,0],[0,3,0],[0,0,2]]);
+Adiagnum=matrix(Adiag.numpy());
+B=matrix([[1],[2],[4]]);
+\end{sagesilent}
+\itemi{
+\item Trường hợp dễ nhất: giải $AX=B$ với $A$ là ma trận đường chéo với $a_{ii} \neq 0, \forall i$ (để $det(A) \neq 0$), có công thức tính nghiệm riêng lẻ cho từng thành phần $x_i$:
+\begin{align}
+ x_{i}=\frac{b_i}{a_{ii}}, \quad i=1, 2, \cdots, n
+\end{align}
+\item Ví dụ:
+\begin{align*}
+ A=\sage{Adiag},  B=\sage{B}
+\end{align*}
+}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+\itemi{
+\item Với $A$ là ma trận tam giác trên: tính thành phần $x_n$ trước, sau đó tính $x_{n-1}$, dần lên đến $x_2, x_1$, theo công thức:
+\begin{align}
+ x_{n} =\frac{b_n}{a_{nn}}; x_{n-1} &=\frac{b_{n-1}-a_{nn}x_n}{a_{(n-1)(n-1)}} \\
+ &\cdots \nonumber \\
+ x_i &=\frac{b_{i}-\sum_{k=i+1}^n a_{ik}x_k}{a_{ii}} \\
+ &\cdots \nonumber \\
+ x_1 &=\frac{b_{1}-\sum_{k=2}^n a_{1k}x_k}{a_{11}}
+\end{align}
+\item Với $A$ là ma trận tam giác dưới: giải từ $x_1$ đến $x_n$ (ngược lại).
+}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+\begin{sagesilent}
+Aupper=matrix([[1,5,1],[0,3,2],[0,0,2]]);
+Auppernum=matrix(Aupper.numpy());
+#B=matrix([[1],[2],[4]]);
+Aupper1=matrix([Aupper[0]/Aupper[0,0],Aupper[1]/Aupper[1,1],Aupper[2]/Aupper[2,2]]);
+B1=matrix([B[0]/Aupper[0,0],B[1]/Aupper[1,1],B[2]/Aupper[2,2]]);
+\end{sagesilent}
+
+Ví dụ 1:
+\begin{align}\label{eq_Atgtren}
+ A=\sage{Aupper}, B=\sage{B}
+\end{align}
+
+Ví dụ 2:
+\begin{align}\label{eq_Atgtren2}
+ A=\sage{Aupper1}, B=\sage{B1}
+\end{align}
+
+Câu hỏi: 
+\itemi{
+\item Các phương trình \eqref{eq_Atgtren} và \eqref{eq_Atgtren2} khác nhau thế nào?
+\item Giải phương trình nào dễ hơn?
+}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+\blue{Tinh thần của phương pháp: biến đổi ma trận $A$ về dạng ma trận tam giác trên, sau đó giải từ dưới lên, lần lượt tìm từng phần tử của $X$.}
+\spa{2}
+
+Các phép biến đổi ma trận (sơ cấp) thường dùng:
+\itemi{
+\item Nhân một hàng với một số khác không (ví dụ: từ \eqref{eq_Atgtren} sang \eqref{eq_Atgtren2})
+\item Hoán chuyển hai hàng cho nhau
+\item Cộng một hàng cho một hàng khác đã nhân với một số khác không
+}
+
+Qua biến đổi sơ cấp, ta tìm được phương trình \emph{tương đương}, tức là sẽ có nghiệm giống nhau.
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+\blue{Giải thuật Gauss: biến đổi sơ cấp để khử từng phần tử của ma trận $A$ ở bên dưới của đường chéo chính, bắt đầu từ cột thứ nhất, dịch chuyển dần sang bên phải cho đến cột $n-1$.}
+\spa{2}
+Bước 1 (xét cột 1):
+\itemi{
+\item Xét trong các số $a_{11}, \cdots, a_{n1}$ để tìm một số khác không (do $det(A) \neq 0$ nên cả cột không thể cùng bằng không). Nếu $a_{11}=0$ thì dùng phép hoán chuyển hai hàng để được $a_{11} \neq 0$.
+\item Lấy các hàng thứ $k$ với $k=2, \cdots, n$, trừ cho hàng thứ nhất đã nhân với $\frac{a_{k1}}{a_{11}}$.
+\item Kết thúc bước này, thì ấn định dòng 1 và cột 1 (sẽ không thay đổi ở các bước sau).
+}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+Kết thúc bước 1, ta thu được hệ phương trình mới có dạng:
+\begin{align*}
+\left\lbrace \begin{array}{ccccccccc}
+a_{11}x_1 &+& a_{12}x_2 &+& \cdots &+& a_{1n}x_n &=& b_1 \\
+0 &+& a_{22}x_2 &+& \cdots &+& a_{2n}x_n &=& b_2 \\
+\cdots & & & & &&&&\\
+0 &+& a_{n2}x_2 &+& \cdots &+& a_{nn}x_n &=& b_n 
+        \end{array}
+\right.
+\end{align*}
+
+Cứ thế làm tiếp, đến bước thứ $i$ (xét cột $i$) thì xét các dòng từ $i$ đến $n$, mục tiêu là đạt được các ma trận tương đương có chứa $a_{ii} \neq 0$ và $a_{ki}=0, k=i+1,\cdots,n$. 
+Sau $n-1$ bước, ta có hệ tam giác trên:
+\begin{align*}
+\left\lbrace \begin{array}{ccccccccc}
+a_{11}x_1 &+& a_{12}x_2 &+& \cdots &+& a_{1n}x_n &=& b_1 \\
+0 &+& a_{22}x_2 &+& \cdots &+& a_{2n}x_n &=& b_2 \\
+\cdots & & & & &&&&\\
+0 &+& \cdots &+& 0 &+& a_{nn}x_n &=& b_n 
+        \end{array}
+\right.
+\end{align*}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+Ví dụ:
+\begin{sagesilent}
+A0=matrix([[1,-1,2,-1],[2,-2,3,-3],[1,1,1,0],[1,-1,4,3]]);
+A0num=matrix(A0.numpy());
+B0=matrix([[-8],[-20],[-2],[4]]);
+A1=matrix([A0[0],A0[1]-2*A0[0],A0[2]-A0[0],A0[3]-A0[0]]);
+B1=matrix([B0[0],B0[1]-2*B0[0],B0[2]-B0[0],B0[3]-B0[0]]);
+A2=matrix([A1[0],A1[2],A1[1],A1[3]]);
+B2=matrix([B1[0],B1[2],B1[1],B1[3]]);
+A3=matrix([A2[0],A2[1],A2[2],A2[3]+2*A2[2]]);
+B3=matrix([B2[0],B2[1],B2[2],B2[3]+2*B2[2]]);
+\end{sagesilent}
+\begin{align}
+ A^{(0)}=\sage{A0}, B^{(0)}=\sage{B0}
+\end{align}
+Ở bước 1: biến đổi $h_2=h_2-2h_1, h_3=h_3-h_1, h_4=h_4-h_1$, ta thu được:
+\begin{align}
+ A^{(1)}=\sage{A1}, B^{(1)}=\sage{B1}
+\end{align}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+Ở bước 2: hoán chuyển hàng thứ hai và ba:
+\begin{align}
+ A^{(2)}=\sage{A2}, B^{(2)}=\sage{B2}
+\end{align}
+Ở bước 3: biến đổi $h_4=h_4+2h_3$, cuối cùng ta có:
+\begin{align}
+ A^{(3)}=\sage{A3}, B^{(3)}=\sage{B3}
+\end{align}
+Sau đó dùng cách giải hệ phương trình với $A$ là ma trận tam giác trên, để tìm $X$.
+
+\newpage\titls{Bài tập}
+
+\begin{sagesilent}
+A=matrix([[1,2,3],[2,5,3],[1,4,6]]);
+B=matrix([[3],[5],[6]]);
+A1=matrix([[3,2,5,1],[2,6,3,2],[1,4,1,3],[5,2,2,1]]);
+B1=matrix([[1],[2],[3],[4]]);
+\end{sagesilent}
+Giải hệ phương trình bằng phương pháp khử Gauss với các ma trận:
+\enu{
+\item \begin{align}
+       A=\sage{A}, B=\sage{B}
+      \end{align}
+\item \begin{align}
+       A=\sage{A1}, B=\sage{B1}
+      \end{align}
+}
+
+\newpage\titls{Các phương pháp khử Gauss}
+
+\textbf{Phương pháp Gauss-Jordan:}
+
+Ta cải tiến phương pháp Gauss bằng cách: tại mỗi bước, ta chọn phần tử để biến đổi là phần tử có trị tuyệt đối lớn nhất, sao cho không cùng hàng và cột với những phần tử đã chọn trước. Phần tử đó gọi là \textbf{phần tử trội} (hay \textbf{phần tử chính}). Sau đó ta biến đổi cho tất cả các phần tử trên cùng cột của phần tử trội bằng không. Sau $n$ bước ta sẽ tìm được nghiệm dễ dàng.
+
+
+\newpage\titls{Các phương pháp lặp}
+
+\blue{Tinh thần của kỹ thuật lặp: chuyển phương trình $AX=B$ sang dạng tương đương $X=TX+C$ với $T$ là một ma trận vuông cấp $n$ và $C$ là một vector hằng số. Chọn một giá trị ban đầu $X^{(0)}$, sau đó ta xây dựng dần dãy vector $\{X^{(k)}\}_{k=0}^\infty$ theo công thức:
+\begin{equation}\label{eq_ctlap}
+X^{(k)} = T X^{(k-1)} + C, \quad k=1, 2, \cdots
+\end{equation}
+}
+\textbf{Một số lưu ý}:
+\itemi{
+\item Giải bằng phương pháp lặp là cách giải gần đúng, không giống các phương pháp Gauss (tìm nghiệm chính xác).
+\item Phép lặp này tương tự phương pháp lặp đơn đã học ở chương trước: công thức tính toán rất đơn giản, và nếu khéo chọn ánh xạ thì có thể nhanh đạt được kết quả (nghiệm có sai số nhỏ).
+%\item Phương pháp lặp đối với hệ phương trình tuyến tính trở nên rất hữu ích khi ta tính toán với bộ vi xử lý nhiều lõi, hoặc dùng nhiều máy tính để giải bài toán cực lớn (kỹ thuật tính toán song song).
+}
+
+\newpage\titls{Các phương pháp lặp}
+
+Để giải bằng phương pháp lặp, ta cần quan tâm: giải thuật sẽ \emph{hội tụ} hay \emph{phân kỳ}. Cách chọn ma trận $T$ sẽ quyết định tính chất đó, qua định lý sau:
+\begin{Thm}
+ Ký hiệu $\|\cdot\|$ là một chuẩn ma trận. Nếu $\|T\|<1$ thì dãy lặp các vector theo công thức \eqref{eq_ctlap} sẽ hội tụ về nghiệm $\bar{X}$ của phương trình \eqref{eq_pttt} với mọi vector lặp ban đầu $X^{(0)}$. Ta có công thức đánh giá sai số như sau:
+ \begin{align}
+ \|X^{(k)} - \bar{X}\| &\leq \frac{\|T\|}{1-\|T\|} \|X^{(k)} - X^{(k-1)}\| \\
+ \|X^{(k)} - \bar{X}\| &\leq \frac{\|T\|^k}{1-\|T\|} \|X^{(1)} - X^{(0)}\|
+ \end{align}
+\end{Thm}
+
+\newpage\titls{Chuẩn vector và chuẩn ma trận}
+
+\textbf{Định nghĩa chuẩn vector}:
+
+Xét trên không gian tuyến tính thực $\R^n$. Chuẩn (norm) của vector $X \in \R^n$ là một số thực, ký hiệu là $\|X\|$, thỏa đủ ba điều kiện sau:
+\enu{
+\item $\forall X \in \R^n, \|X\| \geq 0; \|X\|=0 \Leftrightarrow X=0$ (chỉ bằng không ở gốc tọa độ)
+\item $\forall X \in \R^n, \forall \lambda \in \R, \|\lambda X\| = |\lambda|.\|X\|$ (tỉ lệ với phép nhân)
+\item $\forall X, Y \in \R^n, \|X+Y\| \leq \|X\| + \|Y\|$ (bất đẳng thức tam giác)
+}
+Một chuẩn là một cách đo lường, so sánh các vector. Có nhiều loại chuẩn, tương ứng với các cách tính $\|X\|$ khác nhau.
+
+\newpage\titls{Chuẩn vector và chuẩn ma trận}
+
+Hai loại chuẩn vector thường dùng, được định nghĩa bằng công thức sau đối với $X=[x_1, \cdots, x_n]^T \in \R^n$ (lưu ý: \textbf{$X$ là vector}):
+\blue{
+\begin{align}
+ \textrm{Chuẩn 1 (1-norm):~} &\|X\|_1=|x_1|+\cdots+|x_n|=\sum_{i=1}^n |x_i| \label{eq_chuan1}\\
+ \textrm{Chuẩn $\infty$ ($\infty$-norm):~} &\|X\|_\infty=\max(|x_1|,\cdots,|x_n|)=\max_{1 \leq i \leq n} |x_i| \label{eq_chuanvc}
+\end{align}
+}
+
+\textbf{Định nghĩa hội tụ của vector theo chuẩn}:
+
+Xét dãy vector $\{X^{(k)}\}_{k=0}^\infty$ với $X^{(k)} \in \R^n$. Ta nói dãy vector này hội tụ về vector $\bar{X}$ khi $k \to \infty$ nếu và chỉ nếu $\|X^{(k)}-\bar{X}\| \to 0$ khi $k \to \infty$.
+
+\newpage\titls{Chuẩn vector và chuẩn ma trận}
+
+\textbf{Định nghĩa chuẩn ma trận}: Chuẩn ma trận tương ứng với chuẩn vector được xác định theo công thức (\textbf{$A$ là ma trận, $X$ là vector}):
+\begin{equation}
+\|A\| = \max_{\|X\|=1}\|AX\| = \max_{\|X\| \neq 0} \frac{\|AX\|}{\|X\|} 
+\end{equation}
+
+Các chuẩn ma trận tương ứng với chuẩn vector như sau:
+\blue{
+\begin{align}
+ \textrm{Chuẩn 1 (1-norm):~} &\|A\|_1=\max_{1 \leq j \leq n} \sum_{i=1}^n |a_{ij}| \\
+ \textrm{Chuẩn $\infty$ ($\infty$-norm):~} &\|A\|_\infty=\max_{1 \leq i \leq n} \sum_{j=1}^n |a_{ij}|
+\end{align}
+}
+
+\newpage\titls{Phương pháp lặp Jacobi}
+
+\textbf{Định nghĩa ma trận đường chéo trội nghiêm ngặt}:
+
+Ma trận $A$ được gọi là ma trận đường chéo trội nghiêm ngặt nếu nó thỏa mãn điều kiện:
+\begin{equation}\label{eq_mtdctroi}
+ \sum_{j=1,j\neq i}^n |a_{ij}|<|a_{ii}|
+\end{equation}
+
+Đối với $A$ là  ma trận đường chéo trội nghiêm ngặt, ta phân tích ma trận $A$ thành $A=D-L-U$, với $D$ là ma trận đường chéo của $A$, $-L$ là ma trận đối tam giác dưới và $-U$ là ma trận đối tam giác trên của $A$.
+
+Lưu ý: từ công thức \eqref{eq_mtdctroi}, ta có $a_{ii} \neq 0, \forall i$, do đó $det(D) \neq 0$ và có ma trận nghịch đảo $D^{-1}$ (là nghịch đảo từng phần tử trên đường chéo chính của ma trận $D$).
+
+\newpage\titls{Phương pháp lặp Jacobi}
+
+Khi đó ta có: $AX=B \Leftrightarrow (D-L-U)X=B$.
+
+Nếu ta chuyển thành phương trình tương đương là $DX = (L+U)X+B$, hay $X=D^{-1}(L+U)X+D^{-1}B$, thì ký hiệu $T_j=D^{-1}(L+U)$ và $C_j=D^{-1}B$, ta có công thức lặp:
+\begin{equation}
+X^{(k)}=T_j X^{(k-1)}+C_j, k=1, 2, \cdots
+\end{equation}
+
+Đây gọi là \textbf{phương pháp lặp Jacobi}. Ta chứng minh được $\|T_j\|_\infty<1$ từ điều kiện $A$ là ma trận đường chéo trội nghiêm ngặt.
+
+Công thức lặp tính cho từng giá trị thứ $i$ của $X^{(k)}$:
+\begin{equation}
+x_i^{(k)}=\frac{1}{a_{ii}} \left( -\sum_{j=1}^{i-1} a_{ij} x_j^{(k-1)} -\sum_{j=i+1}^{n} a_{ij} x_j^{(k-1)} + b_i\right)
+\end{equation}
+
+\newpage\titls{Phương pháp lặp Gauss-Seidel}
+
+Nếu ta chuyển thành phương trình tương đương là $(D-L)X = UX+B$, hay $X=(D-L)^{-1}UX+(D-L)^{-1}B$, thì ký hiệu $T_g=(D-L)^{-1}U$ và $C_g=(D-L)^{-1}B$, ta có công thức lặp:
+\begin{equation}
+X^{(k)}=T_g X^{(k-1)}+C_g, k=1, 2, \cdots
+\end{equation}
+
+Đây gọi là \textbf{phương pháp lặp Gauss-Seidel}.
+
+Công thức lặp tính cho từng giá trị thứ $i$ của $X^{(k)}$:
+\begin{equation}
+x_i^{(k)}=\frac{1}{a_{ii}} \left( -\sum_{j=1}^{i-1} a_{ij} x_j^{(k)} -\sum_{j=i+1}^{n} a_{ij} x_j^{(k-1)} + b_i\right)
+\end{equation}
+
+\textbf{Lưu ý}: công thức lặp Gauss-Seidel sử dụng các giá trị \emph{mới nhất} đối với các phần tử $x_1, \cdots, x_{i-1}$, do đó tốc độ hội tụ nhanh hơn phương pháp lặp Jacobi.
+
+\newpage\titls{Ví dụ}
+
+\begin{sagesilent}
+A=matrix([[10,-1,2,0],[-1,11,-1,3],[2,-1,10,-1],[0,3,-1,8]]);
+B=matrix([[6],[25],[-11],[15]]);
+\end{sagesilent}
+
+Giải phương trình $AX=B$ với:
+\begin{equation}
+ A=\sage{A}, B=\sage{B}
+\end{equation}
+bằng phương pháp Jacobi và Gauss-Seidel.
+
+\newpage\titls{Ví dụ}
+
+Tính các ma trận lặp theo phương pháp Jacobi và Gauss-Seidel:
+\enu{
+\item \begin{eqnarray*}
+14x_1-2x_2=7\\
+-2x_1+17x_2=5
+\end{eqnarray*}
+
+\item \begin{eqnarray*}
+19x_1-2x_2=4\\
+-2x_1+9x_2=4
+\end{eqnarray*}
+}
+
+\textbf{Lưu ý}: với phương pháp Gauss-Seidel, có thể dùng công thức $T_g=(D-L)^{-1}U$, hoặc dùng các hệ số của phương pháp Jacobi nhưng thay những vị trí ở dưới đường chéo chính bằng giá trị mới (ở cùng bước lặp).
+
+\newpage\titls{Số điều kiện của ma trận}
+
+Xét hệ phương trình $AX=B$ với $det(A)\neq 0$, có nghiệm là $x=A^{-1}B$. 
+
+\blue{Ta đặt câu hỏi: nếu vế phải $B$ thay đổi một khoảng $\Delta_B$, thì nghiệm mới sẽ thay đổi một khoảng $\Delta_X$ là bao nhiêu?}
+\begin{align*}
+ A \Delta_X=\Delta_B \Rightarrow \Delta_X=A^{-1} \Delta_B \\
+ \Rightarrow \|\Delta_X \|=\|A^{-1} \Delta_B \| \leq \|A^{-1}\| \|\Delta_B\|
+\end{align*}
+và $\|B\|=\|AX\|\leq \|A\| \|X\|$, nên ta suy ra:
+\begin{align*}
+ \frac{\|\Delta_X\|}{\|X\|} \leq \|A\| \|A^{-1}\| \frac{\|\Delta_B\|}{\|B\|}
+\end{align*}
+
+\textbf{Số điều kiện của ma trận $A$} được định nghĩa là:
+\begin{align}
+k(A) = \|A\| \|A^{-1}\|
+\end{align}
+
+\newpage\titls{Số điều kiện của ma trận}
+
+Ý nghĩa của số điều kiên $k(A)$: số điều kiện càng lớn thì tỉ lệ biến động của nghiệm càng lớn, ta gọi là hệ phương trình càng mất ổn định.
+
+\begin{sagesilent}
+A=matrix([[1,2],[1,2.01]]);
+B1=matrix([[3],[3.01]]);
+B2=matrix([[3],[3.1]]);
+X1=matrix([[1],[1]]);
+X2=matrix([[-17],[10]]);
+\end{sagesilent}
+
+Ví dụ: xét phương trình $AX=B$ với:
+\begin{equation}
+ A=\begin{bmatrix}  1 & 2\\ 1 & 2.01 \end{bmatrix}, B=\begin{bmatrix}  3 \\ 3.01 \end{bmatrix}, \textrm{~và~} B=\begin{bmatrix}  3 \\ 3.1 \end{bmatrix} 
+\end{equation}
+
+Với $B=\begin{bmatrix}  3 \\ 3.01 \end{bmatrix}$, nghiệm của hệ là $X_1=\begin{bmatrix}  1 \\ 1 \end{bmatrix}$, với $B=\begin{bmatrix}  3 \\ 3.1 \end{bmatrix}$, nghiệm của hệ là $X_2=\begin{bmatrix}  -17 \\ 10 \end{bmatrix}$ (để ý: $X_1$ và $X_2$ cách nhau xa).
+
+Hãy tính số điều kiện $k(A)$ theo chuẩn vô cùng:
+\begin{align}
+k_\infty(A)=\|A\|_\infty \|A^{-1}\|_\infty 
+\end{align}
+
+\newpage\titls{Tính ma trận nghịch đảo}
+
+Xét ma trận vuông $A$ không suy biến (tức $det(A) \neq 0$), tồn tại ma trận nghịch đảo $A^{-1}$. Các phương pháp tính ma trận nghịch đảo $A^{-1}$:
+\enu{
+\item Biến đổi ma trận $A$ thành ma trận đơn vị, cùng lúc đó biến đổi ma trận đơn vị theo phép biến đổi đó, thì sẽ thu được $A^{-1}$.
+\item Dùng ma trận phần phụ đại số:
+\begin{align}
+ A^{-1} = \frac{1}{det(A)} \left(\begin{array}{cccc}
+            a_{11} & a_{12} & \cdots & a_{1n}\\
+            a_{21} & a_{22} & \cdots & a_{2n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            a_{n1} & a_{n2} & \cdots & a_{nn}
+           \end{array}\right)^T
+\end{align}
+với $a_{ij}=(-1)^{i+j} D_{ij}$, $D_{ij}$ là định thức của ma trận con bỏ đi hàng $i$, cột $j$ của $A$.
+}
+
+\newpage\titls{Tính ma trận nghịch đảo}
+
+Cách khác: tách thành các hệ phương trình tuyến tính, nhằm đạt:
+\begin{align}
+ &A \cdot A^{-1} = I \\
+ &A \cdot \left(\begin{array}{cccc}
+            x_{11} & x_{12} & \cdots & x_{1n}\\
+            x_{21} & x_{22} & \cdots & x_{2n}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            x_{n1} & x_{n2} & \cdots & x_{nn}
+           \end{array}\right) = \left(\begin{array}{cccc}
+            1 & 0 & \cdots & 0\\
+            0 & 1 & \cdots & 0\\
+            \vdots & \vdots & \ddots & \vdots\\
+            0 & 0 & \cdots & 1
+           \end{array}\right)
+\end{align}
+
+Ta giải từng hệ phương trình:
+\begin{align}
+ &A \cdot \left(\begin{array}{c}
+            x_{1j}\\
+            \vdots\\
+            x_{ij}\\
+            \vdots\\
+            x_{nj}
+           \end{array}\right) = \left(\begin{array}{cccc}
+            0\\
+            \vdots\\
+            1 (\textrm{j-th row})\\
+            \vdots\\
+            0
+           \end{array}\right)
+\end{align}
+%\newpage\titls{Bài tập}
+
+
+\label{lastpage}
+\end{document}

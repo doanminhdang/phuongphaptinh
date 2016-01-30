@@ -1,0 +1,188 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,1in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{sagetex}
+
+
+\title{Bài tập nhóm 3 - Phương pháp tính kỹ thuật HK1 2014-2015}
+\author{Name: \hspace*{2in}}
+\author{Doãn Minh Đăng}
+\date{Hạn nộp: 13:30 ngày thứ ba 08/12/2014}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Solution}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large  \Author \par}%
+      \vskip 1em%
+    {\large \Date \par}% 
+  \end{center}\par
+
+\section*{Yêu cầu}
+\begin{itemize}
+ \item Sinh viên có thể ghi kết quả trên giấy viết tay, hoặc đánh máy và in ra. Đối với bài 6 và 7 cần gửi file chương trình cho giảng viên qua email.
+ \item Trên bài làm và trên file chương trình, cần ghi cụ thể tên, mã số sinh viên của các thành viên trong nhóm.
+ \item Sinh viên làm theo nhóm từ 2 đến 3 thành viên.
+ \item Bài nộp trễ sẽ bị trừ 10 điểm cho mỗi ngày trễ hạn.
+ \item Câu hỏi số 8 và 9 có bonus, tuy nhiên điểm tối đa cho bài tập nhóm này là 100 điểm, sẽ được quy đổi sang thang điểm 10 khi kết thúc môn học.
+\end{itemize}
+
+
+\section{Bài 1 (10 điểm)}
+
+% Tính tích phân xác định: % độ dài của cung của một hình ellipse
+% 
+% \begin{align*}
+%  \int_{-1}^1 \sqrt{1+\frac{4x^2}{1-x^2}}dx
+% \end{align*}
+
+Cho các giá trị rời rạc với $x = 0,1,2,3,4,5,6$, và các giá trị $y$ lần lượt là bằng các chữ số trong mã số sinh viên của bạn (lấy 7 chữ số trong MSSV làm các giá trị $y_0, y_1, \cdots, y_6$). Tính bảng tỉ sai phân theo công thức Newton tiến, và tính giá trị nội suy tại điểm $x=2.5$. Khi báo cáo, cần cho biết vector $y$ mà mình sử dụng để tính toán.
+
+\section{Bài 2 (10 điểm)}
+
+Dùng bảng giá trị $x,y$ cho ở Bài 1. Tính gần đúng đạo hàm của các nút phía trong theo công thức sai phân hướng tâm. Khi báo cáo, cần cho biết vector $y$ mà mình sử dụng để tính toán.
+
+\section{Bài 3 (10 điểm)}
+
+Cho các giá trị rời rạc với $x = 0,2,4,6,8,10,12$, và các giá trị $y$ lần lượt là bằng các chữ số trong mã số sinh viên của bạn (lấy 7 chữ số trong MSSV làm các giá trị $y_0, y_1, \cdots, y_6$). Xem các giá trị này là kết quả của hàm số $y=f(x)$, tính gần đúng tích phân sau theo công thức hình thang:
+
+\begin{align*}
+ I = \int_0^{12} f(x) dx
+\end{align*}
+
+Khi báo cáo, cần cho biết vector $y$ mà mình sử dụng để tính toán.
+
+\section{Bài 4 (10 điểm)}
+
+Tìm phương trình đường thẳng xấp xỉ hàm số $f(x)$ với các giá trị $(x,y)$ được cho trong bảng sau, và tính sai số bình phương:
+
+$(0,5)$, $(1,3)$, $(2,3)$, $(3,1)$
+
+%\begin{enumerate}[a)]
+%\item $(0,0)$, $(1,3)$, $(2,3)$, $(5,6)$
+
+%\item $(1,2)$,  $(3,2)$,  $(4,1)$,  $(6,3)$
+
+%\item $(0,5)$, $(1,3)$, $(2,3)$, $(3,1)$
+
+%\end{enumerate}
+
+Vẽ đồ thị gồm các điểm được cho và đường thẳng xấp xỉ được. Tính giá trị cực tiểu của phiếm hàm $g(f)=\sum_{k=1}^4 [f(x_k)-y_k]^2$.
+
+% \section{Bài 5 (6 điểm)}
+% 
+% \section{Exercise 5.1.4 (6 points)}
+% 
+% Use the three point formula to estimate $f'(\frac \pi 3)$ 
+% when $f(x) = \sin x$, and find the approximation error when $h = 0.1, 0.01$, and $0.001$. 
+
+% \section{Bài 4 (9 điểm)}
+
+% \section{Exercise 5.2.4 (6 points)}
+% 
+% Apply Simpson's rule with $m = 1$, 2, and 4 panels to the integrals below, and report the errors.
+% \\
+% 
+% \begin{enumerate}[a)]
+% \begin{minipage}{0.33\linewidth} 
+% \item
+% \[\int_0^1 x e^x dx\]
+% \end{minipage} 
+% \hspace{0.5cm} 
+% \begin{minipage}{0.33\linewidth} 
+% \item
+% \[\int_0^1 \frac {dx} {1 + x^2}\]
+% \end{minipage}
+% \begin{minipage}{0.33\linewidth} 
+% \item
+% \[\int_0^{\pi} x \cos x dx \]
+% \end{minipage}
+% \end{enumerate}
+
+\section{Bài 5 (20 điểm)}
+
+Tính gần đúng tích phân xác định dưới đây với sai số không vượt quá 0.00001 so với giá trị chính xác, sử dụng bất kỳ phương pháp nào bạn được học. Nêu các bước tính toán và lý giải về sai số.
+
+\[\int_{0}^1  \sin \left( \frac 1 x \right) dx \]
+
+\section{Bài 6 (10 điểm)}
+Viết một chương trình Octave để thực hiện giải thuật tính đa thức nội suy Lagrange, chương trình nhận ba tham số là các vector $x$ và $y$ cho biết bộ dữ liệu các điểm, và một số $xx$ là điểm mà chương trình cần tính giá trị nội suy (là kết quả đầu ra của chương trình)
+
+Sinh viên nộp chương trình dạng file function \emph{noisuy\_lagrange.m}, file này phải chứa chương trình sao cho có thể gọi nó với cú pháp sau:
+
+yx = noisuy\_lagrange(x,y,xx)
+
+Thử nghiệm chương trình trên với các vector $x, y$ của Bài 1, và $xx=3.5$.
+
+\textbf{Lưu ý}: dựa trên các tham số đầu vào $x, y$, chương trình này cần tự xác định được bộ dữ liệu có bao nhiêu điểm.
+
+\section{Bài 7 (10 điểm)}
+Viết một chương trình Octave để tính gần đúng đạo hàm với các giá trị đo đạc của hàm số được cho bằng hai vector $x$ và $y$, theo công thức sai phân tiến ($f'(x_k)=\frac{y_{k+1}-y_k}{x_{k+1}-x_k}$).
+
+Sinh viên nộp chương trình dạng file function \emph{saiphan\_tien.m}, file này phải chứa chương trình sao cho có thể gọi nó với cú pháp sau:
+
+dy = saiphan\_tien(x,y)
+
+Thử nghiệm chương trình trên với các vector $x, y$ của Bài 1.
+
+\section{Bài 8 (10+10 điểm)}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần xấp xỉ một hàm thực nghiệm (từ bảng giá trị $(x_k,y_k)$, tìm hàm số theo một dạng cho trước sao cho sai số bình phương là bé nhất). Trình bày ví dụ đó, cho biết dạng của hàm số cần xấp xỉ (đường thẳng / đường parabol / hàm tuần hoàn...), và nêu ý nghĩa của việc tính được hàm số xấp xỉ đó.
+
+Các nhóm sinh viên không được sao chép ý tưởng của nhau. Nếu có ví dụ được hai hay nhiều nhóm cùng sử dụng, điểm số chỉ được tính cho nhóm nào gửi đầu tiên. Các nhóm có thể gửi giải đáp cho bài 8 này nhiều lần qua email trước khi gửi bài báo cáo cuối cùng cho bài tập nhóm này (để đăng ký ý tưởng mình nghĩ ra).
+
+Mỗi ví dụ đúng đắn và trình bày rõ ràng được tính 5 điểm.
+
+\textbf{Bonus}: Nếu báo cáo bài tập nhóm được hoàn thành kịp hạn chót, thì câu này có thể đạt tối đa 20 điểm. Nếu báo cáo bài tập nhóm được gửi trễ hạn, thì câu này chỉ được tối đa 10 điểm.
+
+\section{Bài 9 (10+10 điểm)}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần tính gần đúng đạo hàm hoặc tích phân xác định (từ bảng giá trị $(x_k,y_k)$). Trình bày ví dụ đó, và nêu ý nghĩa của việc tính được các giá trị đạo hàm / tích phân đó.
+
+Các nhóm sinh viên không được sao chép ý tưởng của nhau. Nếu có ví dụ được hai hay nhiều nhóm cùng sử dụng, điểm số chỉ được tính cho nhóm nào gửi đầu tiên. Các nhóm có thể gửi giải đáp cho bài 9 này nhiều lần qua email trước khi gửi bài báo cáo cuối cùng cho bài tập nhóm này (để đăng ký ý tưởng mình nghĩ ra).
+
+Mỗi ví dụ đúng đắn và trình bày rõ ràng được tính 5 điểm.
+
+\textbf{Bonus}: Nếu báo cáo bài tập nhóm được hoàn thành kịp hạn chót, thì câu này có thể đạt tối đa 20 điểm. Nếu báo cáo bài tập nhóm được gửi trễ hạn, thì câu này chỉ được tối đa 10 điểm.
+
+\end{document}

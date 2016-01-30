@@ -1,0 +1,128 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{BÀI GIẢNG PHƯƠNG PHÁP TÍNH KỸ THUẬT}
+\Large{
+\itemi{
+\item Thông tin môn học:
+\itemi{
+\item Tên môn học: \textbf{Phương pháp tính kỹ thuật} (\textbf{DI004})
+\item Thời lượng: 3 TC, gồm 2 TC lý thuyết (30 tiết) + 1 TC thực hành (30 tiết)
+\item Đối tượng học: Sinh viên ngành CNKT Điện, điện tử và CNKT Điều khiển và tự động hóa
+\item Đơn vị quản lý: Khoa Điện - Điện tử - Viễn thông, Trường Đại học Kỹ thuật - Công nghệ Cần Thơ
+}
+\item Người biên soạn: \textbf{TS. Doãn Minh Đăng}
+\item Thời gian biên soạn: Năm học 2014-2015
+}
+}
+
+\newpage\titf{Tóm tắt quá trình biên soạn}
+
+\itemi{
+\item Bài giảng được soạn trong quá trình dạy lớp học phần đầu tiên, vào Học kỳ 1, năm học 2014-2015
+\item Bổ sung, hoàn chỉnh thêm sau khi kết thúc lớp học phần
+\item Phương tiện giảng dạy: slides trong giờ lý thuyết, file mã lệnh trong giờ thực hành, file bài tập về nhà
+\item Tài liệu tham khảo chính: \textit{Giáo trình phương pháp tính} của \textbf{Lê Thái Thanh}, sinh viên có thể tham khảo cả mã lệnh trong sách này
+\item Phần mềm hỗ trợ (free): Latex (dùng để soạn tài liệu), Octave (dùng để lập trình theo ngôn ngữ giống MATLAB)
+}
+
+%\section{Giới thiệu về phương pháp tính}
+\newpage\titls{Triển khai môn học}\label{intro_gioithieu}
+
+\itemi{
+\item Lý thuyết: 2 tiết/tuần x 15 tuần, bám theo đề cương môn học
+\item Thực hành: 2 tiết/tuần x 15 tuần, ở phòng máy tính (nhóm tối đa 35 SV). Trong 3 tuần đầu dạy căn bản về sử dụng Octave cho tính toán và lập trình. Các tuần sau hướng dẫn SV lập trình theo bài tập nhóm.
+\item Tự học: đọc tài liệu, làm bài tập, thực hành, làm bài tập lớn
+\item Chia nhóm làm bài tập lớn: 2-3 người/nhóm, 3 bài tập lớn trong suốt môn học, SV nộp báo cáo (viết tay / in) và file mã nguồn
+%Chiều T3, tiết 6-7: lý thuyết, tiết 8-9: thực hành (nhóm 1). Chiều T6, tiết 6-7: thực hành (nhóm 2)
+%\item Các buổi sẽ nghỉ (có học bù): 16/9/2014 (T3), 21/11/2014 (T6)
+}
+
+% \section{Mục tiêu, đánh giá}
+\newpage\titls{Những mục tiêu cần đạt}\label{intro_muctieu}
+
+Các mục tiêu:
+\itemi{
+\item Biết khả năng ứng dụng của phương pháp tính
+\item Hiểu các bài toán được trình bày trong môn học
+\item Nắm vững nguyên lý của các giải thuật được học
+\item Biết cách dùng máy tính lập trình các giải thuật tính toán số
+}
+
+\newpage\titls{Những mục tiêu cần đạt}
+
+Các nội dung chính sẽ học: (đúng theo đề cương của trường)
+\enu{
+\item Các loại sai số (2t LT + 2t BT)
+\item Phương pháp số để giải phương trình phi tuyến 1 ẩn (tìm nghiệm gần đúng) (6t LT + 6t BT)
+\item Phương pháp số để giải hệ phương trình đại số tuyến tính (6t LT + 6t BT)
+\item Lập đa thức nội suy (tìm hàm số gần đúng) (6t LT + 6t BT)
+\item Tính gần đúng đạo hàm và tích phân xác định (4t LT + 4t BT)
+\item Giải gần đúng phương trình vi phân thường (6t LT + 6t BT)
+}
+
+\newpage\titls{Đánh giá môn học, cách thức chấm điểm, kiểm tra}\label{intro_muctieu}
+
+Đánh giá môn học:
+\itemi{
+\item Bài tập lớn: làm theo nhóm, trong 12 tuần. Hệ số 20\%. Tối đa 10 điểm, điểm chung cho cả nhóm, nộp chậm 1 ngày trừ 1 điểm.
+\item Thi giữa kỳ: trong giờ học ở tuần 7, đề mở, 45 phút. Hệ số 20\%, Tối đa 10 điểm, vắng không phép = 0 điểm (rớt), vắng có phép = 0.5, quay cóp/trao đổi với bạn = 1 (cả người hỏi lẫn người trả lời).
+\item Thi cuối kỳ: đề đóng, 60 phút. Hệ số 60\%. Tối đa 10 điểm, không được vắng, không được gian lận.
+}
+
+\newpage\titls{Tài liệu tham khảo}\label{intro_tailieu}
+
+\itemi{
+\item \textbf{Lê Thái Thanh}, \textit{Giáo trình phương pháp tính}
+\item \textbf{Burden and Faires}, \textit{Numerical analysis}
+\item Các sách về \textit{phương pháp tính, giải thuật số}, các tài liệu tiếng Anh về \textit{numerical analysis, numerical methods}
+}
+
+\newpage\titls{Phần mềm}\label{intro_phanmem}
+
+\itemi{
+\item Phần mềm Octave (http://octave.org)
+\item Trang web NClab, nếu không tự cài được Octave trên máy của mình (http://nclab.com)
+}
+
+\label{lastpage}
+\end{document}

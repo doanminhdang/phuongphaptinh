@@ -1,0 +1,1101 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 2: Giải phương trình phi tuyến}
+\Large{\textbf{Tính gần đúng nghiệm thực của một phương trình}}
+
+\enu{
+\item Đặt bài toán
+\item Nghiệm và khoảng cách ly nghiệm
+\item Phương pháp chia đôi
+\item Phương pháp lặp đơn
+\item Phương pháp dây cung
+\item Phương pháp Newton
+\item Bài tập
+% \item Lập trình giải thuật
+}
+\spa{0}
+
+% \sagetexpause
+\newpage\titls{Đặt bài toán}
+
+Tìm nghiệm của phương trình phi tuyến:
+\begin{align}\label{eq_baitoan}
+ f(x) = 0
+\end{align}
+với $f$ là hàm liên tục trên một khoảng đóng hoặc mở thuộc $\Rset$.
+
+Vấn đề: khó tính được nghiệm chính xác của \eqref{eq_baitoan}, nên ta cần \textbf{tìm nghiệm gần đúng}.
+
+\begin{tabular}{lr}
+Ví dụ:
+\begin{sagesilent} 
+f(x) = sin(2*x) + x^3 - 2
+\end{sagesilent} 
+  \begin{tabular}{c}
+% \begin{align}\label{eq_ptvidu1}
+    $f(x) = \sage{f(x)}$
+% \end{align}
+  \end{tabular}
+&
+  \begin{tabular}{c}
+    \sageplot[scale=.3]{plot(f, 0, 2)}
+  \end{tabular}
+\end{tabular}
+
+\spa{0}
+
+\newpage\titls{Đặt bài toán}
+
+Mục tiêu của chương này:
+
+\itemi{
+\item Tìm hiểu về cách \textbf{đánh giá sai số} của một nghiệm gần đúng của phương trình phi tuyến một ẩn
+\item Học các nguyên lý xác định nghiệm qua \textbf{ý nghĩa hình học} của các giải thuật
+\item Biết cách thiết lập các \textbf{công thức tính toán} trong các giải thuật
+\item Biết \textbf{áp dụng} các giải thuật (tính toán bằng tay, và lập trình các chương trình chứa giải thuật)
+}
+
+\newpage\titls{Nghiệm và khoảng cách ly nghiệm}
+
+Nghiệm chính xác của phương trình $f(x)=\sage{f(x)}=0$ là:
+\begin{sagesilent}
+s=solve(f,x)
+\end{sagesilent}
+\[
+\sage{s[0]}
+\]
+\[
+\sage{s[1]}
+\]
+\[
+\red{\sage{s[2]}}
+\]
+
+\red{(hai giá trị đầu là nghiệm phức, chỉ có nghiệm thứ ba là số thực)}
+\spa{1}
+
+Để dễ tìm giá trị số, trước tiên ta tìm \textbf{khoảng cách ly nghiệm}, tức là các khoảng đóng $[a,b]$ (hoặc khoảng mở $(a,b)$) mà trên đó tồn tại duy nhất nghiệm. Sau đó tìm nghiệm gần đúng trong đó.
+
+\textbf{Lưu ý}: Khoảng cách ly nghiệm càng nhỏ thì sai số của nghiệm gần đúng là càng nhỏ, và càng ít tốn công tìm kiếm.
+
+\newpage\titls{Nghiệm và khoảng cách ly nghiệm}
+
+Ví dụ:
+
+\green{Khoảng cách ly nghiệm là $[0.8,1.3]$}
+
+\red{Khoảng cách ly nghiệm là $[1,1.1]$}
+
+\cen{\sageplot[scale=.35]{plot(f, 0, 2)+line([(0.8,-1),(0.8,4)], color='green')+line([(1.3,-1),(1.3,4)], color='green')+line([(1,-1),(1,4)], color='red')+line([(1.1,-1),(1.1,4)], color='red')}}
+
+\newpage\titls{Nghiệm và khoảng cách ly nghiệm}
+
+\begin{Thm}\label{thm_hamtraidau}
+ Nếu hàm $f(x)$ liên tục trên đoạn $[a,b]$ và giá trị của hàm trái dấu tại hai đầu mút thì phương trình \eqref{eq_baitoan} có nghiệm trong khoảng $[a,b]$. Thêm nữa, nếu $f(x)$ đơn điệu trên $[a,b]$ thì nghiệm là duy nhất.
+\end{Thm}
+
+% \begin{Exa} ×
+Ví dụ: Tìm các khoảng cách ly nghiệm của phương trình $f(x)=0$ với
+ \begin{sagesilent}
+  f(x) = x^3-3*x+1
+ \end{sagesilent}
+
+ \begin{tabular}{lc}
+    \begin{tabular}{l}
+    Hàm số: $f(x)=\sage{f(x)}$\\
+    Tính giá trị hàm số ở vài điểm \\
+    $\begin{array}{c|rrrrr}
+    x & -2 & -1 & 0 & 1 & 2 \\
+    \hline
+    f(x) & \sage{f(-2)} & \sage{f(-1)} & \sage{f(0)} & \sage{f(1)} & \sage{f(2)}
+    \end{array}$\\
+    ta tìm được 3 khoảng cách ly nghiệm: \\
+    $[-2,-1]$, $[0,1]$, và $[1,2]$
+    \end{tabular}
+ & 
+    \begin{tabular}{c}
+    Đồ thị:\\
+ \sageplot[scale=.25]{plot(f,-2,2)}
+    \end{tabular} 
+\end{tabular}
+% \end{Exa}
+
+\newpage\titls{Nghiệm và khoảng cách ly nghiệm}
+
+\textbf{Đánh giá sai số:} ta dựa vào \textbf{định lý giá trị trung bình} của Lagrange:
+
+\begin{Thm}\label{thm_gttb}
+ Nếu hàm số $f(x)$ liên tục trên $[a,b]$ và có đạo hàm trong $(a,b)$, thì tồn tại một giá trị $c \in (a,b)$ thỏa mãn:
+ \begin{equation}
+  f'(c) = \frac{f(b)-f(a)}{b-a}
+ \end{equation}
+\end{Thm}
+ \begin{tabular}{lc}
+    \begin{tabular}{l}
+    \textbf{Ý nghĩa hình học}:\\
+    Tiếp tuyến với đường cong $y=f(x)$ \\
+    tại điểm $(c,f(c))$ song song với ab
+    \end{tabular}
+  &
+    \begin{tabular}{c}
+    \includegraphics[scale=.2]{Lagrange}
+    \end{tabular}
+ \end{tabular}
+
+\newpage\titls{Nghiệm và khoảng cách ly nghiệm} 
+
+\textbf{Áp dụng Định lý \ref{thm_gttb}}: gọi $p$ là nghiệm chính xác và $x^*$ là nghiệm gần đúng của $f(x)$ trên $[a,b]$. Xét trường hợp $f(x)$ có đạo hàm trên $(p,x^*)$ (nếu $p<x^*$) hoặc trên $(x^*,p)$ (nếu $x^*<p$). Theo định lý Lagrange, tồn tại một điểm $c \in (p,x^*)$ (hoặc $c \in (x^*,p)$), sao cho:
+\begin{align*}
+ f'(c)&=\frac{f(x^*)-f(p)}{x^*-p} \\
+ \Rightarrow |x^*-p|&=\frac{|f(x^*)-f(p)|}{|f'(c)|}=\frac{|f(x^*)|}{|f'(c)|}
+\end{align*}
+
+Nếu có số $m$ thỏa: $\mathbf{0<m\leq |f'(x)|, \forall x \in [a,b]}$, thì $|f'(c)| \geq m$, do đó:
+$|x^*-p|\leq \frac{|f(x^*)|}{m}$
+\bigskip
+
+Vậy ta có thể chọn sai số tuyệt đối là: $\mathbf{\Delta_{x^*}=\frac{|f(x^*)|}{m}}$.
+
+\newpage\titls{Nghiệm và khoảng cách ly nghiệm} 
+
+\textbf{Công thức đánh giá sai số tổng quát:}
+
+\begin{Thm}
+ Giả sử hàm $f(x)$ liên tục trên đoạn $[a,b]$, khả vi trong $(a,b)$.  Nếu $x^*$ là nghiệm xấp xỉ của nghiệm chính xác $p \in [a,b]$ và $|f'(x)| \geq m > 0, \forall x \in [a,b]$, thì sai số của $x^*$ thỏa công thức sau:
+ \begin{equation}\label{eq_saisotongquat}
+  |x^* - p| \leq \frac{|f(x^*)|}{m}
+ \end{equation}
+\end{Thm}
+
+Ví dụ: xét phương trình $f(x) = \sage{f(x)} = 0$ trong $[1.3,2]$, giả sử tìm được nghiệm gần đúng $x^* = 1.5$. Xét đạo hàm:
+\begin{sagesilent}
+ f_d1=diff(f, x, 1)(x)
+ m = abs(f_d1(1.3))
+\end{sagesilent}
+\begin{align}
+|f'(x)| = |\sage{f_d1}| \geq \sage{round(m,3)} = m, \forall x \in [1.3,2]
+\end{align}
+Do đó: $|x^* - p| \leq \frac{|f(1.3)|}{|\sage{round(m,3)}|} \approx \sage{round(abs(f(1.3)/m),3)}$  
+% RealField(10)(m) to convert the variable to 10-bit binary precision
+% m.n(10) also convert the variable to 10-bit binary precision
+% round(m,3) to round up to 3 decimal digits
+
+\newpage\titls{Phương pháp chia đôi}
+
+\blue{Giải thuật:
+\itemi{
+\item Xét đoạn $[a,b]$ là khoảng cách ly nghiệm và $f(a)f(b)<0$. Đặt $a_0=a, b_0=b$ và $x_0=\frac{b+a}{2}$ (điểm giữa của đoạn $[a,b]$).
+\item Làm phép lặp (với $k$ là chỉ số vòng lặp, khởi đầu $k=0$): 
+\itemi{
+  \item Nếu $f(x_k)=0$ thì dừng lại, xác định $x_k$ là nghiệm.
+  \item Nếu $\mathbf{f(x_k)f(a_k)}<0$ (tức là $\mathbf{f(a_k)}$ trái dấu với $f(x_k)$) thì đặt $\mathbf{a_{k+1}=a_k}, b_{k+1}=x_k, x_{k+1}=\frac{b_{k+1}+a_{k+1}}{2}$.
+  \item Nếu $\mathbf{f(x_k)f(b_k)}<0$ (tức là $\mathbf{f(b_k)}$ trái dấu với $f(x_k)$), khi đó đặt $a_{k+1}=x_k, \mathbf{b_{k+1}=b_k}, x_{k+1}=\frac{b_{k+1}+a_{k+1}}{2}$.
+  \item Tăng $k$ thêm 1: $k=k+1$, và lặp lại cách tính toán này.
+}
+}
+}
+
+\newpage\titls{Phương pháp chia đôi}
+
+Kết quả từ giải thuật chia đôi:
+\itemi{
+\item Ta luôn duy trì được $f(a_k)f(b_k)<0, \forall k$ (trừ khi đạt được nghiệm chính xác). Như vậy $[a_k,b_k]$ luôn là khoảng cách ly nghiệm.
+\item Sau mỗi bước, khoảng cách ly nghiệm giảm đi một nửa: $b_{k}-a_{k} = \frac{b_{k-1}-a_{k-1}}{2}$.%dùng k và k-1 để sử dụng ngay vào công thức dưới này, cho SV dễ nhận ra
+\item Đặt $d_k=b_k-a_k$, ta có công thức:
+\begin{align}\label{eq_khoangcachlyk}
+ d_k = \frac{b_{k-1}-a_{k-1}}{2} = \frac{b_{k-2}-a_{k-2}}{2^2} = \cdots = \frac{b_{0}-a_{0}}{2^k} = \frac{b-a}{2^k}
+\end{align}
+dễ thấy $\lim_{k \to \infty} d_k = 0$, tức là hai dãy số $\{a_k\}, \{b_k\}$ hội tụ. Do $[a_k,b_k]$ là khoảng cách ly nghiệm nên nếu gọi $p$ là nghiệm thì ta luôn có $a_k \leq p \leq b_k$, nên các dãy số $\{a_k\}, \{b_k\}$ hội tụ về $p$.
+}
+
+\newpage\titls{Phương pháp chia đôi}
+
+Đánh giá sai số: cho giải thuật chia đôi được lặp cho đến khi đạt được $x_k$ (tức là điểm giữa của đoạn $[a_k,b_k]$). Ta dùng công thức sai số là:
+\blue{
+\begin{align}
+ |x_k - p| \leq \frac{b-a}{2^{k+1}}
+\end{align}
+}
+(Lưu ý: tại sao ở mẫu số có số mũ $k+1$? Vì ta có $d_k= \frac{b-a}{2^{k}}$ theo \eqref{eq_khoangcachlyk}, điểm $x_k$ chia đôi khoảng $[a_k,b_k]$ nên sai số được chia cho 2 nữa)
+
+\newpage\titls{Phương pháp chia đôi}
+
+\begin{sagesilent}
+f = sin(2*x) + x^3 - 2
+\end{sagesilent}
+Ví dụ: giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp chia đôi trên đoạn $[0,1.5]$
+
+\begin{sagesilent}
+ xk=range(5)
+ ak=range(5)
+ bk=range(5)
+ fxk=range(5)
+ p=find_root(f,0,1.5) # find nearly exact root
+ ak[0]=0; bk[0]=1.5; xk[0]=(ak[0]+bk[0])/2; fxk[0]=f(x=xk[0])
+ for i in range(4):
+    if N(f(x=xk[i])*f(x=ak[i]))<= 0:
+        ak[i+1]=ak[i]
+        bk[i+1]=xk[i]
+    else:    
+        ak[i+1]=xk[i]
+        bk[i+1]=bk[i]
+    xk[i+1]=(bk[i+1]+ak[i+1])/2
+    fxk[i+1]=f(x=xk[i+1])
+ ak_disp=[round(ak[i],4) for i in range(5)] # to display ak with 4 decimal digits
+ bk_disp=[round(bk[i],4) for i in range(5)]
+ xk_disp=[round(xk[i],4) for i in range(5)]
+ fxk_disp=[round(fxk[i],4) for i in range(5)]
+ p_disp=round(p,4)
+\end{sagesilent}
+
+Giá trị hàm ở hai đầu: $f(a)=\sage{round(f(x=ak[0]),4)}$, $f(b)=\sage{round(f(x=bk[0]),4)}$
+
+% % hiển thị bảng kết quả bằng cách lập trình Sagetex; cần dùng lệnh latex() của Sage để chuyển giá trị int thành str cho hiển thị latex
+\begin{sagesilent}
+table=r"\begin{tabular}{ccccc}"
+table+=r"$k$ & $a_k$ & $b_k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(5):
+  table+=latex(i) + r"&" + latex(ak_disp[i]) + r"&" + latex(bk_disp[i]) + r"&" + latex(xk_disp[i]) + r"&" + latex(fxk_disp[i]) + r"\\"
+table+=r"\end{tabular}"
+\end{sagesilent}
+\cen{\sagestr{table}}
+
+% Để test:  table+=r"0 & 1 & 2 & 3 & 4 \\"
+
+
+% % Hiển thị các array, kiểu cũ
+% \begin{align*}
+% \begin{array}{rl}
+% a_k: & \sage{ak_disp} \\
+% b_k: & \sage{bk_disp} \\
+% x_k: & \sage{xk_disp} \\
+% f(x_k): & \sage{fxk_disp}
+% \end{array}
+% \end{align*}
+
+
+So sánh với nghiệm chính xác: $p = \sage{p_disp}$.
+
+
+% \begin{sagesilent}
+%  a=matrix([[1, 2 , 3],[2, 4, 5],[6,7,8]])
+% \end{sagesilent}
+% 
+% Ma tran:
+% $\sage{a}$
+
+\newpage\titls{Phương pháp chia đôi}
+
+Minh họa các bước giải qua đồ thị:
+
+% \cen{\sageplot[scale=.35]{plot(f, -0.5, 2)+line([(ak[0],-1),(ak[0],4)], color='green')+line([(ak[1],-1),(ak[1],4)], color='green')+line([(ak[2],-1),(ak[2],4)], color='green')+line([(ak[3],-1),(ak[3],4)], color='green')+line([(ak[4],-1),(ak[4],4)], color='green')+line([(bk[0],-1),(bk[0],4)], color='blue')+line([(bk[1],-1),(bk[1],4)], color='blue')+line([(bk[2],-1),(bk[2],4)], color='blue')+line([(bk[3],-1),(bk[3],4)], color='blue')+line([(bk[4],-1),(bk[4],4)], color='blue')+line([(xk[0],-1),(xk[0],4)], color='red')+line([(xk[1],-1),(xk[1],4)], color='red')+line([(xk[2],-1),(xk[2],4)], color='red')+line([(xk[3],-1),(xk[3],4)], color='red')+line([(xk[4],-1),(xk[4],4)], color='red')+line([(p,-1.5),(p,4.5)], color='black')}}
+
+\textbf{Bước 1}:
+
+\begin{sagesilent}
+ i=0
+ plotchiadoi=plot(f, -0.5, 2)+line([(ak[i],-1),(ak[i],4)], color='green')+line([(bk[i],-1),(bk[i],4)], color='blue')+line([(xk[i],-1),(xk[i],4)], color='red')+line([(p,-1.5),(p,4.5)], color='black')
+\end{sagesilent}
+
+\cen{\sageplot[scale=.35]{plotchiadoi}}
+
+\newpage\titls{Phương pháp chia đôi}
+
+Minh họa các bước giải qua đồ thị:
+
+\textbf{Bước 2}:
+
+\begin{sagesilent}
+ i=1
+ plotchiadoi=plot(f, -0.5, 2)+line([(ak[i],-1),(ak[i],4)], color='green')+line([(bk[i],-1),(bk[i],4)], color='blue')+line([(xk[i],-1),(xk[i],4)], color='red')+line([(p,-1.5),(p,4.5)], color='black')
+\end{sagesilent}
+
+\cen{\sageplot[scale=.35]{plotchiadoi}}
+
+\newpage\titls{Phương pháp chia đôi}
+
+Minh họa các bước giải qua đồ thị:
+
+\textbf{Bước 3}:
+
+\begin{sagesilent}
+ i=2
+ plotchiadoi=plot(f, -0.5, 2)+line([(ak[i],-1),(ak[i],4)], color='green')+line([(bk[i],-1),(bk[i],4)], color='blue')+line([(xk[i],-1),(xk[i],4)], color='red')+line([(p,-1.5),(p,4.5)], color='black')
+\end{sagesilent}
+
+\cen{\sageplot[scale=.35]{plotchiadoi}}
+
+\newpage\titls{Phương pháp chia đôi}
+
+Minh họa các bước giải qua đồ thị:
+
+\textbf{Bước 4}:
+
+\begin{sagesilent}
+ i=3
+ plotchiadoi=plot(f, -0.5, 2)+line([(ak[i],-1),(ak[i],4)], color='green')+line([(bk[i],-1),(bk[i],4)], color='blue')+line([(xk[i],-1),(xk[i],4)], color='red')+line([(p,-1.5),(p,4.5)], color='black')
+\end{sagesilent}
+
+\cen{\sageplot[scale=.35]{plotchiadoi}}
+
+\newpage\titls{Phương pháp chia đôi}
+
+Minh họa các bước giải qua đồ thị:
+
+\textbf{Bước 5}:
+
+\begin{sagesilent}
+ i=4
+ plotchiadoi=plot(f, -0.5, 2)+line([(ak[i],-1),(ak[i],4)], color='green')+line([(bk[i],-1),(bk[i],4)], color='blue')+line([(xk[i],-1),(xk[i],4)], color='red')+line([(p,-1.5),(p,4.5)], color='black')
+\end{sagesilent}
+
+\cen{\sageplot[scale=.35]{plotchiadoi}}
+
+\newpage\titls{Phương pháp chia đôi}
+
+\begin{sagesilent}
+f = x^2 - 2
+\end{sagesilent}
+Ví dụ (\red{tính căn bậc hai của 2}): giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp chia đôi trên đoạn $[0,2]$
+
+\begin{sagesilent}
+ n=7
+ xk=range(n)
+ ak=range(n)
+ bk=range(n)
+ fxk=range(n)
+ p=find_root(f,0,2) # find nearly exact root
+ ak[0]=0; bk[0]=2; xk[0]=(ak[0]+bk[0])/2; fxk[0]=f(x=xk[0])
+ for i in range(n-1):
+    if N(f(x=xk[i])*f(x=ak[i]))<= 0:
+        ak[i+1]=ak[i]
+        bk[i+1]=xk[i]
+    else:    
+        ak[i+1]=xk[i]
+        bk[i+1]=bk[i]
+    xk[i+1]=(bk[i+1]+ak[i+1])/2
+    fxk[i+1]=f(x=xk[i+1])
+ ak_disp=[round(ak[i],4) for i in range(n)] # to display ak with 4 decimal digits
+ bk_disp=[round(bk[i],4) for i in range(n)]
+ xk_disp=[round(xk[i],4) for i in range(n)]
+ fxk_disp=[round(fxk[i],4) for i in range(n)]
+ p_disp=round(p,4)
+\end{sagesilent}
+
+Giá trị hàm ở hai đầu: $f(a)=\sage{round(f(x=ak[0]),4)}$, $f(b)=\sage{round(f(x=bk[0]),4)}$
+
+% % hiển thị bảng kết quả bằng cách lập trình Sagetex; cần dùng lệnh latex() của Sage để chuyển giá trị int thành str cho hiển thị latex
+\begin{sagesilent}
+table=r"\begin{tabular}{ccccc}"
+table+=r"$k$ & $a_k$ & $b_k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  table+=latex(i) + r"&" + latex(ak_disp[i]) + r"&" + latex(bk_disp[i]) + r"&" + latex(xk_disp[i]) + r"&" + latex(fxk_disp[i]) + r"\\"
+table+=r"\end{tabular}"
+\end{sagesilent}
+\cen{\sagestr{table}}
+
+Nghiệm chính xác: $p=\sage{p_disp}$
+% \sagetexunpause
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Đầu tiên, chuyển từ phương trình \eqref{eq_baitoan} sang dạng tương đương:
+\begin{align}\label{eq_baitoanlap}
+ x = g(x)
+\end{align}
+
+Nghiệm của phương trình \eqref{eq_baitoanlap} được gọi là \textbf{điểm bất động} của hàm số $g(x)$.
+
+\blue{Giải thuật:
+\itemi{
+\item Xét đoạn $[a,b]$ là khoảng cách ly nghiệm. Chọn giá trị đầu $x_0 \in [a,b]$.
+\item Lặp: $x_k=g(x_{k-1})$, với $k=1, 2, ...$
+}
+}
+
+Ta sẽ khảo sát phương pháp này có \textbf{hội tụ} về nghiệm của bài toán hay không, tùy vào đặc điểm của hàm $g(x)$.
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Ý nghĩa hình học:
+\itemi{
+\item Tìm điểm giao của đường thẳng $y=x$ và đồ thị $y=g(x)$.
+\item Giải thuật lặp: khi có giá trị $x_{k-1}$, ta lấy điểm đối xứng của điểm $g(x_{k-1})$ qua đường $y=x$, chiếu xuống trục hoành được $x_k$.
+}
+
+%  Đây là hàm chuyển đổi cho f(x)=x^3-3*x+1 đã có ở phía trên
+\begin{sagesilent}
+ g1 = x^2/2 - sin(x)
+ g1_diff=diff(g1, x, 1)
+ x_k=1
+ x_kplus1=g1(x=x_k)
+ plotg1=plot(g1, -1, 2, color='red')
+ plotyeqx=plot(x, -1, 2, color='blue')
+ plotxkchieu=line([(x_k,x_kplus1),(x_kplus1,x_k)], color='green', linestyle='-')
+ plotxkline_ngang=line([(0,x_kplus1),(x_k,x_kplus1)], color='green', linestyle='--')
+ plotxkline_doc=line([(x_kplus1,x_k),(x_kplus1,0)], color='green', linestyle='--') 
+ cxk=circle((x_k,g1(x=x_k)),0.04,color='green')
+ cxkplus1=circle((x_kplus1,g1(x=x_kplus1)),0.04,color='red')
+\end{sagesilent}
+
+ \begin{tabular}{lc}
+    \begin{tabular}{l}
+    \red{Hàm số: $g(x)=\sage{g1}$}\\
+    \blue{Đường $y=x$}\\
+    \green{Điểm bắt đầu: $x_{k-1}$}\\
+    \red{Điểm tiếp theo: $x_k$}
+    \end{tabular}
+  &
+    \begin{tabular}{c}
+    \sageplot[scale=.3]{plotg1+plotyeqx+plotxkchieu+plotxkline_ngang+plotxkline_doc+cxk+cxkplus1}
+    \end{tabular}
+ \end{tabular}
+
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Định nghĩa: Hàm $g(x)$ được gọi là \textbf{hàm co} trong đoạn $[a,b]$ nếu tồn tại một số $q: 0 \leq q < 1$ sao cho:
+\begin{equation}
+ |g(x_1) - g(x_2)| \leq q |x_1 - x_2|, \forall x_1, x_2 \in [a,b]
+\end{equation}
+Giá trị $q$ được gọi là \textbf{hệ số co}.
+
+\begin{Thm}
+ Nếu $g(x)$ là hàm co trên đoạn $[a,b]$, thì nó liên tục trên đó.
+\end{Thm}
+
+\begin{Thm}
+ Nếu $g(x)$ liên tục trên đoạn $[a,b]$, khả vi trong $(a,b)$ và $\exists q: 0 \leq q < 1$ sao cho $|g'(x)| \leq q, \forall x \in (a,b)$, thì $g(x)$ là hàm co trên $[a,b]$ với hệ số co là $q$.
+\end{Thm}
+
+\newpage\titls{Phương pháp lặp đơn}
+
+\begin{sagesilent}
+ f2(x) = x^3 + x - 10
+ g2 = (10 - x)^(1/3)
+ g2_diff=diff(g2, x, 1)
+\end{sagesilent}
+
+Ví dụ: Xét phương trình $f(x)=0$ với $f(x)=\sage{f2(x)}$ trên đoạn $[0,3]$, chuyển sang dạng \eqref{eq_baitoanlap}, ta được: $g(x) = \sage{g2}$.
+
+Ta có:
+\begin{align*}
+ |g'(x)| = \Bigg| \sage{g2_diff} \Bigg| \leq \sage{abs(g2_diff(x=3))} \approx \sage{round(abs(g2_diff(x=3)),4)} \triangleq q < 1
+\end{align*}
+Do đó $g(x)$ là hàm co trên đoạn $[0,3]$.
+
+% Ví dụ khác: Xét $f(x)=\sage{f}$ trên đoạn $[0,1.5]$:
+% \begin{sagesilent}
+%  g2 = (10 - x)^(1/3)
+%  g2_diff1=diff(g2, x, 1)
+% \end{sagesilent}
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Định lý sau đây tạo cơ sở cho phương pháp lặp đơn, còn gọi là \textbf{nguyên lý ánh xạ co}.
+\begin{Thm}
+ Giả sử $g(x)$ là hàm co trên đoạn $[a,b]$ với hệ số co là $q$; đồng thời $\forall x \in [a,b], g(x) \in [a,b]$. Khi đó, với mọi giá trị ban đầu $x_0 \in [a,b]$, dãy lặp $\{x_n\}_{n=1}^\infty$ của giải thuật lặp sẽ hội tụ về nghiệm $p$ của phương trình \eqref{eq_baitoanlap}.
+\end{Thm}
+
+Sai số thu được:
+\begin{align}
+ |x_n - p| \leq \frac{q^n}{1-q} |x_1 - x_0|
+\end{align}
+hoặc:
+\begin{align}
+ |x_n - p| \leq \frac{q}{1-q} |x_n - x_{n-1}|
+\end{align}
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Tóm tắt tính chất hội tụ:
+\itemi{
+\item Hàm số là \emph{co} (hệ số co thỏa mãn $q<1$)
+\item Tập hợp $[a,b]$ là \emph{tập giới nội} của hàm số $g(x)$
+\item Tốc độ hội tụ phụ thuộc vào giá trị của hệ số co $q$: $q$ càng nhỏ thì hội tụ càng nhanh (ít bước).
+}
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Ví dụ: áp dụng phương pháp lặp để giải $x=g(x)=\sage{g2}$ với $x_0=0$
+
+\cen{\sageplot[scale=.4]{plot(g2,-1,10)+line([(-1,-1),(6,6)],color='green')}}
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Ví dụ: áp dụng phương pháp lặp để giải $x=g(x)=\sage{g2}$ với $x_0=0$
+
+\begin{sagesilent}
+ n=6
+ decipoint=4
+ xk=range(n+1)
+ g2xk=range(n)
+ deltaxk=range(n)
+ xk[0]=0
+ p_g2=find_root(f2,0,5) # find nearly exact root
+ for i in range(n):
+    g2xk[i]=g2(x=xk[i])
+    xk[i+1]=g2xk[i]
+    deltaxk[i]=abs(xk[i]-p_g2)
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ g2xk_disp=[round(g2xk[i],decipoint) for i in range(n)]
+ deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ p_g2_disp=round(p_g2,decipoint)
+ table2=r"\begin{tabular}{c|ccc}"
+ table2+=r"$k$ & $x_k$ & $g(x_k)$ & $|x_k-p|$ \\ \hline"
+ for i in range(n):
+   table2+=latex(i) + r"&" + latex(xk_disp[i]) + r"&" + latex(g2xk_disp[i]) + r"&" + latex(deltaxk_disp[i]) + r"\\"
+ table2+=r"\end{tabular}"
+\end{sagesilent}
+% Nếu decipoint=5, khi tính toán sẽ cho ra sai số kiểu 9x10^(-5), khi compile Latex sẽ có báo lỗi kiểu "Missing $ inserted \cen{\sagestr{table2}}", "Extra }, or forgotten $ \cen{\sagestr{table2}}", chắc là do Sagetex có đưa ra ký tự x là đặc biệt. Dù sao khi đó file PDF vẫn compile được, có thể bỏ qua lỗi đó. Nếu decipoint=4 (làm tròn thêm nữa) thì không có báo lỗi.
+\cen{\sagestr{table2}}
+
+So sánh với nghiệm chính xác: $p=\sage{p_g2_disp}$
+
+
+\newpage\titls{Phương pháp lặp đơn}
+
+\begin{sagesilent}
+ g3=cos(x)
+\end{sagesilent}
+
+Ví dụ: áp dụng phương pháp lặp để giải $x=g(x)=\sage{g3}$ với $x_0=0$
+
+\cen{\sageplot[scale=.4]{plot(g3,-pi/2,pi/2)+line([(-1,-1),(1,1)],color='green')}}
+
+\newpage\titls{Phương pháp lặp đơn}
+
+Ví dụ: áp dụng phương pháp lặp để giải $x=g(x)=\sage{g3}$ với $x_0=0$
+
+\begin{sagesilent}
+ n=9
+ decipoint=5
+ xk=range(n+1)
+ g3xk=range(n)
+ deltaxk=range(n)
+ xk[0]=0
+ p_g3=find_root(g3-x,0,1) # find nearly exact root
+ for i in range(n):
+    g3xk[i]=g3(x=xk[i])
+    xk[i+1]=g3xk[i]
+    deltaxk[i]=abs(xk[i]-p_g3)
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ g3xk_disp=[round(g3xk[i],decipoint) for i in range(n)]
+ deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ p_g3_disp=round(p_g3,decipoint)
+ table3=r"\begin{tabular}{c|ccc}"
+ table3+=r"$k$ & $x_k$ & $g(x_k)$ & $|x_k-p|$ \\ \hline"
+ for i in range(n):
+   table3+=latex(i) + r"&" + latex(xk_disp[i]) + r"&" + latex(g3xk_disp[i]) + r"&" + latex(deltaxk_disp[i]) + r"\\"
+ table3+=r"\end{tabular}"
+\end{sagesilent}
+
+\cen{\sagestr{table3}}
+
+So sánh với nghiệm chính xác: $p=\sage{p_g3_disp}$
+
+
+% \sagetexpause
+
+\newpage\titls{Phương pháp dây cung}
+
+Xét bài toán \eqref{eq_baitoan} trong khoảng cách ly nghiệm $[a,b]$, hàm $f(x)$ là liên tục và $f(a).f(b)<0$. Ý nghĩa: hai đầu hàm số ở hai bên trục hoành.
+
+\blue{Giải thuật \textbf{lặp} (ở bước thứ $k$, với $a_0=a, b_0=b$):
+\itemi{
+\item Kẻ đoạn thẳng (\textit{dây cung}) nối hai điểm $(a_k, f(a_k))$ và $(b_k, f(b_k))$ (hai đầu của đồ thị hàm số trong đoạn $[a_k,b_k]$).
+\item Dây cung giao với trục hoành tại một điểm, thì lấy hoành độ của điểm đó làm $x_k$.
+\item Lặp lại việc dựng dây cung với đoạn nhỏ hơn: Nếu $f(a_k).f(x_k)<0$, thì đặt $a_{k+1}=a_k, \mathbf{b_{k+1}=x_k}$; nếu $f(x_k).f(b)<0$, thì đặt $\mathbf{a_{k+1}=x_k}, b_{k+1}=b_k$.
+}
+}
+
+\newpage\titls{Phương pháp dây cung}
+
+\begin{sagesilent}
+ f = (x-1)^3*e^(x+1)/10-1
+\end{sagesilent}
+% Sageplot xuat ra hinh khong tot neu nhan 10 ham f len: ti le o truc tung va truc hoanh khong tu dong scale cho phu hop voi khung hinh xuat ra, lam cho hinh rat la dai
+% Để sửa tỉ lệ, có thể dùng thuộc tính: p.set_aspect_ratio(r), với p là một đối tượng plot, tỉ lệ r=độ dài trên trục tung/độ dài trên trục hoành
+
+Minh họa: \green{dây cung} của \blue{$f(x)=\sage{f}$} trên đoạn $[1,2]$
+% Tọa độ của điểm giao:
+% Dây cung: y=f(a)+[(f(b)-f(a))/(b-a)]*(x-a)
+% Giao với trục hoành: y=0 <=> x=a-f(a)*(b-a)/(f(b)-f(a))
+\begin{sagesilent}
+ a=1
+ b=2
+ plot_hamf=plot(f,a,b, color='blue')
+ plot_daycung=line([(a,f(x=a)),(b,f(x=b))], color='green')
+ x_k_daycung=a-f(x=a)*(b-a)/(f(x=b)-f(x=a))
+ c_xk_daycung=circle((x_k_daycung,0),0.04, color='red')
+ c_fxk_daycung=circle((x_k_daycung,f(x=x_k_daycung)),0.04, color='blue')
+ plot_daycung2=line([(x_k_daycung,f(x=x_k_daycung)),(b,f(x=b))], color='purple')
+\end{sagesilent}
+
+\red{$x=\sage{round(x_k_daycung,4)}$}, \blue{$f(x)=\sage{round(f(x=x_k_daycung),4)}$}, ta có $f(x).f(b)<0$, vậy tiếp theo xét trên đoạn $[\sage{round(x_k_daycung,4)},\sage{b}]$.
+
+\cen{\sageplot[scale=.35]{plot_hamf+plot_daycung+c_xk_daycung+c_fxk_daycung+plot_daycung2}}
+
+% \newpage\titls{Phương pháp dây cung}
+% 
+% Có 4 trường hợp xảy ra của thuật toán:
+% \enu{
+% \item $f(a)<0, f(b)>0$, và $f(x_k)<0$: khoảng cách ly nghiệm tiếp theo sẽ là $[x_k, b]$
+% \item $f(a)<0, f(b)>0$, và $f(x_k)>0$
+% \item $f(a)>0, f(b)<0$, và $f(x_k)<0$
+% \item $f(a)>0, f(b)<0$, và $f(x_k)>0$
+% }
+
+\newpage\titls{Phương pháp dây cung}
+
+\textbf{Tìm công thức tính giá trị của $x_k$:}
+
+Phương trình của dây cung: 
+\begin{equation}\label{eq_daycung}
+y=f(a)+\frac{f(b)-f(a)}{b-a}(x-a) 
+\end{equation}
+Phương trình của trục hoành: $y=0$
+
+Tọa độ của điểm giao giữa dây cung với trục hoành là nghiệm chung của hai phương trình trên. Ta thay $y=0$ vào phương trình \eqref{eq_daycung}:
+\begin{align}
+y=0 &\Leftrightarrow f(a)+\frac{f(b)-f(a)}{b-a}(x-a)=0 \nonumber\\
+&\Leftrightarrow x=a-f(a)\frac{b-a}{f(b)-f(a)} \nonumber\\
+&\Leftrightarrow x=a-f(a)\frac{a-b}{f(a)-f(b)} \label{eq_ppdaycung_xtheoa}
+\end{align}
+
+\newpage\titls{Phương pháp dây cung}
+
+\textbf{Tìm công thức tính giá trị của $x_k$, cách khác:}
+
+Phương trình của dây cung, \textbf{thiết lập theo $f(b)$}:
+\begin{equation}\label{eq_daycung2}
+y=f(b)-\frac{f(b)-f(a)}{b-a}(b-x) 
+\end{equation}
+Phương trình của trục hoành: $y=0$
+
+Tọa độ của điểm giao giữa dây cung với trục hoành là nghiệm chung của hai phương trình trên. Ta thay $y=0$ vào phương trình \eqref{eq_daycung2}:
+\begin{align}
+y=0 &\Leftrightarrow f(b)-\frac{f(b)-f(a)}{b-a}(b-x)=0 \nonumber\\
+&\Leftrightarrow x=b-f(b)\frac{b-a}{f(b)-f(a)} \label{eq_ppdaycung_xtheob}
+\end{align}
+
+\textbf{Lưu ý}: cả hai công thức \eqref{eq_ppdaycung_xtheoa} và \eqref{eq_ppdaycung_xtheob} đều đúng.
+
+\newpage\titls{Phương pháp dây cung}
+
+\textbf{Xét mối quan hệ giữa $x_{k+1}$ và $x_k$:}
+
+Theo giải thuật, ta biết rằng hoặc $a_{k+1}=x_k$, hoặc $b_{k+1}=x_k$.% Có hai trường hợp:
+
+\blue{
+\itemi{
+\item Nếu $a_{k+1}=x_k$, thì dùng công thức \eqref{eq_ppdaycung_xtheoa}, ta được:
+\begin{align*}
+x_{k+1}&=a_{k+1}-f(a_{k+1})\frac{a_{k+1}-b_{k+1}}{f(a_{k+1})-f(b_{k+1})}\\
+\Leftrightarrow x_{k+1}&=x_k-\frac{f(x_k)(x_k-b_{k+1})}{f(x_k)-f(b_{k+1})}
+\end{align*}
+\item Nếu $b_{k+1}=x_k$, thì dùng công thức \eqref{eq_ppdaycung_xtheob}, ta được:
+\begin{align*}
+x_{k+1}&=b_{k+1}-f(b_{k+1})\frac{b_{k+1}-a_{k+1}}{f(b_{k+1})-f(a_{k+1})}\\
+\Leftrightarrow x_{k+1}&=x_k-\frac{f(x_k)(x_k-a_{k+1})}{f(x_k)-f(a_{k+1})}
+\end{align*}
+}
+}
+
+% \sagetexunpause
+
+\newpage\titls{Phương pháp dây cung}
+
+\begin{sagesilent}
+f = sin(2*x) + x^3 - 2
+\end{sagesilent}
+
+\begin{sagesilent}
+ n=10
+ decipoint=4
+ xk=range(n)
+ ak=range(n)
+ bk=range(n)
+ deltaxk=range(n)
+ fxk=range(n)
+ fak=range(n)
+ fbk=range(n)
+ p_f=find_root(f,0,1.5) # find nearly exact root
+ ak[0]=0; bk[0]=1.5;
+ for i in range(n-1):
+    fak[i]=f(x=ak[i])
+    fbk[i]=f(x=bk[i])
+    xk[i]=bk[i]-(fbk[i]*(bk[i]-ak[i]))/(fbk[i]-fak[i])
+    fxk[i]=f(x=xk[i])
+    deltaxk[i]=abs(xk[i]-p_f)
+    if N(fxk[i]*fak[i])<= 0:
+        ak[i+1]=ak[i]
+        bk[i+1]=xk[i]
+    else:    
+        ak[i+1]=xk[i]
+        bk[i+1]=bk[i]
+ ak_disp=[round(ak[i],decipoint) for i in range(n)]
+ bk_disp=[round(bk[i],decipoint) for i in range(n)]
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ fxk_disp=[round(fxk[i],decipoint) for i in range(n)]
+ deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ p_f_disp=round(p_f,decipoint)
+ tableDC1=r"\begin{tabular}{c|ccc}"
+ tableDC1+=r"$k$ & $x_k$ & $f(x_k)$ & $|x_k-p|$ \\ \hline"
+ for i in range(n-1):
+   tableDC1+=latex(i) + r"&" + latex(xk_disp[i]) + r"&" + latex(fxk_disp[i]) + r"&" + latex(deltaxk_disp[i]) + r"\\"
+ tableDC1+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp dây cung trên đoạn $[0,1.5]$
+
+\cen{\sageplot[scale=.4]{plot(f,0,1.5)}}
+
+\newpage\titls{Phương pháp dây cung}
+
+Ví dụ: giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp dây cung trên đoạn $[0,1.5]$
+ (nghiệm chính xác: $p=\sage{p_f_disp}$)
+
+\cen{\sagestr{tableDC1}}
+
+\newpage\titls{Phương pháp dây cung}
+
+\begin{sagesilent}
+f = x^3 + x - 10
+\end{sagesilent}
+
+\begin{sagesilent}
+ n=10
+ decipoint=4
+ xk=range(n)
+ ak=range(n)
+ bk=range(n)
+ deltaxk=range(n)
+ fxk=range(n)
+ fak=range(n)
+ fbk=range(n)
+ p_f=find_root(f,0,3) # find nearly exact root
+ ak[0]=0; bk[0]=3;
+ for i in range(n-1):
+    fak[i]=f(x=ak[i])
+    fbk[i]=f(x=bk[i])
+    xk[i]=bk[i]-(fbk[i]*(bk[i]-ak[i]))/(fbk[i]-fak[i])
+    fxk[i]=f(x=xk[i])
+    deltaxk[i]=abs(xk[i]-p_f)
+    if N(fxk[i]*fak[i])<= 0:
+        ak[i+1]=ak[i]
+        bk[i+1]=xk[i]
+    else:    
+        ak[i+1]=xk[i]
+        bk[i+1]=bk[i]
+ ak_disp=[round(ak[i],decipoint) for i in range(n)]
+ bk_disp=[round(bk[i],decipoint) for i in range(n)]
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ fxk_disp=[round(fxk[i],decipoint) for i in range(n)]
+ deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ p_f_disp=round(p_f,decipoint)
+ tableDC2=r"\begin{tabular}{c|ccc}"
+ tableDC2+=r"$k$ & $x_k$ & $f(x_k)$ & $|x_k-p|$ \\ \hline"
+ for i in range(n-1):
+   tableDC2+=latex(i) + r"&" + latex(xk_disp[i]) + r"&" + latex(fxk_disp[i]) + r"&" + latex(deltaxk_disp[i]) + r"\\"
+ tableDC2+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp dây cung trên đoạn $[0,3]$
+ (nghiệm chính xác: $p=\sage{p_f_disp}$)
+
+\cen{\sageplot[scale=.4]{plot(f,-1,4)}}
+
+\newpage\titls{Phương pháp dây cung}
+
+Ví dụ: giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp dây cung trên đoạn $[0,3]$
+ (nghiệm chính xác: $p=\sage{p_f_disp}$)
+
+\cen{\sagestr{tableDC2}}
+
+
+% \sagetexpause
+
+% % Mang về đằng trước, chứng minh công thức sai số tổng quát
+% \newpage\titls{Phương pháp dây cung}
+% 
+% \textbf{Đánh giá sai số của phương pháp dây cung:} ta dựa vào \textbf{định lý giá trị trung bình} của Lagrange:
+% 
+% \begin{Thm}
+%  Nếu hàm số $f(x)$ liên tục trên $[a,b]$ và có đạo hàm trong $(a,b)$, thì tồn tại một giá trị $c \in (a,b)$ thỏa mãn:
+%  \begin{equation}
+%   f'(c) = \frac{f(b-f(a)}{b-a}
+%  \end{equation}
+% \end{Thm}
+%  \begin{tabular}{lc}
+%     \begin{tabular}{l}
+%     Ý nghĩa hình học:\\
+%     Tiếp tuyến với đường cong $y=f(x)$ \\
+%     tại điểm $(c,f(c))$ song song với AB
+%     \end{tabular}
+%   &
+%     \begin{tabular}{c}
+%     \includegraphics[scale=.2]{Lagrange}
+%     \end{tabular}
+%  \end{tabular}
+% 
+% \newpage\titls{Phương pháp dây cung} 
+% 
+% \textbf{Đánh giá sai số của phương pháp dây cung:}
+% 
+% Áp dụng: gọi $p$ là nghiệm của $f(x)$ trên $[a,b]$ (tức là $f(p)=0$). Xét trường hợp $f(x)$ có đạo hàm trên $(p,x_k)$ (nếu $p<x_k$) hoặc trên $(x_k,p)$ (nếu $x_k<p$). Theo định lý Lagrange, tồn tại một điểm $c \in (p,x_k)$ (hoặc $c \in (x_k,p)$), sao cho:
+% \begin{align*}
+%  f'(c)&=\frac{f(x_k)-f(p)}{x_k-p} \\
+%  \Rightarrow |x_k-p|&=\frac{|f(x_k)-f(p)|}{|f'(c)|}=\frac{|f(x_k)|}{|f'(c)|}
+% \end{align*}
+% 
+% Nếu có số $m$ thỏa: $\mathbf{0<m\leq f'(x), \forall x \in [a,b]}$, thì $|x_k-p|\leq \frac{|f(x_k)|}{m}$
+% \bigskip
+% 
+% Vậy ta có thể chọn sai số tuyệt đối là: $\mathbf{\Delta_{x_k}=\frac{|f(x_k)|}{m}}$.
+
+\newpage\titls{Phương pháp dây cung}
+
+Tên giải thuật bằng tiếng Anh:
+
+\itemi{
+\item \emph{Secant method}: là giải thuật lặp 
+\begin{equation*}
+x_{k+1}=x_k - \frac{f(x_k)(x_k-x_{k-1})}{f(x_k)-f(x_{k-1})} 
+\end{equation*}
+giống như phương pháp dây cung nhưng không so sánh dấu của $f(x)$ với hai đầu $f(a), f(b)$ mà tuần tự bỏ đầu $a_k$ rồi $b_{k+1}$. Giải thuật này có thể hội tụ (tìm được nghiệm) hoặc phân kỳ (không tiến đến nghiệm).
+\item \emph{False position method}: là phương pháp dây cung ta học ở đây, luôn đảm bảo có nghiệm, nhờ có kiểm tra dấu của $f(x)$ ở mỗi bước để đảm bảo khoảng tiếp theo vẫn là khoảng cách ly nghiệm.
+}
+
+\newpage\titls{Phương pháp Newton}
+
+Còn gọi là \emph{Phương pháp tiếp tuyến} hoặc \emph{Phương pháp Newton-Raphson}.
+\bigskip
+
+Xét bài toán \eqref{eq_baitoan} trong khoảng cách ly nghiệm $[a,b]$, với hàm số \textbf{$f(x)$ có đạo hàm} trong $[a,b]$. Ý nghĩa: đồ thị của $f(x)$ là một đường thẳng hoặc đường cong trơn trong $[a,b]$.
+
+\blue{Giải thuật \textbf{lặp} (với điểm ban đầu $x_0 \in [a,b]$):
+\itemi{
+\item Từ điểm có hoành độ $x_{k-1}$ trên đồ thị của đường cong $f(x)$, ta kẻ tiếp tuyến với đường cong.
+\item Đường tiếp tuyến giao với trục hoành tại một điểm, thì lấy hoành độ của điểm đó làm $x_k$.
+}
+}
+
+\newpage\titls{Phương pháp Newton}
+
+Phương trình của tiếp tuyến là:
+\begin{align*}
+ y - f(x_{k-1}) = f'(x_{k-1})(x - x_{k-1})
+\end{align*}
+Điểm giao của đường này với trục hoành là khi $y=0$, tức là:
+\blue{
+\begin{align}\label{eq_lapNewton}
+ \mathbf{x_k = x_{k-1} - \frac{f(x_{k-1})}{f'(x_{k-1})}}, ~ k=1,2,3,...
+\end{align}
+}
+
+Định lý về sự hội tụ của phép lặp này:
+\begin{Thm}
+ Giả sử hàm $f(x)$ có đạo hàm đến cấp hai liên tục và các đạo hàm $f'(x)$ và $f''(x)$ không đổi dấu trên đoạn $[a,b]$. Khi đó nếu chọn $x_0$ thỏa điều kiện Fourier: $f(x_0) f''(x_0)>0$, thì dãy lặp $\{x_n\}_{n=1}^\infty$ xác định theo công thức \eqref{eq_lapNewton} sẽ hội tụ về nghiệm của bài toán \eqref{eq_baitoan}.
+\end{Thm}
+
+\newpage\titls{Phương pháp Newton}
+
+Lưu ý: 
+\itemi{
+\item Hệ số góc của tiếp tuyến là giá trị của đạo hàm tại điểm ta vẽ ($f'(x_{k-1})$). Khi hệ số góc bằng 0 tức là đường tiếp tuyến song song với trục hoành (sẽ không tồn tại điểm giao), giải thuật thường được điều chỉnh bằng cách bỏ đi điểm $c$ có $f'(c)=0$ và dùng lại một trong hai nửa đoạn $[a,c]$ hoặc $[c,b]$.
+\item Điều kiện Fourier chỉ là điều kiện đủ, không phải là điều kiện cần. Nghĩa là giải thuật cũng có thể hội tụ mà không thỏa điều kiện Fourier.
+\item Đánh giá sai số của phương pháp Newton theo công thức sai số tổng quát \eqref{eq_saisotongquat}.
+}
+
+% \sagetexunpause
+\newpage\titls{Phương pháp Newton}
+
+% \begin{sagesilent}
+%  f = e^(x/5) - 5
+% \end{sagesilent}
+% 
+% Minh họa: \green{tiếp tuyến} của \blue{$f(x)=\sage{f}$} với \green{$x_0=10$}
+% % Tọa độ của điểm giao:
+% % Tiếp tuyến: y - f(x_{k-1}) = f'(x_{k-1})(x - x_{k-1})
+% % Giao với trục hoành: y=0 <=> x=[f'(x_{k-1})*x_{k-1}-f(x_{k-1})]/f'(x_{k-1})
+% % (vẽ tiếp tuyến trong đoạn [c,b] để khỏi dài quá làm mất cân đối đồ thị
+% \begin{sagesilent}
+%  a=2.5
+%  b=11
+%  c=7
+%  x0=10
+%  fx0=f(x=x0)
+%  f_diff=diff(f,x,1)
+%  f_diff_x0=f_diff(x=x0)
+%  tieptuyen_x0=f_diff_x0*(x - x0)+fx0
+%  plot_hamf=plot(f,a,b, color='blue')
+%  plot_tieptuyen=plot(tieptuyen_x0,c,b, color='green')
+%  x_k_tieptuyen=(f_diff_x0*x0-fx0)/f_diff_x0
+%  c_xk_tieptuyen=circle((x_k_tieptuyen,0),0.04, color='red')
+%  c_fxk_tieptuyen=circle((x_k_tieptuyen,f(x=x_k_tieptuyen)),0.04, color='blue')
+%  c_fx0=circle((x0,fx0),0.04, color='green')
+%  plotall_tieptuyen=plot_hamf+plot_tieptuyen+c_xk_tieptuyen+c_fxk_tieptuyen+c_fx0
+%  plotall_tieptuyen.set_aspect_ratio(1)
+% \end{sagesilent}
+
+\begin{sagesilent}
+ f = e^(x) - 5
+\end{sagesilent}
+
+Minh họa (\red{tính $ln(5)$}): \green{tiếp tuyến} của \blue{$f(x)=\sage{f}$} với \green{$x_0=2$}
+% Tọa độ của điểm giao:
+% Tiếp tuyến: y - f(x_{k-1}) = f'(x_{k-1})(x - x_{k-1})
+% Giao với trục hoành: y=0 <=> x=[f'(x_{k-1})*x_{k-1}-f(x_{k-1})]/f'(x_{k-1})
+% (vẽ tiếp tuyến trong đoạn [c,b] để khỏi dài quá làm mất cân đối đồ thị)
+\begin{sagesilent}
+ a=1.5
+ b=2.2
+ c=1.6
+ x0=2
+ fx0=f(x=x0)
+ f_diff=diff(f,x,1)
+ f_diff_x0=f_diff(x=x0)
+ tieptuyen_x0=f_diff_x0*(x - x0)+fx0
+ plot_hamf=plot(f,a,b, color='blue')
+ plot_tieptuyen=plot(tieptuyen_x0,c,b, color='green')
+ x_k_tieptuyen=(f_diff_x0*x0-fx0)/f_diff_x0
+ c_xk_tieptuyen=circle((x_k_tieptuyen,0),0.04, color='red')
+ c_fxk_tieptuyen=circle((x_k_tieptuyen,f(x=x_k_tieptuyen)),0.04, color='blue')
+ c_fx0=circle((x0,fx0),0.04, color='green')
+ plotall_tieptuyen=plot_hamf+plot_tieptuyen+c_xk_tieptuyen+c_fxk_tieptuyen+c_fx0
+ plotall_tieptuyen.set_aspect_ratio(0.2)
+\end{sagesilent}
+% Thuộc tính set_aspect_ratio(r) giúp thay đổi tỉ lệ đồ thị manually: r=tỉ lệ trục tung/trục hoành
+
+\red{$x_1=\sage{round(x_k_tieptuyen,4)}$}, \blue{$f(x_1)=\sage{round(f(x=x_k_tieptuyen),4)}$}, nếu tiếp tục kẻ tiếp tuyến với hàm $f$ ở điểm này thì ta có điểm rất gần với nghiệm (phương pháp Newton thường hội tụ nhanh trong lân cận của nghiệm)
+
+\cen{\sageplot[scale=.35]{plotall_tieptuyen}}
+
+\newpage\titls{Phương pháp Newton}
+
+%decipoint=5: sẽ có báo lỗi do có sai số kiểu 1x10^(-5), bỏ qua lỗi này được
+\begin{sagesilent}
+ n=5
+ decipoint=4
+ xk=range(n+1)
+ xk[0]=2
+ fxk=range(n)
+ f_diff_xk=range(n)
+ deltaxk=range(n)
+ p_f=find_root(f,0,3) # find nearly exact root
+ for i in range(n):
+    fxk[i]=f(x=xk[i])
+    f_diff_xk[i]=f_diff(x=xk[i])
+    xk[i+1]=(f_diff_xk[i]*xk[i]-fxk[i])/f_diff_xk[i]
+    deltaxk[i]=abs(xk[i]-p_f)
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ fxk_disp=[round(fxk[i],decipoint) for i in range(n)]
+ deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ p_f_disp=round(p_f,decipoint)
+ tableN1=r"\begin{tabular}{c|ccc}"
+ tableN1+=r"$k$ & $x_k$ & $f(x_k)$ & $|x_k-p|$ \\ \hline"
+ for i in range(n):
+   tableN1+=latex(i) + r"&" + latex(xk_disp[i]) + r"&" + latex(fxk_disp[i]) + r"&" + latex(deltaxk_disp[i]) + r"\\"
+ tableN1+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: tìm nghiệm của $f(x)=\sage{f}$ bằng phương pháp Newton với $x_0=2$ (nghiệm chính xác: $p=\sage{p_f_disp}$)
+
+\cen{\sagestr{tableN1}}
+
+\newpage\titls{Phương pháp Newton}
+
+% Hàm f2 khai báo ở ví dụ về phương pháp lặp đơn
+
+\begin{sagesilent}
+ n=9
+ decipoint=5
+ xk=range(n+1)
+ xk[0]=0
+ f2xk=range(n)
+ f2_diff=diff(f2,x,1)
+ f2_diff_xk=range(n)
+ deltaxk=range(n)
+ p_f2=find_root(f2,0,3) # find nearly exact root
+ for i in range(n):
+    f2xk[i]=f2(x=xk[i])
+    f2_diff_xk[i]=f2_diff(x=xk[i])
+    xk[i+1]=(f2_diff_xk[i]*xk[i]-f2xk[i])/f2_diff_xk[i]
+    deltaxk[i]=abs(xk[i]-p_f2)
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ f2xk_disp=[round(f2xk[i],decipoint) for i in range(n)]
+ deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ p_f2_disp=round(p_f2,decipoint)
+ tableN2=r"\begin{tabular}{c|ccc}"
+ tableN2+=r"$k$ & $x_k$ & $f(x_k)$ & $|x_k-p|$ \\ \hline"
+ for i in range(n):
+   tableN2+=latex(i) + r"&" + latex(xk_disp[i]) + r"&" + latex(f2xk_disp[i]) + r"&" + latex(deltaxk_disp[i]) + r"\\"
+ tableN2+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: tìm nghiệm của $f(x)=\sage{f2(x)}$ bằng phương pháp Newton với $x_0=0$ (nghiệm chính xác: $p=\sage{p_f2_disp}$)
+
+\cen{\sageplot[scale=.4]{plot(f2,-1,4)}}
+
+\newpage\titls{Phương pháp Newton}
+
+Ví dụ: tìm nghiệm của $f(x)=\sage{f2(x)}$ bằng phương pháp Newton với $x_0=0$ (nghiệm chính xác: $p=\sage{p_f2_disp}$)
+
+\cen{\sagestr{tableN2}}
+
+\newpage\titls{Bài tập}
+
+\itemi{
+\item Viết rõ công thức để thực hiện các giải thuật đối với các ví dụ trong bài này (phục vụ tính toán bằng tay)
+\item Dùng máy tính cầm tay để thực hiện các giải thuật nhằm giải các ví dụ, so sánh với kết quả trong bài học
+\item Làm các bài tập 1-7 trong chương 2, sách "Giáo trình phương pháp tính" (Lê Thái Thanh)
+\item Lập trình các thuật toán (thành các file hàm .m trên Octave) theo các phương pháp: 
+  \itemi{
+  \item PP chia đôi, PP dây cung
+  \item PP lặp đơn, PP Newton
+  }
+}
+
+\label{lastpage}
+\end{document}

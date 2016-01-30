@@ -1,0 +1,465 @@
+\documentclass[11pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,.5in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox}
+\usepackage{verbatim}
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{array}
+
+
+\title{Đề thi cuối kỳ - Phương pháp tính kỹ thuật (đề 2)}
+\author{Name: \hspace*{2in}}
+\author{GV: Doãn Minh Đăng}
+\date{Học kỳ 1 - 2014-2015}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Đáp án}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large Trường ĐH Kỹ thuật - Công nghệ Cần Thơ \par}%
+      \vskip 1em%
+    {\large \Date \par}%      
+    \vskip 1em%
+    {\large  \Author ~(Điện thoại: 0947613939) \par}%
+  \end{center}\par
+
+\section*{Yêu cầu}
+\begin{itemize}
+ \item Thời gian làm bài: 90 phút, hình thức thi: tự luận.
+ \item Sinh viên không được dùng tài liệu, ngoại trừ một tờ giấy A4 viết tay bằng mực xanh, có ghi tên và mã số sinh viên của người dự thi.
+ \item Được dùng máy tính cầm tay, không được dùng điện thoại di động.
+\end{itemize}
+
+% \sagetexpause
+
+\section{Bài 1 (2 điểm)}
+\begin{sagesilent}
+ f4(x)=(x+2/3)^2*(x-4/3)
+ x0=1
+ f4diff=diff(f4,x)
+ g1(x)=(x^3-f4(x))^(1/3)
+ g1=g1.expand()
+ g1diff=diff(g1,x)
+ g1diff2=diff(g1,x,2)
+\end{sagesilent}
+
+Cho hàm số $f(x)=\sage{f4(x).expand()}$ có các khoảng cách ly nghiệm là $[-1,0]$ và $[1,2]$.
+\begin{enumerate}[a).]
+ \item (1 điểm) Dùng phương pháp Newton-Raphson để tìm nghiệm của phương trình $f(x)=0$ với điểm bắt đầu là $x_0=\sage{x0}$, lặp tối thiểu 4 bước. Trình bày kết quả theo bảng gồm các giá trị $x_k$, $f(x_k)$.
+ \item (1 điểm) Khi áp dụng phương pháp lặp đơn để tìm nghiệm của bài toán này trong đoạn $[1,2]$, kết quả có hội tụ về cùng điểm hội tụ của phương pháp Newton-Raphson hay không? Giải thích.
+% \item (0.5 điểm) Hãy dùng công thức ước lượng sai số tổng quát để đánh giá sai số đối với nghiệm xấp xỉ thu được ở câu a).
+\end{enumerate}
+
+% \Solution
+% 
+% %decipoint=5: sẽ có báo lỗi do có sai số kiểu 1x10^(-5), bỏ qua lỗi này được
+% \begin{sagesilent}
+% # Tạo hàm số
+% def ppnewton_raphson(f,x0=0,n=10):
+%  # Tính nghiệm của hàm số f(x) theo phương pháp Newton-Raphson với điểm bắt đầu là x0, tối đa n bước
+%  # Yêu cầu: f là hàm số một biến f(x), x0 một số thực thuộc tập xác định của f(x), n là một số nguyên dương (>0)
+%  # Nếu không có các tham số x0, n: lấy mặc định là x0=0, và n=10
+%  # Kết quả được hiển thị làm tròn đến 5 chữ số thập phân
+%  decipoint=4
+%  f_diff=diff(f,x,1)
+%  xk=range(n+1)
+%  xk[0]=x0
+%  fxk=range(n)
+%  f_diff_xk=range(n)
+%  #deltaxk=range(n)
+%  #p_f=find_root(f,0,3) # find nearly exact root
+%  for i in range(n):
+%     fxk[i]=f(x=xk[i])
+%     f_diff_xk[i]=f_diff(x=xk[i])
+%     xk[i+1]=(f_diff_xk[i]*xk[i]-fxk[i])/f_diff_xk[i]
+%     #deltaxk[i]=abs(xk[i]-p_f)
+%  xk_disp=[round(xk[i],decipoint) for i in range(n)]
+%  fxk_disp=[round(fxk[i],decipoint) for i in range(n)]
+%  #deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+%  #p_f_disp=round(p_f,decipoint)
+%  # return fxk[n-1]
+%  return fxk_disp,xk_disp
+%  
+% # Áp dụng để giải các bài toán
+% n=5
+% fxk_disp4,xk_disp4=ppnewton_raphson(f4,x0,n)
+% #fxk_disp2,xk_disp2=ppnewton_raphson(f2,1,2)
+% #fxk_disp3,xk_disp3=ppnewton_raphson(f3,1,2)
+% 
+% # Trình bày các bảng kết quả
+% tableN1=r"\begin{tabular}{c|cc}"
+% tableN1+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+% for i in range(n):
+%   tableN1+=latex(i) + r"&" + latex(xk_disp4[i]) + r"&" + latex(fxk_disp4[i]) + r"\\"
+% tableN1+=r"\end{tabular}"
+% \end{sagesilent}
+% 
+% \begin{enumerate}[a).]
+% \item Kết quả:
+% 
+% \begin{center} \sagestr{tableN1} \end{center}
+% 
+% Ghi chú: nghiệm chính xác là $x_1=-\frac{2}{3}$ (nghiệm kép) và $x_2=\frac{4}{3}$.
+% 
+% \item Ta biến đổi phương trình $f(x)=0$ thành $x=g(x)$ với hàm số $g(x)=\sage{g1(x).expand()}$. Đạo hàm của hàm số là $g'(x)=\sage{g1diff(x).expand()}$. Ta sẽ chứng minh đoạn $[1,2]$ là tập giới nội của hàm số $g(x)$ và hàm số là ánh xạ co trên đoạn này.
+% 
+% \begin{itemize}
+%  \item Ta thấy $g'(x) > 0, \forall x \geq 1$, vậy hàm số $g(x)$ là hàm số đơn điệu tăng trên đoạn $[1,2]$, suy ra với $\forall x \in [1,2]$ ta có: $g(x) \geq g(1) = \sage{round(g1(x=1),3)} > 1$, và $ g(x) \leq g(2) = \sage{round(g1(x=2),3)} < 2$, vậy $g(x) \in [1,2], \forall x \in [1,2]$, tức là đoạn $[1,2]$ là tập giới nội của hàm số $g(x)$.
+%  
+%  \item Ta lại thấy $g''(x)=\sage{g1diff2(x)}<0, \forall x \geq 1$, vậy hàm số $g'(x)$ là hàm số đơn điệu giảm trên đoạn $[1,2]$, và $0 \leq g'(x) \leq g'(1) = \sage{round(g1diff(x=1),3)}, \forall x \in [1,2]$. Suy ra  $|g'(x)| \leq \sage{round(g1diff(x=1),3)} < 1, \forall x \in [1,2]$, vậy hàm số $g(x)$ là ánh xạ co trên đoạn này với hệ số co là $q = \sage{round(g1diff(x=1),3)}$.
+% \end{itemize} 
+% Do đó áp dụng phương pháp lặp đơn trên đoạn $[1,2]$ đối với hàm $g(x)$ sẽ hội tụ.
+% 
+% Hơn nữa, do đoạn $[1,2]$ là một khoảng cách ly nghiệm của phương trình $f(x)=0$, nên chỉ có duy nhất một nghiệm trong đoạn này. Khi áp dụng phương pháp Newton-Raphson, kết quả hội tụ về nghiệm thuộc đoạn $[1,2]$, do vậy đó cũng là nghiệm mà phương pháp lặp đơn hội tụ về, khi giải phương trình $x=g(x)$ với một điểm bắt đầu $x_0 \in [1,2]$. 
+% \end{enumerate}
+
+\section{Bài 2 (2 điểm)}
+
+\begin{sagesilent}
+latex.matrix_delimiters("[", "]")
+A=matrix([[3,1,-1],[1,4,1],[1,-2,-5]])
+A_rdf=matrix(RDF,[[3,1,-1],[1,4,1],[1,-2,-5]]) # lệnh tính condition() chỉ có với ma trận real-double-float, nhưng dùng ma trận RDF thì lại không giải được phương trình bằng kiểu lệnh A\B hoặc A.solve_right(B). Sẽ fix sau.
+B=matrix([[5],[4],[4]])
+x,y,z=var('x y z')
+X=matrix([[x],[y],[z]])
+Xp=A\B
+#Xp=[1,2,3]
+kA1=A_rdf.condition(1)
+kAinf=A_rdf.condition(infinity)
+\end{sagesilent}
+
+Cho hệ phương trình tuyến tính:
+% \begin{equation}
+%   \sage{A*X} = \sage{B}
+% \end{equation}
+$
+\left\lbrace \begin{array}{rrrrrrr}
+    3x &+& y &-& z &=& 5\\
+    x &+& 4y &+& z &=& 4\\
+    x &-& 2y &-& 5z &=& 4
+             \end{array}
+  \right.
+$  
+% \begin{equation}
+%  \begin{array}{ccc}
+%   A = \sage{A}, & B = \sage{B}, & X = \begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}
+%  \end{array}
+% \end{equation}
+%Trả lời các câu hỏi sau:
+\begin{enumerate}[a).]
+ \item (1 điểm) Lập ma trận $A$ từ hệ phương trình trên, rồi tìm các số điều kiện của ma trận $A$ theo chuẩn 1 và chuẩn $\infty$.
+ \item (0.5 điểm) Tìm nghiệm của hệ bằng phương pháp khử Gauss hoặc Gauss-Jordan.
+ \item (0.5 điểm) Khi dùng phương pháp lặp Gauss-Seidel để giải hệ phương trình trên, phép lặp có hội tụ về nghiệm của hệ hay không? Giải thích.
+\end{enumerate}
+
+% \Solution
+% 
+% \begin{enumerate}[a)]
+%  \item Sinh viên cần thể hiện được các phép tính, đưa ra ma trận nghịch đảo và ghi đúng công thức tính các số điều kiện. Kết quả: $k_1(A)=\sage{kA1}; k_{\infty}(A)=\sage{kAinf}$.
+%  \item Sinh viên cần thể hiện được các bước biến đổi để giải. Nghiệm là: $X=\sage{X}=\sage{Xp}$.
+%  \item Khi dùng phương pháp lặp Gauss-Seidel để giải hệ phương trình trên, phép lặp sẽ hội tụ về nghiệm của hệ. Lý do là vì ma trận $A$ ma trận đường chéo trội nghiêm ngặt (sinh viên cần giải thích điều kiện đường chéo trội nghiêm ngặt được thỏa mãn như thế nào).
+% \end{enumerate}
+
+
+\section{Bài 3 (2 điểm)}
+
+% % Octave code:
+% t=0:0.1:1
+% v0=5
+% vt=v0-g*t;
+% xt=zeros(size(t));
+% for i=2:length(t) xt(i)=xt(i-1)+(vt(i)+vt(i-1))*0.1/2+0.1*rand; end % tính vị trí theo công thức hình thang, có cộng thêm sai số ngẫu nhiên bằng hàm rand
+% Tính đạo hàm bằng công thức sai phân tiến
+
+\begin{sagesilent}
+n=10
+tkx=[0.1*i for i in range(n+1)]
+tk=[0.1*i for i in range(n)]
+v0=-2
+g=9.81
+vt=[v0+g*tkx[i] for i in range(n+1)]
+xt=[0 for i in range(n+1)]
+for i in range(n):
+ xt[i+1]=xt[i]+(vt[i+1]+vt[i])*0.1/2
+# Dữ liệu có sai số ngẫu nhiên
+xk=[0,-0.2,-0.189,-0.1929,0.0039,0.1863,0.6058,0.9755,1.5224,2.1542,2.8829]
+#xk=[0 for i in range(n+1)]
+#for i in range(n):
+# xk[i+1]=xt[i]+(vt[i+1]+vt[i])*0.1/2+(0.1*random()-0.05)
+# Dữ liệu chính xác
+#xk=xt
+tk2=[tk[i]^2 for i in range(n)]
+vk=[(xk[i+1]-xk[i])/0.1 for i in range(n)]
+zk=zip(tk,vk)
+plotdata=list_plot(zk, size=50, legend_label='($t_k$,$v_k$)')
+matA=matrix([[n,sum(tk)],[sum(tk),sum(tk2)]])
+tkvk=[tk[i]*vk[i] for i in range(n)]
+matB=vector([sum(vk),sum(tkvk)])
+a,b=N(matA\matB)
+t=var('t')
+hamxapxi=round(a,3)+round(b,3)*t
+plotline=plot(hamxapxi,0,tkx[n], color='red', legend_label='($y=A+Bt$)')
+
+tableVD5=r"\begin{tabular}{l|c|l}"
+tableVD5+=r"$k$ & $t_k$ & $v_k$ \\ \hline"
+for i in range(n):
+  tableVD5+=latex(i) + r"&" + latex(round(tk[i],1)) + r"&" + latex(round(vk[i],3)) + r"\\"
+tableVD5+=r"\end{tabular}"
+
+tableTXk=r"\begin{tabular}{l|c|l}"
+tableTXk+=r"$k$ & $t_k$ & $x_k$ \\ \hline"
+for i in range(n+1):
+  tableTXk+=latex(i) + r"&" + latex(round(tkx[i],1)) + r"&" + latex(round(xk[i],4)) + r"\\"
+tableTXk+=r"\end{tabular}"
+
+\end{sagesilent}
+
+Một vật rắn chuyển động trong không gian theo một phương $x$, người ta đo vị trí của vật tại các điểm thời gian $t_k$, thu được các giá trị đo $x_k$ như trong bảng dưới đây.
+
+ \begin{tabular}{m{10cm} r}
+    \begin{enumerate}[a).]
+     \item (1 điểm) Dùng công thức sai phân tiến để tính giá trị của vận tốc chuyển động của vật, ký hiệu là $v_k$, tại các thời điểm $t_k$, với $k=0,\cdots,\sage{n-1}$.
+     \item (0.5 điểm) Sử dụng phương pháp bình phương bé nhất, tìm hàm số có dạng $v(t)=A+Bt$, với các giá trị $v_k$ tính được ở câu trên.
+     \item (0.5 điểm) Tính xấp xỉ vận tốc của vật tại thời điểm $t=0.85$.
+    \end{enumerate}
+  & 
+   \sagestr{tableTXk}
+ \end{tabular}
+
+% \Solution
+% 
+% \begin{enumerate}[a).]
+%   \item Vận tốc chuyển động của vật là đạo hàm của vị trí ($v(t)=x'(t)$), ta tính được các giá trị $v_k$ tại các thời điểm $t_k$ như trong bảng dưới đây.
+% 
+%   \begin{center} \sagestr{tableVD5} \end{center} 
+% 
+%      \item Phương trình hàm số xấp xỉ được là: $v(t)=\sage{hamxapxi(t)}$. %\sage{round(a,3)}+\sage{round(b,3)}x$).
+%      
+%      Ghi chú: Đồ thị của phương trình này và các điểm dữ liệu $(t_k, v_k)$ được trình bày dưới đây (sinh viên không cần phải vẽ đồ thị):
+%      
+%      \begin{center} \sageplot[scale=0.4]{plotdata+plotline} \end{center} 
+%      
+%      \item Vận tốc của vật tại thời điểm $t=0.85$ là: $v(0.85) \approx \sage{hamxapxi(t=0.85)}$. Sinh viên có thể tính được giá trị vận tốc này bằng cách thay $t=0.85$ vào hàm số xấp xỉ $f(t)$ vừa tìm được, hoặc dùng một phương pháp nội suy để tính.
+% \end{enumerate}
+
+
+\section{Bài 4 (2 điểm)}
+
+Xét bài toán phương trình vi phân với điều kiện ban đầu sau:
+$
+ \left\lbrace \begin{array}{l}
+               y' = \frac{y}{t}-1, 1 \leq t \leq 2 \\
+               y(1)=1
+              \end{array}
+\right.
+$
+%Nghiệm chính xác là: $y=t(1-ln(t))$.
+
+\begin{enumerate}[a).]
+\item (0.5 điểm) Hãy dùng công thức Euler để tính giá trị xấp xỉ của hàm $y(t)$ tại các thời điểm $t=1.1, t=1.2$ và $t=1.3$ với bước $h=0.1$.
+\item (1 điểm) Sử dụng đa thức nội suy Lagrange (hoặc Newton) và dựa trên các giá trị tính được ở câu a), hãy tính xấp xỉ giá trị của hàm số $y$ tại $t=1.15$.
+\item (0.5 điểm) Hãy dùng công thức Runge-Kutta bậc 4 để tính giá trị xấp xỉ của hàm $y(t)$ tại $t=1.2$ với bước $h=0.1$.
+\end{enumerate}
+
+% \Solution
+% \begin{enumerate}[a).]
+% \item Áp dụng công thức Euler:
+% \begin{align*}
+%  y(t_k) \approx y_k = y_{k-1} + h f(t_{k-1},y_{k-1})
+% \end{align*}
+% với $h=0.1$ và $k=1, 2, 3$, ta được:
+% \begin{sagesilent}
+%  n=4
+%  h=1/10
+%  tk=[1+h*i for i in range(n)]
+%  yk=range(n)
+%  yk[0]=1
+%  # Tính bằng công thức lặp
+%  #for i in range(n-1):
+%  #  yk[i+1]=yk[i]+h*(yk[i]+tk[i])
+%  # Tính bằng Euler solver có sẵn trong Sage
+%  t,y=var('t y')
+%  from sage.calculus.desolvers import eulers_method
+%  zk1=eulers_method(y/t-1,tk[0],yk[0],h,tk[0]+h*(n-1),algorithm="none")
+%  #yk=[[j] for i,j in zk1] # Báo lỗi phía sau: lệnh latex(round(yk[i],3)) không thực hiện được (TypeError: a float is required), vì dấu [] tạo ra matrix chứ không phải list
+%  yk=[j for i,j in zk1]
+%  # Tạo table trong Latex
+%  tableEuler=r"\begin{tabular}{l|c|l}"
+%  tableEuler+=r"$k$ & $t_k$ & $y_k$ \\ \hline"
+%  for i in range(n):
+%    tableEuler+=latex(i) + r"&" + latex(round(tk[i],1)) + r"&" + latex(round(yk[i],4)) + r"\\"
+%  tableEuler+=r"\end{tabular}"
+% \end{sagesilent}
+% 
+%   \begin{center} \sagestr{tableEuler} \end{center} 
+% 
+% \item
+% \begin{sagesilent}
+%  #tiếp tính toán ở đoạn trên
+%  tp=1.15
+%  zk1=zip(tk,yk) # zip: couple pairs of values of the two arrays
+%  #R = PolynomialRing(RR, "t") #RR: real numerical number
+%  R = PolynomialRing(QQ, "t") #QQ: symbolic number
+%  Lagrange_1 = R.lagrange_polynomial(zk1)
+%  bangNewton = R.divided_difference(zk1, full_table=True)
+%  plotL1=plot(Lagrange_1, (tk[0]), (tk[n-1]), color='red', legend_label='$\mathcal{L}_3(x)$')
+%  plotfxk1=list_plot(zk1, size=50, legend_label='($t_k$,$y_k$)')
+% 
+%  # Now change the full table from Sagemath to my form of representing table
+%  bang1=list(list(i for i in range(j,n)) for j in range(n))
+%  for j in range(n):            
+%     for i in range(j,n):
+%         bang1[j][i-j]=bangNewton[i][j]
+%  # Now create the Latex table
+%  tableNewton=r'\begin{tabular}{l|c|' # first column: k, second column: x_k
+%  for i in range(n): tableNewton+='c' # n columns for finit difference order 0 to n
+%  tableNewton+=r'}'
+%  tableNewton+=r'$k$ & $t_k$ & $y_k$'
+%  # for i in range(n-1): tableNewton+=r' & f[$t_0,\cdots,t_'+str(i+1)+r'$]'
+%  for i in range(1,n): tableNewton+=r' & $f_\Delta^'+str(i)+r'$'
+%  tableNewton+=r'\\ \hline'
+%  for i in range(n):
+%    tableNewton+=latex(i) + r' & ' + latex(round(tk[i],2))
+%    for j in range(i+1):
+%      tableNewton+= r' & ' + latex(round(bangNewton[i][j],2))
+%    for j in range(i+1,n): tableNewton+= r' & '
+%    tableNewton+= r'\\'
+%  tableNewton+=r'\end{tabular}'
+% \end{sagesilent}
+% 
+% Nếu dùng đa thức nội suy Lagrange, thì hàm số thu được là: $y(t)=\sage{Lagrange_1.expand()}$
+% 
+% Nếu dùng đa thức nội suy Newton, thì kết quả là bảng tỉ sai phân (phương pháp Newton tiến): (ký hiệu $f_\Delta^k=f[t_0,\cdots,t_k]$)
+% 
+%   \begin{center} \sagestr{tableNewton} \end{center} 
+% 
+% Giá trị xấp xỉ của $y(t)$ tại $t=1.15$ là: $\sage{round(Lagrange_1(1.15),3)}$.
+% 
+% \item Áp dụng công thức Runge-Kutta bậc 4 (RK4):
+% 
+% \begin{align*}
+% \left\lbrace \begin{array}{l}
+%                y(t_k) \approx y_k = y_{k-1} + \frac{1}{6}(K_1 + 2K_2 + 2K_3 + K_4) \\
+%                K_1 = h f(t_{k-1},y_{k-1}) \\
+%                K_2 = h f\left(t_{k-1}+\frac{h}{2},y_{k-1} + \frac{K_1}{2}\right) \\
+%                K_3 = h f\left(t_{k-1}+\frac{h}{2},y_{k-1} + \frac{K_2}{2}\right) \\
+%                K_4 = h f\left(t_{k-1}+h,y_{k-1} + K_3\right)
+%                \end{array}
+% \right.
+% \end{align*}
+% với $k=1, 2$ và bước $h=0.1$, ta thu được kết quả:
+% \begin{sagesilent}
+%  from sage.calculus.desolvers import desolve_rk4
+%  t,y=var('t y')
+%  zk_rk4=desolve_rk4(y/t-1,y,ics=[1,1],end_points=1.21,step=0.1) # nếu dùng đúng 1.2 thì nó lại bỏ số đó ra
+%  tk_rk4=[i for i,j in zk_rk4]
+%  yk_rk4=[j for i,j in zk_rk4]
+%  # Tạo table trong Latex
+%  tableRK4=r"\begin{tabular}{l|c|l}"
+%  tableRK4+=r"$k$ & $t_k$ & $y_k$ \\ \hline"
+%  for i in range(3):
+%    tableRK4+=latex(i) + r"&" + latex(round(tk_rk4[i],1)) + r"&" + latex(round(yk_rk4[i],4)) + r"\\"
+%  tableRK4+=r"\end{tabular}"
+% \end{sagesilent}
+% 
+%   \begin{center} \sagestr{tableRK4} \end{center} 
+% 
+%   Ghi chú: nghiệm chính xác của phương trình vi phân này là: $y=t(1-ln(t))$.
+% 
+% \end{enumerate}
+
+\section{Bài 5 (2 điểm)}
+
+Cho một hàm được viết để chạy trong chương trình Octave, lưu trong file tên \textit{taodayso.m}, có nội dung như sau:
+\begin{verbatim}
+ function [y]=taodayso(a,b,n)
+ if nargin<3
+   n=10;
+ end
+ y=zeros(1,n);
+ y(1)=a;
+ for k=2:n
+   y(k)=y(k-1)*b;
+ end
+\end{verbatim}
+
+\begin{enumerate}[a).]
+ \item (0.5 điểm) Cho biết kết quả xuất ra khi chạy lệnh sau đây trong Octave: 
+  \texttt{y1=taodayso(1,0.5,4)}
+ \item (0.5 điểm) Cho biết kết quả xuất ra khi chạy lệnh sau đây trong Octave:
+  \texttt{y2=taodayso(1,2)}
+ \item (0.5 điểm) Cho biết kết quả xuất ra khi chạy lệnh sau đây trong Octave:
+  \texttt{y3=taodayso(1,1,1)}
+ \item (0.5 điểm) Sau khi thực hiện lệnh \texttt{y=taodayso(2,2,N)} với $N$ là một số tự nhiên bất kỳ đã có sẵn trong bộ nhớ, ta muốn tạo ra một vector sai phân của \texttt{y}, tức là một vector \texttt{yd} có $N-1$ phần tử, mà mỗi phần tử của nó được tính như sau: \texttt{yd(k)=y(k+1)-y(k)} với $k$ là chỉ số cho biết thứ tự của phần tử trong vector. Hãy viết các câu lệnh trong Octave để tạo ra được vector \texttt{yd} theo mô tả trên.
+\end{enumerate}
+
+% \Solution 
+% 
+% \begin{enumerate}[a).]
+%  \item 
+%   \begin{verbatim}
+%   y1 = [1   0.5   0.25   0.125]
+%   \end{verbatim}
+%  \item 
+%   \begin{verbatim}
+%   y2 = [1      2      4      8     16     32     64    128    256    512]
+%   \end{verbatim}
+%  \item 
+%   \begin{verbatim}
+%   y3 = 1
+%   \end{verbatim}
+%  \item Sinh viên có thể dùng phép lặp để tạo ra vector \texttt{yd}:
+%   \begin{verbatim}
+%   N=length(y);
+%   yd=zeros(1,N-1);
+%   for k=1:N-1
+%      yd(k)=y(k+1)-y(k);
+%   end
+%   \end{verbatim}
+%   hoặc có thể dùng lệnh tạo ra vector sai phân trực tiếp (có sẵn trong Octave):
+%   \begin{verbatim}
+%   yd=diff(y)
+%   \end{verbatim}
+% \end{enumerate}
+
+\end{document}

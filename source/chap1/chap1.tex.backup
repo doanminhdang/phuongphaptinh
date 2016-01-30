@@ -1,0 +1,174 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 1: Sai số}
+
+\enu{
+\item Số gần đúng, sai số tuyệt đối và sai số tương đối
+\item Sự quy tròn và sai số quy tròn
+\item Sai số của hàm số
+}
+
+\newpage\titls{Số gần đúng và sai số}
+ \spa{1}
+
+\textbf{Số gần đúng}: khi tìm giá trị của một đại lượng $A$, ta không có giá trị chính xác, mà chỉ có giá trị gần đúng $a$. Số $a$ là \textbf{số gần đúng} và được dùng thay thế cho $A$ trong tính toán. Ta còn nói $a$ \textbf{xấp xỉ} $A$, ký hiệu: $a \approx A$.
+\spa{1}
+\textbf{Sai số}: 
+\itemi{
+\item Sai số tuyệt đối: $\Delta = |A - a|$. Do $A$ không có giá trị chính xác, nên $\Delta$ không tính chính xác được $\rightarrow$ ta dùng giới hạn trên của sai số: $\mathbf{\Delta_a \geq |A - a|}$.\\
+Giá trị $\Delta_a$ gọi là \textbf{sai số tuyệt đối giới hạn} của số gần đúng $a$ so với $A$. Ta có:\\
+$a - \Delta_a \leq A \leq a + \Delta_a$, thường viết là: $\mathbf{A = a \pm \Delta_a}$.
+}
+
+\newpage\titls{Số gần đúng và sai số}
+
+\itemi{
+\item Sai số tương đối: $\delta = \frac{|A - a|}{|A|}, (A \neq 0)$. Do không biết chính xác $A$, ta dùng giá trị ước lượng: $\mathbf{\delta_a = \frac{\Delta_a}{|a|}, (a \neq 0)}$.
+}
+
+Lưu ý: 
+\itemi{
+\item $\Delta_a$ có thứ nguyên (cm, kg...), còn $\delta_a$ không có thứ nguyên và thường viết dưới dạng phần trăm (\%).
+\item Sai số tương đối không được định nghĩa với $A = 0$, cũng không tính được với $a = 0$.
+\item Trong tiếng Anh, chữ \textit{accuracy} thường dùng để chỉ sai số tuyệt đối, còn chữ \textit{precision} thường chỉ sai số tương đối (\textit{tuy nhiên computer precision} có nghĩa khác).
+}
+
+\newpage\titls{Sự quy tròn và sai số quy tròn}
+
+Cách biểu diễn của một số thập phân:
+\begin{equation}\label{eq_bdthapphan}
+a=\alpha_{m}\alpha_{m-1}\cdots\alpha_{0}.\alpha_{-1}\alpha_{-2}\cdots\alpha_{-n} = \sum_{k=-n}^m \alpha_{k}10^k     
+\end{equation}
+với $m, n$ là số tự nhiên, $\alpha_k \in \{0, 1, \cdots, 9\}$
+
+Ví dụ, số $a=12.345$ viết dưới dạng:
+\begin{equation} \label{eq_lamtron}
+a = 1 \times 10^1 + 2 \times 10^0 + 3 \times 10^{-1} + 4 \times 10^{-2} + 5 \times 10^{-3} 
+\end{equation}
+
+\textbf{Quy tròn}: bỏ một số chữ số ở bên phải dấu thập phân, thì số mới được viết gọn hơn, đồng thời cũng làm tăng sai số như trong công thức \eqref{eq_lamtron}. Quy ước làm tròn: chữ số $\leq 4$ thì bỏ, chữ số $\geq 5$ khi bỏ thì cộng một vào chữ số cuối cùng còn lại (ở phía trái).
+
+\newpage\titls{Sự quy tròn và sai số quy tròn}
+
+\textbf{Sai số quy tròn}: khi quy tròn bằng cách bỏ đi các số bên phải của $a$ cho đến $\alpha_{-n}$ trong \eqref{eq_bdthapphan} để thu được số $\tilde{a}$, đặt \textbf{sai số quy tròn} là $\theta_{\tilde{a}}=|a - \tilde{a}|$, sai số mới so với số chính xác $A$ là:
+\begin{equation}
+ |A - \tilde{a}| \leq |A - a| + |a - \tilde{a}| \leq \Delta_a + \theta_{\tilde{a}} \triangleq \Delta_{\tilde{a}} 
+\end{equation}
+
+Ý nghĩa: khi quy tròn, sai số tăng lên.
+
+Cho $A = a \pm \Delta_a$, khi viết $a$ dưới dạng thập phân \eqref{eq_bdthapphan}, chữ số $\alpha_k$ gọi là \textbf{đáng tin} nếu:
+\begin{equation}
+\Delta_a \leq 0.5 \times 10^{k} 
+\end{equation}
+
+Khi viết $a$ dưới dạng thập phân \eqref{eq_bdthapphan}, \textbf{chữ số có nghĩa} % tiếng Anh: significant figure
+là các chữ số bắt đầu từ một chữ số khác không tính từ trái sang.
+
+\newpage\titls{Cách viết số gần đúng}
+
+Có hai cách viết số gần đúng
+
+\enu{
+\item Viết giá trị đi kèm với sai số tuyệt đối: $\mathbf{a \pm \Delta_a}$
+\item Viết theo quy ước \textbf{mọi chữ số có nghĩa đều đáng tin}. Nghĩa là sai số tuyệt đối không quá một nửa của giá trị ứng với chữ số cuối cùng bên phải.\\
+Ví dụ, khi viết $a=12.34$ thì sai số là $\Delta_a \leq 0.005$.
+}
+
+\newpage\titls{Sai số của hàm số}
+
+Xét hàm số:
+\begin{equation}
+ y = f(x_1, x_2, \cdots, x_n)
+\end{equation}
+
+Gọi $y, x_i, i = 1, 2, \cdots, n$ là giá trị chính xác, $\bar{x}_i, i = 1, 2, \cdots, n$ là các giá trị gần đúng, và giá trị gần đúng của hàm số là $\bar{y} = f(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n)$.
+
+Ta muốn biết: \textbf{làm sao tính được sai số của $y$ khi biết các sai số của $x_i$}?
+ 
+Giả sử $f$ là hàm khả vi liên tục đối với mọi biến số của nó. Xét khai triển Taylor hàm $f(\mathbf{x})$, với $\mathbf{x}$ là vector cột chứa $x_1 \cdots x_n$, ở lân cận của điểm $\bar{\xb}=(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n)^T$: % hàm nhiều biến
+\begin{align*}
+ f(\xb) &=& f(\bar{\xb}) + [(\xb - \bar{\xb})^T \grad f(\bar{\xb})] + \frac{1}{2!}[(\xb - \bar{\xb})^T H(\bar{\xb}) (\xb - \bar{\xb})] + \cdots
+\end{align*}
+với $\grad f$ là vector đạo hàm riêng, $H$ là ma trận đạo hàm riêng cấp hai
+
+\newpage\titls{Sai số của hàm số}
+
+Bỏ đi các giá trị nhỏ phía sau:
+\begin{align}
+f(\xb) &\approx f(\bar{\xb}) + [(\xb - \bar{\xb})^T \grad f(\bar{\xb})] \\
+%\Leftrightarrow f(x_1, x_2, \cdots, x_n) &\approx& f(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n) + \frac{\partial f}{\partial x_1}(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n)\cdot (\xb - \bar{\xb}) + \cdots + \frac{\partial f}{\partial x_n}(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n) \cdot (\xb - \bar{\xb}) \label{eq_taylorapproxf}
+f(\xb) &\approx f(\bar{\xb}) + \frac{\partial f}{\partial x_1}(\bar{\xb}) \cdot (x_1 - \bar{x_1}) + \cdots + \frac{\partial f}{\partial x_n}(\bar{\xb}) \cdot (x_n - \bar{x_n}) \label{eq_taylorapproxf}
+\end{align}
+
+Dùng \eqref{eq_taylorapproxf} để ước lượng sai số của $\bar{y}$ đối với $y$:
+\begin{equation}\label{eq_saisoy}
+%|y - \bar{y}| = |f(x_1, x_2, \cdots, x_n) - f(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n)|
+ |y - \bar{y}| = |f(\xb) - f(\bar{\xb})| \approx \sum_{i=1}^n \left| \frac{\partial f}{\partial x_i}(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n) \right| |x_i - \bar{x}_i|
+\end{equation}
+
+Do $\Delta_{x_i}=|x_i - \bar{x}_i|$ khá nhỏ, ta có thể xem:
+\begin{equation}\label{eq_saisotuyetdoiy}
+ \Delta_y = \sum_{i=1}^n \left| \frac{\partial f}{\partial x_i}(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n) \right| \Delta_{x_i}
+\end{equation}
+
+\newpage\titls{Sai số của hàm số}
+
+Sai số tương đối của $\bar{y}$:
+
+\begin{equation}\label{eq_saisotuongdoiy}
+ \delta_y = \frac{\Delta_y}{|y|} = \sum_{i=1}^n \left| \frac{\partial (\ln f)}{\partial x_i}(\bar{x}_1, \bar{x}_2, \cdots, \bar{x}_n) \right| \Delta_{x_i}
+\end{equation}
+
+(nhớ lại công thức đạo hàm: $ (\ln f)' = \frac{1}{x}$)
+
+\newpage\titls{Bài tập}
+
+\enu{
+\item Cho $a=1.85$ với sai số tương đối $\delta_a=0.12\%$. Tính sai số tuyệt đối của $a$.
+\item Làm tròn đến hai chữ số lẻ sau dấu thập phân của các số: $a=14.0909, b=13.2950, c\leq 12.8713, d\geq 1.2354$.
+
+}
+
+\label{lastpage}
+\end{document}

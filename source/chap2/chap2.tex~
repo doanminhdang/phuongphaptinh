@@ -1,0 +1,53 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 2: Giải gần đúng phương trình}
+
+\enu{
+\item Phát biểu bài toán
+\item Khoảng cách ly nghiệm
+\item Phương pháp chia đôi
+\item Phương pháp tiếp tuyến
+}
+
+\label{lastpage}
+\end{document}

@@ -1,0 +1,134 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{color,graphicx,fancybox,pause}
+\usepackage[utf8]{vntex} % type Vietnamese
+\usepackage{sagetex} % run Sagemath within Latex
+
+\input{slides}
+
+%% end of slides.tex
+\renewcommand{\pause}{}
+
+\newcommand{\Hi}{H_\infty}
+\begin{document}
+\sdd
+
+% \newpage\titlogo{Tiêu đề có tiếng Việt có dấu}
+
+\newpage\titlogo{Tieu de khong dau}
+
+
+ffs gg gf
+Using Sage\TeX, one can use Sage to compute things and put them into
+your \LaTeX{}  document. For example, there are
+$\sage{number_of_partitions(1234)} $ integer partitions of $1234$.
+You don't need to compute the number yourself, or even cut and paste
+it from somewhere.
+
+Một hai ba bốn năm
+% ffs gg gf
+% Using Sage\TeX, one can use Sage to compute things and put them into
+% your \LaTeX{}  document. For example, there are
+% $\sage{number_of_partitions(1234)} $ integer partitions of $1234$.
+% You don't need to compute the number yourself, or even cut and paste
+% it from somewhere.
+% 
+% Here's some \sage{'Hello'} Sage code:
+% 
+% \begin{sageblock} 
+%     f(x) = exp(x) * sin(2*x) *cos(x)
+% \end{sageblock} 
+
+
+\newpage\titlogo{Phương pháp tính kỹ thuật}
+
+ffs gg gf
+Using Sage\TeX, one can use Sage to compute things and put them into
+your \LaTeX{}  document. For example, there are
+$\sage{number_of_partitions(1234)} $ integer partitions of $1234$.
+You don't need to compute the number yourself, or even cut and paste
+it from somewhere.
+
+Here's some \sage{'Hello'} Sage code:
+
+\begin{sageblock} 
+    f(x) = exp(x) * sin(2*x) *cos(x)
+\end{sageblock} 
+
+The second derivative of $f$ is
+
+\begin{align}
+  \frac{ \mathrm{ d} ^{ 2} } { \mathrm{ d} x^{ 2} }  \sage{f(x)}  =
+  \sage{diff(f, x, 2)(x)} .
+\end{align}
+
+% Here's a plot of $f$ from $-1$ to $1$:
+% 
+% \sageplot{ plot(f, -1, 1)}
+
+% \spa{1} sdfsdfsdf 
+
+\newpage\titf{Controller Synthesis có dấu}
+
+\itemi{
+\item Single-Objective Synthesis
+
+State-feedback, Output-feedback
+
+A general framework with illustrations
+
+\item Mixed-objective Synthesis
+
+Trouble and Remedy, Mixed synthesis
+
+LMI-regions
+
+\item Auxiliary Results
+
+Dualization, Elimination
+}
+
+\newpage\titls{Controller Synthesis}
+
+Have seen several analysis specifications (stability/performance).
+
+\spa{1} All formulated in terms of matrix inequalities.
+
+\spa{1} Try to achieve them by designing a controller.
+
+\spa{1}
+% \cen{\includegraphics[width=6cm]{../logo_ctut.pdf}}
+
+\spa{1}
+% \ypa{Generalized plant framework: System interconnection and weights.}
+
+
+\newpage\titls{Example: Mixed Sensitivity Design}
+
+\spa{0}
+In a tracking problem, a major emphasis is laid on shaping the sensitivity (reference to tracking error), under
+the constraint that the control effort (reference to control) does not peak too much and rolls off at high frequencies. In view of this rough specs,
+consider
+
+% \cen{\includegraphics[scale=.6]{../logo_ctut.pdf}}
+
+which indicates the relevant performance signals.
+
+\newpage\titls{Example: Mixed Sensitivity Design}
+
+\spa{-1}
+
+Choose a low-pass scalar weighting function $w_1$ and a constant or high-pass weight $w_2$. Define $W_1=w_1I$ and
+$W_2=w_2I$ and consider the following interconnection with weighted performance channels:
+
+% \cen{\includegraphics[scale=.6]{../logo_ctut.pdf}}
+
+Then design a controller $K$ which stabilizes this interconnection and minimizes
+the $\Hi$-norm of $d\to e=\text{col}(e_1,e_2)$.
+
+% \newpage\titls{Example: Mixed Sensitivity Design}
+
+
+
+\label{lastpage}
+\end{document}

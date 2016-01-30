@@ -1,0 +1,479 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,1in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{sagetex}
+
+
+\title{Bài tập cho môn Phương pháp tính kỹ thuật}
+\author{Name: \hspace*{2in}}
+\author{Doãn Minh Đăng}
+\date{}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Solution}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large  \Author \par}%
+      \vskip 1em%
+    {\large \Date \par}% 
+  \end{center}\par
+
+\section*{Giới thiệu}
+\begin{itemize}
+ \item Bài tập này có thể được dùng để sinh viên làm thêm ở nhà, tự làm hoặc làm việc theo nhóm.
+ \item Các bài tập này có lời giải để sinh viên tham khảo.
+ \item Một số bài tập là lập trình thuật toán, sinh viên có thể lập trình trên phần mềm Octave hoặc MATLAB.
+\end{itemize}
+
+\section{Bài tập chương 1}
+
+\subsection{Bài 1}
+Cho $a=1.85$ với sai số tương đối $\delta_a=0.12\%$. Tính $\Delta_a$.
+
+\subsection{Bài 2}
+Làm tròn đến hai chữ số lẻ sau dấu thập phân của các số: $a=14.0909, b=13.2950, c\leq 12.8713, d\geq 1.2354$.
+
+\subsection{Bài 3}
+Xác định số các chữ số đáng tin trong cách viết thập phân các số sau: $a=1.3452, \Delta_a=0.0023$; $b=154.2341, \Delta_b=6.23 \times 10^{-3}$; $c=3.14159, \delta_c=0.25\%$.
+
+\subsection{Bài 4}
+Cho hình cầu có bán kính $R=5 \pm 0.0003(m)$ và số $\pi = 3.14 \pm 0.002$. Tính sai số tuyệt đối của thể tích hình cầu ($V=\frac{4}{3}\pi R^3$).
+
+\subsection{Bài 5}
+Cho $a=1.5 \pm 0.02, b=0.123 \pm 0.001, c=3.7 \pm 0.05$. Hãy tính sai số tuyệt đối và tương đối của: $A=a+b+c; B= 2a - 5b + 3c; C = a^2+b^2 c$.
+
+\subsection{Bài 6}
+Cho hàm $f(x) = 3x^5 - 2x^2 + 7$ và $x=1.234 \pm 0.00015$. Tính $\Delta_f$.
+
+\section{Bài tập chương 2}
+
+\subsection{Bài 1}
+Dùng phương pháp chia đôi để tìm nghiệm của phương trình $x^2+3x-8^{-14}=0$ chính xác đến ba chữ số thập phân (chữ số thứ ba sau dấu thập phân là chữ số đáng tin). Mỗi nhóm sinh viên tự chọn khoảng ban đầu $[a,b]$ để triển khai phương pháp chia đôi. Trình bày kết quả theo bảng gồm các giá trị $a_k, b_k, x_k$, dấu của $f(x_k)$.
+
+\subsection{Bài 2}
+Giả sử phương pháp chia đôi được dùng để tìm nghiệm của hàm số $f(x) = 1/x$, với khoảng ban đầu là $[-2,1]$. Trả lời các câu hỏi sau:
+\begin{enumerate}[a)]
+ \item Giải thuật này có hội tụ về một giá trị thực hay không?
+ \item Giá trị đó có phải là nghiệm của phương trình hay không?
+ \item Giải thích tại sao giải thuật này không giúp tìm được nghiệm của hàm số này?
+ \item Phương pháp nào khác giúp tìm được nghiệm của hàm số này? Giải thích.
+\end{enumerate}
+
+\subsection{Bài 3}
+Dùng định lý 6 trong bài giảng chương 2 để kiểm tra xem phương pháp lặp đơn dùng để tìm điểm bất động của hàm số $g(x)$ có hội tụ về nghiệm $p$ được cho hay không:
+
+\begin{enumerate}[a)]
+\item $g(x) = (2x-1)/x^2, p = 1$
+
+\item $g(x) = \cos x + \pi + 1, p = \pi$
+
+\item $g(x) = e^{2x} - 1, p = 0$
+
+\end{enumerate}
+
+\subsection{Bài 4}
+Đối với mỗi phương trình sau đây, tìm hàm số $g(x)$ để chuyển bài toán về dạng tìm điểm bất động của hàm số $g(x)$. Xác định khoảng $[a,b]$ sao cho thỏa mãn điều kiện hội tụ của phương pháp lặp đơn tìm điểm bất động của hàm số $g(x)$ trên khoảng $[a,b]$. Giải thích điều kiện hội tụ được thỏa mãn như thế nào.
+
+\begin{enumerate}[a)]
+\item $x^3-x-1=0$
+
+\item $x=2tanh(x)$ ($tanh$ là hàm tan hyperbolic)
+
+\end{enumerate}
+
+%\textbf{Gợi ý}: xem định lý 5 và định lý 6 trong bài giảng chương 2.
+
+\subsection{Bài 5}
+Thực hiện hai bước đầu tiên theo phương pháp dây cung để giải các phương trình sau với khoảng ban đầu là $[1,2]$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$ (chuyển đổi bài toán để tạo $f(x_k)$ theo quy ước giải bài toán $f(x_k)=0$).
+
+\begin{enumerate}[a)]
+\item $x^3 = 2x + 2$
+
+\item $e^x + x = 7$
+
+\item $e^x + \sin x = 4$
+
+\end{enumerate}
+
+\subsection{Bài 6}
+Thực hiện hai bước đầu tiên theo phương pháp Newton-Raphson để giải các phương trình sau với điểm bắt đầu là $x_0 = 1$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$.
+
+\begin{enumerate}[a)]
+
+\item $x^3 + x^2 - 1 = 0$
+
+\item $x^2 + 1/(x+1) - 3x = 0$
+
+\item $5x - 10 = 0$
+
+\end{enumerate}
+
+\subsection{Bài 7}
+Viết một chương trình Octave để vẽ đồ thị của một hàm số $f(x)$, chương trình nhận bốn tham số bao gồm: khai báo hàm số $f$ từ một function $f=hamso(x)$, điểm bắt đầu vẽ đồ thị $a$ và điểm kết thúc vẽ đồ thị $b$, khoảng cách giữa hai điểm rời rạc hóa trên đồ thị $step$ (nếu người dùng không nhập giá trị $step$ thì cho nó giá trị mặc định là $0.1$).
+
+Sinh viên nộp chương trình dạng file function \emph{vedothi.m}, và hình chụp màn hình khi chạy file này để vẽ được đồ thị một hàm số.
+
+\textbf{Gợi ý}: file chứa hàm số cần được lưu riêng, ví dụ \emph{hamso.m}, và chương trình chính gọi function đó bằng cách nhập tham số kiểu \emph{@hamso}.
+
+\subsection{Bài 8}
+Viết một chương trình Octave để thực hiện một trong các giải thuật: phương pháp lặp đơn, phương pháp dây cung, hoặc phương pháp Newton-Raphson, nhằm tìm nghiệm của hàm số $f(x)$ trong một khoảng bắt đầu $[a,b]$ cho trước hoặc xuất phát từ một điểm $x_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+Sinh viên nộp chương trình dạng file function \emph{giaiphuongtrinh.m}, và hình chụp màn hình khi chạy file này nếu chương trình xuất ra được các bước giải trên đồ thị.
+
+\textbf{Gợi ý}: dùng lệnh \emph{hold on} để cho phép vẽ chồng nhiều đồ thị trên một đối tượng figure, trong lệnh plot dùng thêm thông số \emph{color} để chọn màu sắc, ví dụ $plot(x,fx,color='r')$.
+
+\subsection{Bài 9}
+Cho hàm số $f(x) = 54x^6 + 45x^5 - 102x^4 - 69x^3 + 35x^2 + 16x -4$. Vẽ đồ thị hàm số này trên đoạn $[-2,2]$, và dùng một trong các phương pháp số đã học trong chương 2 để tìm toàn bộ 5 nghiệm của phương trình này trên đoạn đó với độ chính xác đến ba chữ số thập phân. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$ hội tụ về từng nghiệm.
+
+\textbf{Gợi ý}: sinh viên nên phân tích kỹ đồ thị để chọn 5 điểm/khoảng bắt đầu sao cho giải thuật hội tụ về 5 nghiệm khác nhau.
+
+\subsection{Bài 10}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần giải một phương trình để tính được một giá trị mong muốn. Trình bày ví dụ đó, xây dựng phương trình cần giải, và nêu ý nghĩa của việc giải phương trình đó.
+
+\section{Bài tập chương 3}
+
+\subsection{Bài 1}
+\begin{sagesilent}
+latex.matrix_delimiters("[", "]");
+A=matrix([[10,-1,2,0],[-1,11,-1,3],[2,-1,10,-1],[0,3,-1,8]]);
+B=matrix([[6],[25],[-11],[15]]);
+\end{sagesilent}
+
+Cho một ma trận $A$ trong Octave, ví dụ:
+\begin{equation}
+ A=\sage{A}
+\end{equation}
+
+Hãy ghi các lệnh Octave dùng để tạo ra các ma trận khác như sau:
+\begin{enumerate}
+ \item $Ak$ là ma trận mà mỗi phần tử đều bằng hằng số $k$ nhân với phần tử cùng vị trí bên ma trận $A$ ($k$ là số cho trước)
+ \item $Ac2$ là vector chứa các phần tử trên cột số 2 của $A$
+ \item $Ar3$ là vector chứa các phần tử trên hàng số 3 của $A$
+ \item $a1$ là ma trận con chứa các phần tử ở hàng 2 đến 4, cột 1 đến 3 của $A$
+ \item $AT$ là ma trận chuyển vị của $A$
+ \item $Ainv$ là ma trận nghịch đảo của $A$ (nếu $A$ là ma trận vuông, khả đảo)
+ \item $A2c$ là ma trận lớn, mà nếu cắt đôi ma trận này theo chiều dài thì mỗi nửa đều là ma trận $A$
+ \item $A2r$ là ma trận lớn, mà nếu cắt đôi ma trận này theo chiều rộng thì mỗi nửa đều là ma trận $A$
+ \item $Aghep$ là một vector hàng, được thành lập bằng cách nối liên tiếp các hàng của ma trận $A$ (câu này có thể dùng một nhóm lệnh)
+ \item Cho vector $B=\sage{B}$, lệnh nào giúp giải nhanh hệ phương trình $AX=B$?
+\end{enumerate}
+
+\subsection{Bài 2}
+
+%Ta xem lại bài toán \textbf{Lập hệ phương trình tuyến tính} trong đề thi giữa kỳ:
+
+%http://www.chess.com/news/millionaire-chess-concludes-with-6-figure-check-to-wesley-so-7896
+%http://www.millionairechess.com/2014/mco2014-prizes-open.pdf
+%http://millionairechess.com/standings/prizes-mc-open.pdf
+Giải thi đấu cờ vua \emph{Millionaire Chess} vừa diễn ra tại Las Vegas tháng 10/2014, kết quả các kỳ thủ được giải thưởng như sau:
+
+\begin{center}
+\begin{tabular}{l|c|r}
+Tên kỳ thủ & Hạng & Giá trị giải thưởng \\
+\hline
+SO Wesley & 1 & $x_1$ \\%100k
+ROBSON Ray & 2 & $x_2$ \\%50k
+YU Yangyi & 3 & $x_3$ \\%25k
+ZHOU Jianchao & 4 & $x_4$ \\%14k
+6 kỳ thủ & 5-10 & $x_5$ \\%3334->3000
+12 kỳ thủ & 11-22 & $x_6$ \\%1834->2000
+LE Quang Liem & 23 & $x_7$ \\%1000
+\end{tabular}
+\end{center}
+
+Lập hệ phương trình tuyến tính để tính giải thưởng các kỳ thủ trên nhận được, với các thông tin sau đây:
+\begin{enumerate}
+ \item Tổng cộng các kỳ thủ trong bảng trên nhận được 232 ngàn USD. %sum_x=232 % Dùng phương trình này thì ma trận không còn có dạng tam giác
+ \item SO Wesley được giải thưởng gấp đôi người hạng nhì, gấp bốn người hạng ba. %x1=2x2; x2=2x3
+ \item YU Yangyi có giải thưởng bằng tổng của ZHOU Jianchao, hai kỳ thủ nhóm 5-10, 2 kỳ thủ nhóm 11-22, và LE Quang Liem cộng lại. %x3=x4+2*x5+2*x6+x7
+ \item Kỳ thủ hạng 4 nhận giải thưởng bằng một phần ba tổng giải thưởng của cả hai nhóm tiếp sau gộp lại. %x4=(6*x5+12*x6)/3
+ \item Mỗi kỳ thủ trong nhóm 5-10 nhận được gấp rưỡi tiền thưởng so với mỗi kỳ thủ ở nhóm 11-22. %x5=1.5*x6
+ \item LE Quang Liem nhận được một nửa giải thưởng so với người xếp ngay trên mình. %x6=2x7
+% \item Mỗi kỳ thủ cần đóng phí tham dự là 1000 USD, kết quả là LE Quang Liem hòa vốn. %x7=1000 
+\end{enumerate}
+
+Hãy tìm cách để biến đổi ma trận vừa thành lập được thành một \textbf{ma trận tam giác trên}, với ít thao tác nhất.
+
+\subsection{Bài 3}
+
+Sử dụng phương pháp khử Gauss hoặc Gauss-Jordan để giải các hệ phương trình sau:
+
+\begin{enumerate}[a)]
+\item 
+\begin{eqnarray*}
+    2x -2y -z &=& -2\\
+    4x + y -2z &=& 1\\
+    -2x + y -z &=& -3
+  \end{eqnarray*}
+
+
+\item 
+  \begin{eqnarray*}
+    x + 2y -z &=& 2\\
+       3y + z &=& 4\\
+    2x -y + z &=& 2
+  \end{eqnarray*}
+
+
+\item 
+  \begin{eqnarray*}
+    2x + y -4z &=& -7\\
+    x -y +z &=& -2\\
+    -x + 3y - 2z &=& 6
+  \end{eqnarray*}
+
+\end{enumerate}
+
+
+\subsection{Bài 4}
+
+Sắp xếp lại các hệ phương trình sau để có dạng ma trận đường chéo trội nghiêm ngặt. Áp dụng phương pháp Jacobi tính 2 bước lặp đầu tiên, với vector ban đầu là $[0,\ldots,0]$.
+
+\begin{enumerate}[a)]
+
+\item
+
+  \begin{eqnarray*}
+    u - 8v -2w &=& 1\\
+    u + v + 5w &=& 4 \\
+    3u - v + w &=& -2
+  \end{eqnarray*}
+    
+\item  
+ \begin{eqnarray*}
+    u + 4v &=& 5\\
+    v + 2w &=& 2\\
+    4u + 3w&=& 0
+  \end{eqnarray*}
+  
+\end{enumerate}
+
+\subsection{Bài 5}
+
+Áp dụng phương pháp Gauss-Seidel để giải các hệ phương trình ở bài 4.
+
+\subsection{Bài 6}
+
+Tìm các số điều kiện của các ma trận sau:
+
+\begin{enumerate}[a)]
+
+\item $A = \begin{bmatrix}  1 & 2\\ 3 & 4 \end{bmatrix}$
+
+\item $A = \begin{bmatrix} 1 & 2.01 \\ 3 & 6\end{bmatrix}$
+
+\item $A = \begin{bmatrix} 6 & 3 \\ 4 & 2\end{bmatrix}$
+
+\end{enumerate}
+
+\subsection{Bài 7}
+Viết một chương trình Octave để thực hiện giải thuật khử Gauss, chương trình nhận hai tham số là ma trận vuông $A$ và vector cột $B$, xuất ra nghiệm là vector cột $X$.
+
+Sinh viên nộp chương trình dạng file function \emph{khugauss.m}, file này sẽ được kiểm tra bằng cách cho chạy một số ma trận mẫu có kích thước 3x3, 3x4, 4x3, 4x4, 5x5.
+
+\textbf{Lưu ý}: chương trình này cần kiểm tra các điều kiện để có thể trả lời là hệ phương trình có nghiệm hay không.
+
+\subsection{Bài 8}
+Viết một chương trình Octave để thực hiện phương pháp lặp Jacobi giải hệ phương trình tuyến tính $AX=B$ với $X_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+Sinh viên nộp chương trình dạng file function \emph{ppjacobi.m}, file này sẽ được kiểm tra bằng cách cho chạy một số ma trận mẫu có kích thước 3x3, 3x4, 4x3, 4x4, 5x5.
+
+\textbf{Lưu ý}: cần kiểm tra ma trận có ở dạng đường chéo trội nghiêm ngặt không.
+
+\subsection{Bài 9}
+Viết một chương trình Octave để thực hiện phương pháp lặp Gauss-Seidel giải hệ phương trình tuyến tính $AX=B$ với $X_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+Sinh viên nộp chương trình dạng file function \emph{ppgauss\_seidel.m}, file này sẽ được kiểm tra bằng cách cho chạy một số ma trận mẫu có kích thước 3x3, 3x4, 4x3, 4x4, 5x5.
+
+\textbf{Lưu ý}: cần kiểm tra ma trận có ở dạng đường chéo trội nghiêm ngặt không.
+
+\subsection{Bài 10}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần giải một hệ phương trình tuyến tính. Trình bày ví dụ đó, xây dựng hệ phương trình cần giải, và nêu ý nghĩa của việc giải hệ phương trình đó.
+
+\section{Bài tập chương 4}
+
+\subsection{Bài 1}
+
+% Tính tích phân xác định: % độ dài của cung của một hình ellipse
+% 
+% \begin{align*}
+%  \int_{-1}^1 \sqrt{1+\frac{4x^2}{1-x^2}}dx
+% \end{align*}
+
+Cho các giá trị rời rạc với $x = 0,1,2,3,4,5,6$, và các giá trị $y$ lần lượt là bằng các chữ số trong mã số sinh viên của bạn (lấy 7 chữ số trong MSSV làm các giá trị $y_0, y_1, \cdots, y_6$). Tính bảng tỉ sai phân theo công thức Newton tiến, và tính giá trị nội suy tại điểm $x=2.5$. Khi báo cáo, cần cho biết vector $y$ mà mình sử dụng để tính toán.
+
+\subsection{Bài 2}
+
+Tìm phương trình đường thẳng xấp xỉ hàm số $f(x)$ với các giá trị $(x,y)$ được cho trong bảng sau, và tính sai số bình phương:
+
+$(0,5)$, $(1,3)$, $(2,3)$, $(3,1)$
+
+%\begin{enumerate}[a)]
+%\item $(0,0)$, $(1,3)$, $(2,3)$, $(5,6)$
+
+%\item $(1,2)$,  $(3,2)$,  $(4,1)$,  $(6,3)$
+
+%\item $(0,5)$, $(1,3)$, $(2,3)$, $(3,1)$
+
+%\end{enumerate}
+
+Vẽ đồ thị gồm các điểm được cho và đường thẳng xấp xỉ được. Tính giá trị cực tiểu của phiếm hàm $g(f)=\sum_{k=1}^4 [f(x_k)-y_k]^2$.
+
+% \section{Bài 5 (6 điểm)}
+% 
+% \section{Exercise 5.1.4 (6 points)}
+% 
+% Use the three point formula to estimate $f'(\frac \pi 3)$ 
+% when $f(x) = \sin x$, and find the approximation error when $h = 0.1, 0.01$, and $0.001$. 
+
+% \section{Bài 4 (9 điểm)}
+
+% \section{Exercise 5.2.4 (6 points)}
+% 
+% Apply Simpson's rule with $m = 1$, 2, and 4 panels to the integrals below, and report the errors.
+% \\
+% 
+% \begin{enumerate}[a)]
+% \begin{minipage}{0.33\linewidth} 
+% \item
+% \[\int_0^1 x e^x dx\]
+% \end{minipage} 
+% \hspace{0.5cm} 
+% \begin{minipage}{0.33\linewidth} 
+% \item
+% \[\int_0^1 \frac {dx} {1 + x^2}\]
+% \end{minipage}
+% \begin{minipage}{0.33\linewidth} 
+% \item
+% \[\int_0^{\pi} x \cos x dx \]
+% \end{minipage}
+% \end{enumerate}
+
+\subsection{Bài 3}
+Viết một chương trình Octave để thực hiện giải thuật tính đa thức nội suy Lagrange, chương trình nhận ba tham số là các vector $x$ và $y$ cho biết bộ dữ liệu các điểm, và một số $xx$ là điểm mà chương trình cần tính giá trị nội suy (là kết quả đầu ra của chương trình)
+
+Sinh viên nộp chương trình dạng file function \emph{noisuy\_lagrange.m}, file này phải chứa chương trình sao cho có thể gọi nó với cú pháp sau:
+
+yx = noisuy\_lagrange(x,y,xx)
+
+\textbf{Lưu ý}: dựa trên các tham số đầu vào $x, y$, chương trình này cần tự xác định được bộ dữ liệu có bao nhiêu điểm.
+
+\subsection{Bài 4}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần xấp xỉ một hàm thực nghiệm (từ bảng giá trị $(x_k,y_k)$, tìm hàm số theo một dạng cho trước sao cho sai số bình phương là bé nhất). Trình bày ví dụ đó, cho biết dạng của hàm số cần xấp xỉ (đường thẳng / đường parabol / hàm tuần hoàn...), và nêu ý nghĩa của việc tính được hàm số xấp xỉ đó.
+
+
+\section{Bài tập chương 5}
+
+\subsection{Bài 1}
+
+Cho các giá trị rời rạc với $x = 0,1,2,3,4,5,6$, và các giá trị $y$ lần lượt là bằng các chữ số trong mã số sinh viên của bạn (lấy 7 chữ số trong MSSV làm các giá trị $y_0, y_1, \cdots, y_6$). Tính gần đúng đạo hàm của các nút phía trong theo công thức sai phân hướng tâm. Khi báo cáo, cần cho biết vector $y$ mà mình sử dụng để tính toán.
+
+\subsection{Bài 2}
+
+Cho các giá trị rời rạc với $x = 0,2,4,6,8,10,12$, và các giá trị $y$ lần lượt là bằng các chữ số trong mã số sinh viên của bạn (lấy 7 chữ số trong MSSV làm các giá trị $y_0, y_1, \cdots, y_6$). Xem các giá trị này là kết quả của hàm số $y=f(x)$, tính gần đúng tích phân sau theo công thức hình thang:
+
+\begin{align*}
+ I = \int_0^{12} f(x) dx
+\end{align*}
+
+Khi báo cáo, cần cho biết vector $y$ mà mình sử dụng để tính toán.
+
+\subsection{Bài 3(*)}
+
+Tính gần đúng tích phân xác định dưới đây với sai số không vượt quá 0.00001 so với giá trị chính xác, sử dụng bất kỳ phương pháp nào bạn được học. Nêu các bước tính toán và lý giải về sai số.
+
+\[\int_{0}^1  \sin \left( \frac 1 x \right) dx \]
+
+\subsection{Bài 4}
+Viết một chương trình Octave để tính gần đúng đạo hàm với các giá trị đo đạc của hàm số được cho bằng hai vector $x$ và $y$, theo công thức sai phân tiến ($f'(x_k)=\frac{y_{k+1}-y_k}{x_{k+1}-x_k}$).
+
+Sinh viên nộp chương trình dạng file function \emph{saiphan\_tien.m}, file này phải chứa chương trình sao cho có thể gọi nó với cú pháp sau:
+
+dy = saiphan\_tien(x,y)
+
+Thử nghiệm chương trình trên với các vector $x, y$ của Bài 1.
+
+\subsection{Bài 5}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần tính gần đúng đạo hàm hoặc tích phân xác định (từ bảng giá trị $(x_k,y_k)$). Trình bày ví dụ đó, và nêu ý nghĩa của việc tính được các giá trị đạo hàm / tích phân đó.
+
+\section{Bài tập chương 6}
+
+\subsection{Bài 1}
+
+Xét bài toán phương trình vi phân với điều kiện ban đầu sau:
+$
+ \left\lbrace \begin{array}{l}
+               y' = y+t, t \geq 0 \\
+               y(0)=1
+              \end{array}
+\right.
+$
+%Nghiệm chính xác là: $2 e^t - t - 1$.
+
+\begin{enumerate}[a).]
+\item Hãy dùng công thức Euler để tính giá trị xấp xỉ của hàm $y(t)$ tại các thời điểm $t=0.2, t=0.4$ và $t=0.6$ với bước $h=0.2$.
+\item Hãy dùng công thức Euler cải tiến để tính giá trị xấp xỉ của hàm $y(t)$ tại các thời điểm $t=0.2, t=0.4$ và $t=0.6$ với bước $h=0.2$.
+\item Hãy dùng công thức Runge-Kutta bậc 4 để tính giá trị xấp xỉ của hàm $y(t)$ tại $t=0.4$ với bước $h=0.2$.
+\end{enumerate}
+
+\subsection{Bài 2}
+
+Xét bài toán phương trình vi phân với điều kiện ban đầu sau:
+$
+ \left\lbrace \begin{array}{l}
+               y' = \frac{y}{t}-1, 1 \leq t \leq 2 \\
+               y(1)=1
+              \end{array}
+\right.
+$
+%Nghiệm chính xác là: $y=t(1-ln(t))$.
+
+\begin{enumerate}[a).]
+\item Hãy dùng công thức Euler để tính giá trị xấp xỉ của hàm $y(t)$ tại các thời điểm $t=1.1, t=1.2$ và $t=1.3$ với bước $h=0.1$.
+\item Hãy dùng công thức Euler cải tiến để tính giá trị xấp xỉ của hàm $y(t)$ tại các thời điểm $t=1.1, t=1.2$ và $t=1.3$ với bước $h=0.1$.
+\item Hãy dùng công thức Runge-Kutta bậc 4 để tính giá trị xấp xỉ của hàm $y(t)$ tại $t=1.2$ với bước $h=0.1$.
+\end{enumerate}
+
+\end{document}

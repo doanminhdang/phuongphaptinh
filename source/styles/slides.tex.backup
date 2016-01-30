@@ -1,0 +1,420 @@
+% 2014.08.05: This preamble block is now moved to each individual main file, because \import is now used instead of \input
+% \documentclass[12pt]{article}
+% \usepackage{amsmath,amssymb}
+% \usepackage{color,graphicx,fancybox,pause}
+% \usepackage[utf8]{vntex} % type Vietnamese
+% \usepackage{sagetex} % run Sagemath within Latex
+
+\renewcommand{\familydefault}{cmss}
+\renewcommand{\floatpagefraction}{1}
+
+%------------------------------------------
+%  PDF
+%------------------------------------------
+\pdfoutput=1
+\pdfcompresslevel=0
+\pdfimageresolution=600
+\pdfpkresolution=600
+\pagestyle{empty}
+\pdfpageheight=11.1cm
+\pdfpagewidth=14.8cm
+%------------------------------------------
+% Text dimensions
+%------------------------------------------
+\textheight=12cm
+\textwidth=12.2cm
+\topmargin-3cm
+\oddsidemargin-1.2cm
+\parindent0cm
+\parskip0ex
+%\arraycolsep0.4ex
+%------------------------------------------
+%  Lengths
+%------------------------------------------
+\renewcommand{\baselinestretch}{1.2} % These two lines, although not called in .tex file, affect the output
+\renewcommand{\arraystretch}{1}
+\newcommand{\spa}[1]{\par\vspace*{#1ex}}
+\newcommand{\skipthis}[1]{}
+
+%Set standard display distances
+%\rennewcommand{\arraystretch}{1.1}
+
+\newcommand{\sdd}{
+\setlength{\jot}{1ex}
+\setlength{\abovedisplayskip}{1ex}
+\setlength{\abovedisplayshortskip}{1ex}
+\setlength{\belowdisplayskip}{1ex}
+\setlength{\belowdisplayshortskip}{1ex}}
+
+\newlength{\tew}\setlength{\tew}{\textwidth}
+\newlength{\pah}\setlength{\pah}{\pdfpageheight}
+\newlength{\storea}
+\newlength{\storeb}
+\newlength{\storec}
+\newlength{\stored}
+\newlength{\storee}
+\newlength{\storef}
+
+%Scale display distance box
+\newcommand{\sdb}[2]{
+\storea\abovedisplayskip
+\storeb\abovedisplayshortskip
+\storec\belowdisplayskip
+\stored\belowdisplayshortskip
+\setlength{\abovedisplayskip}{#1\abovedisplayskip}
+\setlength{\abovedisplayshortskip}{#1\abovedisplayshortskip}
+\setlength{\belowdisplayskip}{#1\belowdisplayskip}
+\setlength{\belowdisplayshortskip}{#1\belowdisplayshortskip}
+
+#2
+
+\setlength{\abovedisplayskip}{\storea}
+\setlength{\abovedisplayshortskip}{\storeb}
+\setlength{\belowdisplayskip}{\storec}
+\setlength{\belowdisplayshortskip}{\stored}
+}
+
+%Scale display distance box with different factors top and bottom
+\newcommand{\sdbe}[3]{
+\storea=\abovedisplayskip
+\storeb=\abovedisplayshortskip
+\storec=\belowdisplayskip
+\stored=\belowdisplayshortskip
+\setlength{\abovedisplayskip}{#1\abovedisplayskip}
+\setlength{\abovedisplayshortskip}{#1\abovedisplayshortskip}
+\setlength{\belowdisplayskip}{#2\belowdisplayskip}
+\setlength{\belowdisplayshortskip}{#2\belowdisplayshortskip}
+
+#3
+
+\setlength{\abovedisplayskip}{\storea}
+\setlength{\abovedisplayshortskip}{\storeb}
+\setlength{\belowdisplayskip}{\storec}
+\setlength{\belowdisplayshortskip}{\stored}
+}
+
+%Baselineskip box: scale baslineskip
+\newcommand{\blb}[2]{
+\storee=\baselineskip
+\setlength{\baselineskip}{#1\baselineskip}
+#2
+
+\setlength{\baselineskip}{\storee}
+}
+
+%------------------------------------------
+\newcommand{\enu}[1]{ \begin{enumerate} #1 \end{enumerate} }
+\newcommand{\ite}[1]{\vspace*{0ex}\begin{list}{$\bullet$}{\leftmargin2.5ex}#1\end{list} } % itemize list without indentation
+\newcommand{\itemi}[1]{\begin{itemize}#1\end{itemize} }
+
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\renewcommand{\labelenumii}{(\alph{enumii})}
+
+\newcommand{\aln}[1]{\noindent\begin{align*}#1\end{align*}}
+\newcommand{\mun}[1]{\noindent\begin{multline*}#1\end{multline*}}
+\newcommand{\eqn}[1]{\spa{-3}$$#1$$\spa{0}}
+\newcommand{\eqns}[1]{\spa{-2}$$#1$$\spa{0}}
+\newcommand{\gan}[1]{\begin{gather*}#1\end{gather*}}
+\newcommand{\ear}[1]{\begin{eqnarray}#1\end{eqnarray}}
+\newcommand{\ean}[1]{\begin{eqnarray*}#1\end{eqnarray*}}
+
+\newcommand{\arr}[2]{\begin{array}{#1}#2\end{array}}
+\newcommand{\tab}[2]{\begin{tabular}{#1}#2\end{tabular}}
+\newcommand{\mas}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+\newcommand{\mat}[2]{\left(\begin{array}{#1}#2\end{array}\right)}
+%\newcommand{\mat}[2]{\mas{#1}{#2}}
+\newcommand{\matl}[4]{\left#1\begin{array}{#2}#3\end{array}\right#4}
+\newcommand{\dmas}[2]{
+\mas{ccc}{#1&&0\\[-1.5ex]&\ddots&\\[-1.5ex]0&&#2}}
+\newcommand{\quo}[1]{\noindent\vspace*{-1ex}\begin{quote}#1\end{quote}}
+\newcommand{\cen}[1]{\begin{center}#1\end{center}}
+\newcommand{\epro}{ \mbox{\rule{2mm}{2mm}} }
+
+%-----------------------------------------------------------------------
+%title frontpage CTUT and STW
+\newcommand{\titfstw}[2]{%\vspace*{-1ex}
+{\hspace*{-0.0\tew}{\bf\Large\color{black}{{#1}}}\\[-1.6ex] }\\[0.70\pah]
+\fboxsep=0.3ex
+\hspace*{-0.12\tew}
+\colorbox{mag}{
+\begin{minipage}{1.25\tew}
+\tiny  \hfill \phantom{\arabic{page}/\pageref{lastpage}}\hspace*{1cm}
+\end{minipage}}
+\hspace*{-0.12\tew}
+\begin{minipage}{1.25\tew}
+\vspace*{-0.7ex}
+\mbox{}\hspace{0.11\tew}\footnotesize\phantom{\includegraphics[width=1.5cm]{logo_ctut}\hfill\raisebox{1ex}{Doãn Minh Đăng}}\hfill
+\includegraphics[width=1.5cm]{logo_ctut}\hspace*{0.8cm}
+\end{minipage}\\[-0.88\pah]
+
+{\large #2}}
+%-----------------------------------------------------------------------
+%title CTUT and STW
+\newcommand{\titstw}[1]{%\vspace*{-1ex}
+{\hspace*{-0.0\tew}{\bf\large\color{black}{{#1}}}\\[-1.6ex] }\\[0.70\pah]
+\fboxsep=0.3ex
+\hspace*{-0.12\tew}
+\colorbox{mag}{
+\begin{minipage}{1.25\tew}
+\tiny  \hfill \arabic{page}/\pageref{lastpage}\hspace*{1cm}
+\end{minipage}}
+\hspace*{-0.12\tew}
+\begin{minipage}{1.25\tew}
+\vspace*{-0.7ex}
+\mbox{}\hspace{0.02\tew}
+\raisebox{0.5ex}{\includegraphics[width=1.2cm]{logo_ctut}}
+\hfill\footnotesize\raisebox{1.2ex}{Doãn Minh Đăng}\hfill
+\raisebox{0.1ex}{\includegraphics[width=1.5cm]{logo_ctut}}\hspace*{0.8cm}
+\end{minipage}\\[-0.88\pah]}
+%-----------------------------------------------------------------------
+%title CTUT logo small
+\newcommand{\titls}[1]{%\vspace*{-1ex}
+{\hspace*{-0.0\tew}{\bf\large\color{black}{{#1}}}\\[-1.6ex] }\\[0.70\pah]
+\fboxsep=0.3ex
+\hspace*{-0.12\tew}
+\colorbox{mag}{
+\begin{minipage}{1.25\tew}
+\tiny  \hfill \arabic{page}/\pageref{lastpage}\hspace*{1cm}
+\end{minipage}}
+\hspace*{-0.12\tew}
+\begin{minipage}{1.25\tew}
+\vspace*{-0.7ex}
+% \mbox{}\hspace{0.11\tew}\footnotesize\raisebox{1ex}{Carsten Scherer\ \ }\includegraphics[width=0.6cm]{logo_ctut}
+% \hspace{26ex}\raisebox{1ex}{Siep Weiland\ \ }\includegraphics[width=0.6cm]{logo_ctut}\hspace*{0.8cm}
+\mbox{}\hspace{0.11\tew}\footnotesize\raisebox{1ex}{Doãn Minh Đăng}\hfill
+\includegraphics[width=0.5cm]{logo_ctut}\hspace*{0.8cm}
+\end{minipage}\\[-0.88\pah]
+{\large #2}}
+%-----------------------------------------------------------------------
+%title underlined left
+\newcommand{\titline}[1]{{
+\hspace*{-0.0\tew}\hfill{\bf \color[rgb]{0,0,0}{#1}}\\[-1.6ex]}
+\hspace*{-0.0\tew}\color[rgb]{0,0,0}{\rule{1.00\tew}{.12ex}}\\[-2ex]
+\marginpar{{\tiny \vspace*{9cm}\hspace*{0.55cm}\arabic{page}/\pageref{lastpage}}}}
+
+%-----------------------------------------------------------------------
+%just title
+\newcommand{\tit}[1]{
+{\hspace*{-0.0\tew}{\bf\large \color{black}{{#1}}}\\[-1.6ex] }\\[0.79\pah]
+\begin{minipage}{1.09\tew}
+\tiny  \hfill \arabic{page}/\pageref{lastpage}
+\end{minipage}\\[-0.9\pah]
+}
+
+%-----------------------------------------------------------------------
+%title CTUT logo large
+\newcommand{\titlogo}[2]{%\vspace*{-1ex}
+{\hspace*{-0.0\tew}{\bf\Large\color{black}{{#1}}}\\[-1.6ex] }\\[0.70\pah]
+\fboxsep=0.3ex
+\hspace*{-0.12\tew}
+\colorbox{mag}{
+\begin{minipage}{1.25\tew}
+\tiny  \hfill \arabic{page}/\pageref{lastpage}\hspace*{1cm}
+\end{minipage}}
+\hspace*{-0.12\tew}
+\begin{minipage}{1.25\tew}
+\vspace*{-0.7ex}
+\mbox{}\hspace{0.11\tew}\footnotesize\raisebox{1ex}{Doãn Minh Đăng}\hfill
+\includegraphics[width=0.6cm]{logo_ctut}\hspace*{0.8cm}
+\end{minipage}\\[-0.88\pah]
+
+{\large #2}}
+%-----------------------------------------------------------------------
+%title first page CTUT logo large
+\newcommand{\titf}[2]{%\vspace*{-1ex}
+{\hspace*{-0.0\tew}{\bf\Large\color{blue}{{#1}}}\\[-1.6ex] }\\[0.70\pah]
+\fboxsep=0.3ex
+\hspace*{-0.12\tew}
+\colorbox{mag}{
+\begin{minipage}{1.25\tew}
+\tiny  \hfill \phantom{\arabic{page}/\pageref{lastpage}}\hspace*{1cm}
+\end{minipage}}
+\hspace*{-0.12\tew}
+\begin{minipage}{1.25\tew}
+\vspace*{-0.7ex}
+\mbox{}\hspace{0.11\tew}\footnotesize\raisebox{1ex}{Doãn Minh Đăng}\hfill
+\includegraphics[width=0.5cm]{logo_ctut}\hspace*{0.8cm}
+\end{minipage}\\[-0.88\pah]
+
+{\large #2}}
+
+%-----------------------------------------------------------------------
+% Boxes and minipages
+%-----------------------------------------------------------------------
+\newcommand{\sbo}[1]{
+\shadowbox{
+\vspace{1ex}
+\begin{minipage}{0.97\tew}
+\vspace*{1.5ex}
+#1
+\par\vspace{1ex}
+\end{minipage}}}
+
+
+\newcommand{\cpa}[3]{
+{\fboxsep=1.2ex
+\colorbox{#1}{
+\begin{minipage}{#2}
+#3
+\end{minipage}}}
+}
+
+\newcommand{\cbo}[2]{
+\fboxsep=1ex
+\colorbox{#1}{
+#2}}
+
+\newcommand{\cbow}[3]{
+\fboxsep=#2ex
+\colorbox{#1}{
+#3}}
+
+\newcommand{\mini}[2]{ {\begin{minipage}[t]{#1}\sloppy #2 \end{minipage} } }
+
+\newcommand{\twomini}[6]{
+\setlength{\storee}{0.975\tew}
+\addtolength{\storee}{-#1}\addtolength{\storee}{-#3}
+\addtolength{\storee}{#2}
+\mini{#1}{#5}\hspace{\storee}\raisebox{#4}{\mini{#3}{#6}} }
+%\hspace{\storee\raisebox{#2}
+
+\newcommand{\onemini}[3]{\hspace{#1}\mini{#2}{#3}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Colors
+\newcommand{\red}[1]{{\color[rgb]{1,0,0}#1}}
+\newcommand{\green}[1]{{\color[rgb]{0,0.7,0}#1}}
+\newcommand{\blue}[1]{{\color[rgb]{0,0,1}#1}}
+\newcommand{\dblue}[1]{{\color[rgb]{0,0,.4}#1}}
+%\newcommand{\blue}[1]{{\color[rgb]{0,0.5,.8}#1}}
+\newcommand{\black}[1]{{\color[rgb]{0,0,0}#1}}
+%\newcommand{\yellow}[1]{{\color[rgb]{1,1,0}#1}}
+\newcommand{\yellow}[1]{{\color[rgb]{1,0.95,.5}#1}}
+%TUD RBG   0   174   239
+\definecolor{lmag}{rgb}{0,0.82,1}
+% \definecolor{mag}{rgb}{0,0.70,.88}
+\newcommand{\tmag}[1]{{\color[rgb]{0,0.60,.78}#1}}
+% \definecolor{mag}{rgb}{0,0.75,.93}
+% \definecolor{mag}{rgb}{0,0.6,.8} %original
+\definecolor{mag}{rgb}{0,0.7,.9}
+\definecolor{lblue}{rgb}{0.6,0.8,1}
+\definecolor{lgreen}{rgb}{0,0.92,0.7}
+\definecolor{lred}{rgb}{1,0.75,0.75}
+%\definecolor{lred}{rgb}{1,0.80,0.80}
+\definecolor{lblue}{rgb}{0.6,0.8,1}
+\definecolor{lgrey}{rgb}{0.85,0.85,0.85}
+
+\definecolor{lye}{rgb}{1,0.9,0.6}
+%\definecolor{lye}{rgb}{1,0.95,0.7}
+%\definecolor{lgr}{rgb}{1,0.9,0.6}
+
+\newcommand{\ypa}[1]{\cpa{lye}{0.95\tew}{#1}}
+\newcommand{\bpa}[1]{\cpa{lblue}{0.95\tew}{#1}}
+\newcommand{\rpa}[1]{\cpa{lred}{0.95\tew}{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\minimize}[2]{
+\begin{array}{ll}
+\mbox{minimize}    &\ \  #1 \\
+\mbox{subject\ to} &\ \  #2
+\end{array} }
+\newcommand{\opt}{\text{opt}}
+
+\newcommand{\X}{\red{X}}
+\newcommand{\pa}{\blue{\delta}}
+\newcommand{\ve}{\blue{v}}
+\newcommand{\pas}{\blue{\bm{\delta}}}
+\newcommand{\ves}{\bm{\blue{v}}}
+\newcommand{\pad}{\blue{\bm{\dot{\delta}}}}
+\newcommand{\pam}{\blue{\Delta(\pa)}}
+
+\newcommand{\yc}{\blue{y}}
+\newcommand{\cge}{\succcurlyeq}
+\newcommand{\cle}{\preccurlyeq}
+\newcommand{\cl}{\prec}
+\newcommand{\cg}{\succ}
+\newcommand{\rk}{\text{rank}}
+\newcommand{\col}{\text{col}}
+
+%\newcommand{\pa}{\blue{\delta}}
+%\newcommand{\setpa}{\blue{\bm{\delta}}}
+
+\renewcommand{\c}[1]{ {\cal #1} }
+\newcommand{\bm}[1]{\text{\boldmath$ #1 $} }
+\newcommand{\dis}{\displaystyle}
+\newcommand{\ab}[1]{\langle #1 \rangle}
+\newcommand{\ub}[2]{\underbrace{#1}_{#2}}
+
+\newcommand{\diag}{ \operatornamewithlimits{diag} }
+\newcommand{\re}{ \operatorname{Re} }
+\newcommand{\he}{ \operatorname{He} }
+\renewcommand{\t}[1]{ \tilde{\! #1\,} }
+\newcommand{\tc}[1]{ \tilde{{\cal #1}} }
+% \renewcommand{\h}[1]{ \hat{#1} } % 2014.08.06: remove this short-hand command, because it cause conflict with Vietnamese language
+% If \h is used, some characters with accent like ể will cause error for amsmath: ``\hat allowed only in math mode''
+\newcommand{\hc}[1]{ \hat{{\cal #1}} }
+\newcommand{\esup}{ \operatornamewithlimits{ess\,sup} }
+\newcommand{\tr}{ \operatorname{trace} }
+\newcommand{\co}{ \mbox{co} }
+\renewcommand{\i}{i}
+\newcommand{\io}{i\omega}
+\newcommand{\om}{\omega}
+\newcommand{\la}{\lambda}
+\newcommand{\ga}{\gamma}
+
+\newcommand{\Cl}{ {\mathbb{C}^-} }
+\newcommand{\Ci}{ {\mathbb{C}^0} }
+\newcommand{\Cr}{ {\mathbb{C}^+} }
+\newcommand{\C}{ {\mathbb{C}} }
+\newcommand{\Cset}{ {\mathbb{C}} }
+
+\newcommand{\Q}{ {\mathbb{Q}} }
+\newcommand{\R}{ {\mathbb{R}} }
+\newcommand{\Rset}{ {\mathbb{R}} }
+\renewcommand{\H}{ {\mathbb{H}} }
+\renewcommand{\S}{ {\mathbb{S}} }
+\newcommand{\Nset}{ {\mathbb{N}} }
+\newcommand{\Zset}{ {\mathbb{Z}} }
+\newcommand{\alert}[1]{{\bf #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Alf}{{D}}
+\newcommand{\Blf}{{C}}
+\newcommand{\Clf}{{B}}
+\newcommand{\Dlf}{{A}}
+
+
+\newcommand{\Ac}{\green{A_c}}
+\newcommand{\Bc}{\green{B_c}}
+\newcommand{\Cc}{\green{C_c}}
+\newcommand{\Dc}{\green{D_c}}
+
+\newcommand{\Acl}{{\cal A}}
+\newcommand{\Bcl}{{\cal B}}
+\newcommand{\Ccl}{{\cal C}}
+\newcommand{\Dcl}{{\cal D}}
+\newcommand{\Xcl}{{ \green{\cal X} }}
+\newcommand{\Ycl}{{\cal Y}}
+\newcommand{\Zcl}{{\cal Z}}
+\newcommand{\Pcl}{{\cal P}}
+%closed-loop transformed
+\newcommand{\A}{\bm{A}}
+\newcommand{\B}{\bm{B}}
+%\renewcommand{\C}{\bm{C}}
+\newcommand{\D}{\bm{D}}
+\renewcommand{\X}{\bm{X}}
+\newcommand{\DX}{\bm{Y}}
+
+\renewcommand{\v}{\red{v}}
+\newcommand{\K}{\red{K}}
+\renewcommand{\L}{\red{L}}
+\newcommand{\M}{\red{M}}
+\newcommand{\N}{\red{N}}
+\renewcommand{\X}{\red{X}}
+\newcommand{\Y}{\red{Y}}
+\newcommand{\Z}{\red{Z}}
+\newcommand{\F}{\blue{F}}
+
+\newcommand{\T}{\c{T}}
+
+\newcommand{\Ri}{\R\cup\{\infty\}}

@@ -1,0 +1,568 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,1in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox}
+\usepackage{verbatim}
+\usepackage{sagetex} % run Sagemath within Latex
+
+
+\title{Bài tập nhóm 1 - Phương pháp tính kỹ thuật HK1 2014-2015}
+\author{Name: \hspace*{2in}}
+\author{Doãn Minh Đăng}
+\date{Hạn nộp: 13:30 ngày thứ ba 14/10/2014}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Lời giải}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large  \Author \par}%
+      \vskip 1em%
+    {\large \Date \par}% 
+  \end{center}\par
+
+\section*{Yêu cầu}
+\begin{itemize}
+ \item Sinh viên có thể ghi kết quả trên giấy viết tay, hoặc đánh máy và in ra. Đối với bài 7 và bài 8 cần gửi file chương trình cho giảng viên qua email.
+ \item Trên bài làm và trên file chương trình, cần ghi cụ thể tên, mã số sinh viên của các thành viên trong nhóm.
+ \item Sinh viên làm theo nhóm từ 2 đến 3 thành viên.
+ \item Bài nộp trễ sẽ bị trừ 10 điểm cho mỗi ngày trễ hạn.
+ \item Có một số câu hỏi có bonus, tuy nhiên điểm tối đa cho bài tập nhóm này là 100 điểm, sẽ được quy đổi sang thang điểm 10 khi kết thúc môn học.
+\end{itemize}
+
+% \sagetexpause
+
+\section{Bài 1 (5 điểm)}
+Dùng phương pháp chia đôi để tìm nghiệm của phương trình $x^2+3x-8^{-14}=0$ chính xác đến ba chữ số thập phân (chữ số thứ ba sau dấu thập phân là chữ số đáng tin). Mỗi nhóm sinh viên tự chọn khoảng ban đầu $[a,b]$ để triển khai phương pháp chia đôi. Trình bày kết quả theo bảng gồm các giá trị $a_k, b_k, x_k$, dấu của $f(x_k)$.
+
+\Solution
+
+% \begin{sagesilent}
+% f = x^2+3*x-8^(-14)
+% a = 0
+% b = 1
+% \end{sagesilent}
+% 
+% Ví dụ: giải bài toán $f(x)=\sage{f(x)}=0$ bằng phương pháp chia đôi trên đoạn $[\sage{a},\sage{b}]$
+
+\begin{sagesilent}
+# Tạo hàm số
+def chiadoi(f,a=0,b=1,n=100):
+ # Tính nghiệm của hàm số f(x) theo phương pháp chia đôi trên khoảng [a,b], tối đa n bước
+ # Yêu cầu: f là hàm số một biến f(x), a và b là hai số thực và a<b, n là một số nguyên dương (>0)
+ # Nếu không có các tham số a, b, n: lấy mặc định là đoạn [0,1], và n=100
+ # Kết quả được hiển thị làm tròn đến 5 chữ số thập phân
+ lamtron=5
+ xk=range(n)
+ ak=range(n)
+ bk=range(n)
+ fxk=range(n)
+ # p=find_root(f,a,b) # find nearly exact root
+ # p_disp=round(p,lamtron)
+ ak[0]=a; bk[0]=b; xk[0]=(ak[0]+bk[0])/2; fxk[0]=f(x=xk[0])
+ for i in range(n-1):
+    if f(x=xk[i])*f(x=ak[i])<= 0:
+        ak[i+1]=ak[i]
+        bk[i+1]=xk[i]
+    else:    
+        ak[i+1]=xk[i]
+        bk[i+1]=bk[i]
+    xk[i+1]=(bk[i+1]+ak[i+1])/2
+    fxk[i+1]=f(x=xk[i+1])
+ ak_disp=[round(ak[i],lamtron) for i in range(n)] # to display ak with 4 decimal digits
+ bk_disp=[round(bk[i],lamtron) for i in range(n)]
+ xk_disp=[round(xk[i],lamtron) for i in range(n)]
+ fxk_disp=[round(fxk[i],lamtron) for i in range(n)]
+ # return fxk[n-1]
+ return fxk_disp,ak_disp,bk_disp,xk_disp
+# Áp dụng để giải bài toán
+f(x) = x^2+3*x-8^(-14)
+a = 0
+b = 1
+saiso = 0.0005
+n = 11
+#reset('nghiem')
+fxk_disp,ak_disp,bk_disp,xk_disp=chiadoi(f,a,b,n)
+p=find_root(f,a,b) # find nearly exact root
+p_disp=round(p,5)
+\end{sagesilent}
+
+Chọn khoảng $[a,b]=[\sage{a},\sage{b}]$. Giá trị hàm ở hai đầu: $f(a)=-8^{-14}$, $f(b)=4-8^{-14}$. 
+% $f(a)=\sage{round(f(x=a),5)}$, $f(b)=\sage{round(f(x=b),5)}$ % giá trị 8^{-14} quá nhỏ, làm tròn nó biến mất!
+
+% Chọn công thức ước lượng sai số của nghiệm x
+Đạo hàm của hàm số: $f'(x)=2x+3$, ta thấy $f'(x) \geq 3, \forall x \in [0,1]$, ta áp dụng công thức ước lượng sai số tổng quát: 
+\begin{equation}
+ |x^* - p| \leq \frac{|f(x^*)|}{m}, ~\textrm{ với } m=3
+\end{equation}
+
+Bài toán cần giải chính xác đến 3 chữ số thập phân, vậy $\Delta_{x^*}=0.0005$, ta cần giải để đạt $|f(x^*)| \leq m \Delta_{x^*} = 3*0.0005 = 0.0015$.
+
+Trong trường hợp tính trước số bước lặp theo phương pháp chia đôi, ta áp dụng công thức tính sai số của phương pháp chia đôi:
+\begin{align*}
+ |x^* - p| \leq \frac{b-a}{2^{n+1}}
+\end{align*}
+
+Ta cần $\frac{b-a}{2^{n+1}} \leq 0.0005 \Rightarrow (n+1) \geq \log_2(\frac{b-a}{0.0005}) \approx 10.9$, vậy số bước lặp ít nhất để đạt sai số trong giới hạn $0.0005$ là $n+1=11$, suy ra $n=10$ bước.
+
+
+% % hiển thị bảng kết quả bằng cách lập trình Sagetex; cần dùng lệnh latex() của Sage để chuyển giá trị int thành str cho hiển thị latex
+\begin{sagesilent}
+table=r"\begin{tabular}{c|cccc}"
+table+=r"$k$ & $a_k$ & $b_k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  table+=latex(i) + r"&" + latex(ak_disp[i]) + r"&" + latex(bk_disp[i]) + r"&" + latex(xk_disp[i]) + r"&" + latex(fxk_disp[i]) + r"\\"
+table+=r"\end{tabular}"
+\end{sagesilent}
+
+\begin{center}
+\sagestr{table} 
+\end{center}
+
+Vậy ta lấy lời giải gần đúng là $x^*=\sage{xk_disp[n-1]}$
+
+Ghi chú: nghiệm gần như chính xác là $p=\sage{p}$.
+
+\section{Bài 2 (5 điểm)}
+Giả sử phương pháp chia đôi được dùng để tìm nghiệm của hàm số $f(x) = 1/x$, với khoảng ban đầu là $[-2,1]$. Trả lời các câu hỏi sau:
+\begin{enumerate}[a)]
+ \item Giải thuật này có hội tụ về một giá trị thực hay không?
+ \item Giá trị đó có phải là nghiệm của phương trình hay không?
+ \item Giải thích tại sao giải thuật này không giúp tìm được nghiệm của hàm số này?
+ \item Phương pháp nào khác giúp tìm được nghiệm của hàm số này? Giải thích.
+\end{enumerate}
+
+\Solution
+
+\begin{enumerate}[a)]
+ \item Có. (Giải thuật chia đôi luôn luôn hội tụ)
+ \item Không. (Lưu ý: không phải nó "hội tụ" thì có nghĩa là tìm được nghiệm!)
+ \item Vì hàm số này vô nghiệm. (Hoặc là: nghiệm của hàm số ở $+\infty$)
+ \item Không có phương pháp nào, vì không tồn tại một nghiệm xác định của hàm số.
+\end{enumerate}
+
+
+\section{Bài 3 (9 điểm)}
+Dùng định lý 6 trong bài giảng chương 2 để kiểm tra xem phương pháp lặp đơn dùng để tìm điểm bất động của hàm số $g(x)$ có hội tụ về nghiệm $p$ được cho hay không:
+
+\begin{enumerate}[a)]
+\item $g(x) = (2x-1)/x^2, p = 1$
+
+\item $g(x) = \cos x + \pi + 1, p = \pi$
+
+\item $g(x) = e^{2x} - 1, p = 0$
+\end{enumerate}
+
+\Solution
+
+\begin{sagesilent}
+g1(x)=(2*x-1)/x^2
+g1diff=diff(g1,x)
+plotg1=plot(g1,0.8,1.2)
+plotg1diff=plot(g1diff,0.8,1.2)
+
+g2(x)=cos(x) + pi + 1
+g2diff=diff(g2,x)
+plotg2=plot(g2,2*pi/3,4*pi/3)
+plotg2diff=plot(g2diff,2*pi/3,4*pi/3)
+
+g3(x)=e^(2*x) - 1
+g3diff=diff(g3,x)
+\end{sagesilent}
+
+\begin{enumerate}[a)]
+\item Ta có $g'(x) = \sage{g1diff(x)}$; xét trên khoảng $[0.8,1.2]$, ta thấy $|g'(x)|<0.8<1$ và $g(x) \in [0.8,1.2], \forall x \in [0.8,1.2]$. Vậy $g(x)$ là hàm số co và tập $[0.8,1.2]$ là tập giới nội của hàm số, suy ra áp dụng phương pháp lặp đơn trên khoảng này sẽ hội tụ về điểm $p=1$.
+
+\begin{tabular}{cc}
+ \sageplot[scale=.35]{plotg1} & \sageplot[scale=.35]{plotg1diff} \\
+ Đồ thị của hàm $g(x)$ & Đồ thị của hàm $g'(x)$
+\end{tabular}
+
+\item Ta có $g'(x) = \sage{g2diff(x)}$; xét trên khoảng $[\frac{2\pi}{3},\frac{4\pi}{3}]$, ta thấy $|g'(x)|\leq \sage{g2diff(4*pi/3)}<1$ và $g(x) \in [\frac{2\pi}{3},\frac{4\pi}{3}], \forall x \in [\frac{2\pi}{3},\frac{4\pi}{3}]$. Vậy $g(x)$ là hàm số co và tập $[\frac{2\pi}{3},\frac{4\pi}{3}]$ là tập giới nội của hàm số, suy ra áp dụng phương pháp lặp đơn trên khoảng này sẽ hội tụ về điểm $p=\pi$.
+
+\begin{tabular}{cc}
+ \sageplot[scale=.35]{plotg2} & \sageplot[scale=.35]{plotg2diff} \\
+ Đồ thị của hàm $g(x)$ & Đồ thị của hàm $g'(x)$
+\end{tabular}
+
+\item Ta có $g'(x) = \sage{g3diff(x)}$; tại điểm $x=0$, ta thấy $g'(0)=\sage{g3diff(x=0)}>1$, như vậy không tồn tại lân cận của điểm $0$ sao cho $|g'(x)|<1$ trên toàn bộ khoảng đó.
+\end{enumerate}
+
+\section{Bài 4 (8 điểm)}
+Đối với mỗi phương trình sau đây, tìm hàm số $g(x)$ để chuyển bài toán về dạng tìm điểm bất động của hàm số $g(x)$. Xác định khoảng $[a,b]$ sao cho thỏa mãn điều kiện hội tụ của phương pháp lặp đơn tìm điểm bất động của hàm số $g(x)$ trên khoảng $[a,b]$. Giải thích điều kiện hội tụ được thỏa mãn như thế nào.
+
+\begin{enumerate}[a)]
+\item $x^3-x-1=0$
+\item $x=2tanh(x)$ ($tanh$ là hàm tan hyperbolic)
+\end{enumerate}
+
+%\textbf{Gợi ý}: xem định lý 5 và định lý 6 trong bài giảng chương 2.
+
+\Solution
+
+\begin{sagesilent}
+g1(x)=(x+1)^(1/3)
+g1diff=diff(g1,x)
+g1diff2=diff(g1diff,x)
+plotg1=plot(g1,1,2)
+plotg1diff=plot(g1diff,1,2)
+
+f2(x)=2*tanh(x)-x
+g2(x)=2*tanh(x)
+g2diff=diff(g2,x)
+plotf2=plot(f2,-3,3)
+plotg2=plot(g2,-3,3)
+plotg2diff=plot(g2diff,-3,3)
+
+g3(x)=2*tanh(x)-3/2*x
+g3diff=diff(g3,x)
+plotg3=plot(g3,-1,1)
+plotg3diff=plot(g3diff,-1,1)
+#
+#g4(x)=ln((2*e^(2*x)-2-x)/x)/2
+#g4diff=diff(g4,x)
+#plotg4=plot(g4,-3,3)
+#plotg4diff=plot(g4diff,-3,3)
+\end{sagesilent}
+
+\begin{enumerate}[a)]
+\item Ta lập hàm số $g(x)=\sqrt[3]{x+1}$, đạo hàm là $g'(x)=\sage{g1diff(x)}$. Ta sẽ chứng minh đoạn $[1,2]$ là tập giới nội và hàm số là ánh xạ co trên đoạn này.
+
+Ta thấy $g'(x) > 0, \forall x>-1$, vậy hàm số $g(x)$ là hàm số đơn điệu tăng trên đoạn $[1,2]$, suy ra với $\forall x \in [1,2]$ ta có: $g(x) \geq g(1) = \sage{g1(x=1)} > 1$, và $ g(x) \leq g(2) = \sage{g1(x=2)} < 2$, vậy $g(x) \in [1,2], \forall x \in [1,2]$, tức là đoạn $[1,2]$ là tập giới nội của hàm số $g(x)$.
+
+Ta thấy $g''(x)=\sage{g1diff2(x)}<0, \forall x>-1$, vậy hàm số $g'(x)$ là hàm số đơn điệu giảm trên đoạn $[1,2]$, và $g'(x) \leq g'(1) = \sage{g1diff(x=1)} < 1, \forall x \in [1,2]$, vậy hàm số $g(x)$ là ánh xạ co trên đoạn này.
+
+Do đó áp dụng phương pháp lặp đơn trên đoạn $[1,2]$ đối với hàm $g(x)$ sẽ hội tụ.
+
+\item $x=2tanh(x)=2\frac{e^x-e^{-x}}{e^x+e^{-x}}$, trước tiên ta vẽ đồ thị của hàm số $f(x)=2tanh(x)-x$ và $g'(x)$ với $g(x)=2tanh(x)$ để quan sát.
+
+\begin{tabular}{cc}
+ \sageplot[scale=.35]{plotf2} & \sageplot[scale=.35]{plotg2diff} \\
+ Đồ thị của hàm $f(x)$ & Đồ thị của hàm $g'(x)$
+\end{tabular}
+
+% % Rất khó biến đổi phương trình để tìm ánh xạ co sao cho phù hợp với nghiệm x=0
+% Ta thấy hàm số $x=f(x)$ có nghiệm là $x=0$, tuy nhiên nếu dùng ngay công thức đó cho giải thuật lặp đơn thì gặp trở ngại là $f'(0)=\sage{g2diff(x=0)}>1$, ánh xạ đó không phải là ánh xạ co. Vậy ta cần điều chỉnh hàm số lặp sao cho thu được hàm $g(x)$ là ánh xạ co, tức là $|g'(x)|<1$. Ta chọn như sau: $g(x)=2tanh(x)-1.5x$, khi đó $g'(x)=\sage{g3diff(x)}$; xét đồ thị trên đoạn $[-1,1]$:
+% 
+% \begin{tabular}{cc}
+%  \sageplot[scale=.35]{plotg3} & \sageplot[scale=.35]{plotg3diff} \\
+%  Đồ thị của hàm $g(x)$ & Đồ thị của hàm $g'(x)$
+% \end{tabular}
+% 
+% Từ đồ thị, ta thấy đoạn $[-1,1]$ là tập giới nội của hàm số $g(x)$, và $g(x)$ là ánh xạ co trên đoạn này vì $|g'(x)<1, \forall x \in [-1,1]$. Vậy phép lặp $x=g(x)=2tanh(x)-1.5x$ sẽ hội tụ.
+% 
+% Phương án khác: xét hàm $g(x)=\sage{g4(x)}$ và đạo hàm là $g'(x)=\sage{g4diff,x}$; xét đồ thị trên đoạn $[-1,1]$:
+% 
+% \begin{tabular}{cc}
+%  \sageplot[scale=.35]{plotg4} & \sageplot[scale=.35]{plotg4diff} \\
+%  Đồ thị của hàm $g(x)$ & Đồ thị của hàm $g'(x)$
+% \end{tabular}
+
+Ta thấy ngay hàm số $f(x)=0$ (tức $x=g(x)$) có nghiệm là $x=0$, tuy nhiên nếu dùng ngay công thức $x=g(x)$ cho giải thuật lặp đơn thì gặp trở ngại là $g'(0)=\sage{g2diff(x=0)}>1$, ánh xạ đó không phải là ánh xạ co. Mặt khác, qua đồ thị ta thấy phương trình này thực ra còn có hai nghiệm khác không (trái dấu nhau), xét trên đồ thị của hàm $g'(x)$ thì hàm số $g(x)$ là ánh xạ co trên các đoạn: $[-3,-1]$ và $[1,3]$, đây cũng là các tập giới nội của hàm số này.
+
+Vậy áp dụng phương pháp lặp đơn với hàm số $g(x)=2tanh(x)$ trên các đoạn $[-3,-1]$ và $[1,3]$ sẽ hội tụ (trên mỗi một đoạn, phương pháp lặp đơn hội tụ về một nghiệm riêng).
+
+\textbf{Trường hợp muốn áp dụng phương pháp lặp đơn để hội tụ về điểm bất động $x=0$:}
+
+Ta cần điều chỉnh hàm số lặp sao cho thu được hàm $g(x)$ là ánh xạ co, tức là $|g'(x)|<1$. Ta chọn như sau: $g(x)=2tanh(x)-1.5x$, khi đó $g'(x)=\sage{g3diff(x)}$; xét đồ thị trên đoạn $[-1,1]$:
+
+\begin{tabular}{cc}
+ \sageplot[scale=.35]{plotg3} & \sageplot[scale=.35]{plotg3diff} \\
+ Đồ thị của hàm $g(x)$ & Đồ thị của hàm $g'(x)$
+\end{tabular}
+
+Từ đồ thị, ta thấy đoạn $[-1,1]$ là tập giới nội của hàm số $g(x)$, và $g(x)$ là ánh xạ co trên đoạn này vì $|g'(x)<1, \forall x \in [-1,1]$. Vậy phép lặp $x=g(x)=2tanh(x)-1.5x$ sẽ hội tụ về điểm $x=0$.
+\end{enumerate}
+
+
+\section{Bài 5 (9 điểm)}
+Thực hiện hai bước đầu tiên theo phương pháp dây cung để giải các phương trình sau với khoảng ban đầu là $[1,2]$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$ (chuyển đổi bài toán để tạo $f(x_k)$ theo quy ước giải bài toán $f(x_k)=0$).
+
+\begin{enumerate}[a)]
+\item $x^3 = 2x + 2$
+
+\item $e^x + x = 7$
+
+\item $e^x + \sin x = 4$
+\end{enumerate}
+
+\Solution
+
+\begin{sagesilent}
+f1(x) = x^3 - 2*x - 2
+f2(x) = e^x + x - 7
+f3(x) = e^x + sin(x) - 4
+\end{sagesilent}
+
+\begin{sagesilent}
+# Tạo hàm số
+def daycung(f,a=0,b=1,n=100):
+ # Tính nghiệm của hàm số f(x) theo phương pháp dây cung trên khoảng [a,b], tối đa n bước
+ # Yêu cầu: f là hàm số một biến f(x), a và b là hai số thực và a<b, n là một số nguyên dương (>0)
+ # Nếu không có các tham số a, b, n: lấy mặc định là đoạn [0,1], và n=100
+ # Kết quả được hiển thị làm tròn đến 5 chữ số thập phân
+ decipoint=5
+ xk=range(n)
+ ak=range(n+1) # last value unused
+ bk=range(n+1) # last value unused
+ #deltaxk=range(n)
+ fxk=range(n)
+ fak=range(n)
+ fbk=range(n)
+ #p_f=find_root(f,0,1.5) # find nearly exact root
+ ak[0]=a; bk[0]=b;
+ for i in range(n):
+    fak[i]=f(x=ak[i])
+    fbk[i]=f(x=bk[i])
+    xk[i]=bk[i]-(fbk[i]*(bk[i]-ak[i]))/(fbk[i]-fak[i])
+    fxk[i]=f(x=xk[i])
+    #deltaxk[i]=abs(xk[i]-p_f)
+    if fxk[i]*fak[i]<= 0:
+        ak[i+1]=ak[i]
+        bk[i+1]=xk[i]
+    else:    
+        ak[i+1]=xk[i]
+        bk[i+1]=bk[i]
+ ak_disp=[round(ak[i],decipoint) for i in range(n)]
+ bk_disp=[round(bk[i],decipoint) for i in range(n)]
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ fxk_disp=[round(fxk[i],decipoint) for i in range(n)]
+ #deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ #p_f_disp=round(p_f,decipoint)
+ # return fxk[n-1]
+ return fxk_disp,ak_disp,bk_disp,xk_disp
+
+# Áp dụng để giải các bài toán 
+
+fxk_disp1,ak_disp1,bk_disp1,xk_disp1=daycung(f1,1,2,2)
+fxk_disp2,ak_disp2,bk_disp2,xk_disp2=daycung(f2,1,2,2)
+fxk_disp3,ak_disp3,bk_disp3,xk_disp3=daycung(f3,1,2,2)
+
+n=2
+
+tableDC1=r"\begin{tabular}{c|cc}"
+tableDC1+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  tableDC1+=latex(i) + r"&" + latex(xk_disp1[i]) + r"&" + latex(fxk_disp1[i]) + r"\\"
+tableDC1+=r"\end{tabular}"
+
+tableDC2=r"\begin{tabular}{c|cc}"
+tableDC2+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  tableDC2+=latex(i) + r"&" + latex(xk_disp2[i]) + r"&" + latex(fxk_disp2[i]) + r"\\"
+tableDC2+=r"\end{tabular}"
+
+tableDC3=r"\begin{tabular}{c|cc}"
+tableDC3+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  tableDC3+=latex(i) + r"&" + latex(xk_disp3[i]) + r"&" + latex(fxk_disp3[i]) + r"\\"
+tableDC3+=r"\end{tabular}"
+\end{sagesilent}
+
+\begin{enumerate}[a)]
+\item Hàm số $f(x)=\sage{f1(x)}$. Kết quả:
+
+\begin{center} \sagestr{tableDC1} \end{center}
+
+\item Hàm số $f(x)=\sage{f2(x)}$. Kết quả:
+
+\begin{center} \sagestr{tableDC2} \end{center}
+
+\item Hàm số $f(x)=\sage{f3(x)}$. Kết quả:
+
+\begin{center} \sagestr{tableDC3} \end{center}
+\end{enumerate}
+
+% \sagetexunpause
+
+\section{Bài 6 (9 điểm)}
+Thực hiện hai bước đầu tiên theo phương pháp Newton-Raphson để giải các phương trình sau với điểm bắt đầu là $x_0 = 1$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$.
+
+\begin{enumerate}[a)]
+
+\item $x^3 + x^2 - 1 = 0$
+
+\item $x^2 + 1/(x+1) - 3x = 0$
+
+\item $5x - 10 = 0$
+\end{enumerate}
+
+\Solution
+
+\begin{sagesilent}
+ f1(x)=x^3 + x^2 - 1
+ f2(x)=x^2 + 1/(x+1) - 3*x
+ f3(x)=5*x - 10
+\end{sagesilent}
+
+%decipoint=5: sẽ có báo lỗi do có sai số kiểu 1x10^(-5), bỏ qua lỗi này được
+\begin{sagesilent}
+# Tạo hàm số
+def ppnewton_raphson(f,x0=0,n=10):
+ # Tính nghiệm của hàm số f(x) theo phương pháp Newton-Raphson với điểm bắt đầu là x0, tối đa n bước
+ # Yêu cầu: f là hàm số một biến f(x), x0 một số thực thuộc tập xác định của f(x), n là một số nguyên dương (>0)
+ # Nếu không có các tham số x0, n: lấy mặc định là x0=0, và n=10
+ # Kết quả được hiển thị làm tròn đến 5 chữ số thập phân
+ decipoint=5
+ f_diff=diff(f,x,1)
+ xk=range(n+1)
+ xk[0]=x0
+ fxk=range(n)
+ f_diff_xk=range(n)
+ #deltaxk=range(n)
+ #p_f=find_root(f,0,3) # find nearly exact root
+ for i in range(n):
+    fxk[i]=f(x=xk[i])
+    f_diff_xk[i]=f_diff(x=xk[i])
+    xk[i+1]=(f_diff_xk[i]*xk[i]-fxk[i])/f_diff_xk[i]
+    #deltaxk[i]=abs(xk[i]-p_f)
+ xk_disp=[round(xk[i],decipoint) for i in range(n)]
+ fxk_disp=[round(fxk[i],decipoint) for i in range(n)]
+ #deltaxk_disp=[round(deltaxk[i],decipoint) for i in range(n)]
+ #p_f_disp=round(p_f,decipoint)
+ # return fxk[n-1]
+ return fxk_disp,xk_disp
+ 
+# Áp dụng để giải các bài toán
+fxk_disp1,xk_disp1=ppnewton_raphson(f1,1,3)
+fxk_disp2,xk_disp2=ppnewton_raphson(f2,1,3)
+fxk_disp3,xk_disp3=ppnewton_raphson(f3,1,3)
+
+# Trình bày các bảng kết quả
+
+n=3
+
+tableN1=r"\begin{tabular}{c|cc}"
+tableN1+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  tableN1+=latex(i) + r"&" + latex(xk_disp1[i]) + r"&" + latex(fxk_disp1[i]) + r"\\"
+tableN1+=r"\end{tabular}"
+
+tableN2=r"\begin{tabular}{c|cc}"
+tableN2+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  tableN2+=latex(i) + r"&" + latex(xk_disp2[i]) + r"&" + latex(fxk_disp2[i]) + r"\\"
+tableN2+=r"\end{tabular}"
+
+tableN3=r"\begin{tabular}{c|cc}"
+tableN3+=r"$k$ & $x_k$ & $f(x_k)$ \\ \hline"
+for i in range(n):
+  tableN3+=latex(i) + r"&" + latex(xk_disp3[i]) + r"&" + latex(fxk_disp3[i]) + r"\\"
+tableN3+=r"\end{tabular}"
+\end{sagesilent}
+
+\begin{enumerate}[a)]
+\item Hàm số $f(x)=\sage{f1(x)}$. Kết quả:
+
+\begin{center} \sagestr{tableN1} \end{center}
+
+\item Hàm số $f(x)=\sage{f2(x)}$. Kết quả:
+
+\begin{center} \sagestr{tableN2} \end{center}
+
+\item Hàm số $f(x)=\sage{f3(x)}$. Kết quả:
+
+\begin{center} \sagestr{tableN3} \end{center}
+\end{enumerate}
+
+\section{Bài 7 (10 điểm)}
+Viết một chương trình Octave để vẽ đồ thị của một hàm số $f(x)$, chương trình nhận bốn tham số bao gồm: khai báo hàm số $f$ từ một function $f=hamso(x)$, điểm bắt đầu vẽ đồ thị $a$ và điểm kết thúc vẽ đồ thị $b$, khoảng cách giữa hai điểm rời rạc hóa trên đồ thị $step$ (nếu người dùng không nhập giá trị $step$ thì cho nó giá trị mặc định là $0.1$).
+
+Sinh viên nộp chương trình dạng file function \emph{vedothi.m}, và hình chụp màn hình khi chạy file này để vẽ được đồ thị một hàm số.
+
+\textbf{Gợi ý}: file chứa hàm số cần được lưu riêng, ví dụ \emph{hamso.m}, và chương trình chính gọi function đó bằng cách nhập tham số kiểu \emph{@hamso}.
+
+\section{Bài 8 (10+10 điểm)}
+Viết một chương trình Octave để thực hiện một trong các giải thuật: phương pháp lặp đơn, phương pháp dây cung, hoặc phương pháp Newton-Raphson, nhằm tìm nghiệm của hàm số $f(x)$ trong một khoảng bắt đầu $[a,b]$ cho trước hoặc xuất phát từ một điểm $x_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+\textbf{Bonus}: Nếu sinh viên có thể ghép thêm lệnh vẽ đồ thị của hàm số để minh họa các bước lặp của giải thuật, thì sẽ được nhân đôi số điểm của bài này.
+
+Sinh viên nộp chương trình dạng file function \emph{giaiphuongtrinh.m}, và hình chụp màn hình khi chạy file này nếu chương trình xuất ra được các bước giải trên đồ thị.
+
+\textbf{Gợi ý}: dùng lệnh \emph{hold on} để cho phép vẽ chồng nhiều đồ thị trên một đối tượng figure, trong lệnh plot dùng thêm thông số \emph{color} để chọn màu sắc, ví dụ $plot(x,fx,color='r')$.
+
+\section{Bài 9 (15 điểm)}
+Cho hàm số $f(x) = 54x^6 + 45x^5 - 102x^4 - 69x^3 + 35x^2 + 16x -4$. Vẽ đồ thị hàm số này trên đoạn $[-2,2]$, và dùng một trong các phương pháp số đã học trong chương 2 để tìm toàn bộ 5 nghiệm của phương trình này trên đoạn đó với độ chính xác đến ba chữ số thập phân. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$ hội tụ về từng nghiệm.
+
+\textbf{Gợi ý}: sinh viên nên phân tích kỹ đồ thị để chọn 5 điểm/khoảng bắt đầu sao cho giải thuật hội tụ về 5 nghiệm khác nhau.
+
+\Solution
+
+\begin{sagesilent}
+ f(x) = 54*x^6 + 45*x^5 - 102*x^4 - 69*x^3 + 35*x^2 + 16*x -4
+ #plotf=plot(f,-1.4,1.2)
+ nghiem=range(5)
+ nghiem[0]=find_root(f,-1.4,-1.2)
+ nghiem[1]=-2/3
+ nghiem[2]=find_root(f,0,0.4)
+ nghiem[3]=1/2
+ nghiem[4]=find_root(f,1,1.5)
+ # Kiểm tra:
+ g(x)=54*(x-nghiem[0])*(x-nghiem[1])^2*(x-nghiem[2])*(x-nghiem[3])*(x-nghiem[4])
+ # So sánh lại g(x) với f(x):
+ # g.expand()
+ # f
+ \end{sagesilent}
+
+Đồ thị hàm số:
+
+\sageplot[scale=.8]{plot(f,-1.4,1.2)}
+
+Hàm số này có các nghiệm sau:
+\begin{itemize}
+ \item $x_1=\sage{nghiem[0]}$
+ \item $x_2=\sage{nghiem[1]}$ (đây là nghiệm kép, nên dùng phương pháp Newton-Raphson để giải)
+ \item $x_3=\sage{nghiem[2]}$
+ \item $x_4=\sage{nghiem[3]}$
+ \item $x_5=\sage{nghiem[4]}$
+\end{itemize}
+
+\section{Bài 10 (20+10 điểm)}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần giải một phương trình để tính được một giá trị mong muốn. Trình bày ví dụ đó, xây dựng phương trình cần giải, và nêu ý nghĩa của việc giải phương trình đó.
+
+Các nhóm sinh viên không được sao chép ý tưởng của nhau. Nếu có ví dụ được hai hay nhiều nhóm cùng sử dụng, điểm số chỉ được tính cho nhóm nào gửi đầu tiên. Các nhóm có thể gửi giải đáp cho bài 10 này nhiều lần qua email trước khi gửi bài báo cáo cuối cùng cho bài tập nhóm này (để đăng ký ý tưởng mình nghĩ ra).
+
+Mỗi ví dụ đúng đắn và trình bày rõ ràng được tính 5 điểm.
+
+\textbf{Bonus}: Nếu báo cáo bài tập nhóm được hoàn thành kịp hạn chót, thì câu này có thể đạt tối đa 30 điểm. Nếu báo cáo bài tập nhóm được gửi trễ hạn, thì câu này chỉ được tối đa 20 điểm.
+
+\end{document}

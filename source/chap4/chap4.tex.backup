@@ -1,0 +1,654 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 4: Nội suy và xấp xỉ hàm}
+
+\enu{
+\item Khái niệm đa thức nội suy
+\item Đa thức nội suy Lagrange
+\item Đa thức nội suy Newton
+\item Bài toán xấp xỉ hàm thực nghiệm và phương pháp bình phương bé nhất
+% \item Bài tập
+% \item Lập trình giải thuật
+}
+
+\newpage\titls{Khái niệm đa thức nội suy}
+
+Giả sử ta có một mối quan hệ giữa hai đại lượng, viết ở dạng hàm số: $y=f(x)$, tuy nhiên ta \textbf{chưa biết} công thức của hàm số $f(x)$ mà chỉ có các cặp giá trị $(x_k,y_k)$ ở một số hữu hạn $n+1$ điểm ($k=\overline{0,n}$). Các giá trị $x_k$ được gọi là \textbf{điểm nút} và xếp thứ tự tăng dần: $x_0 < x_1 < \cdots < x_n$.
+\spa{1}
+\blue{Vấn đề quan tâm: xây dựng đa thức $P(x)$ thỏa mãn $P(x_k)=y_k, k=\overline{0,n}$. Ta gọi $P(x)$ là đa thức nội suy của hàm số $f(x)$.}
+\spa{1}
+\textbf{Lưu ý}: có nhiều đa thức $P(x)$ cùng thỏa điều kiện đi qua bộ các điểm $(x_k,y_k), k=\overline{0,n}$, tuy nhiên ta chứng minh được chỉ tồn tại duy nhất một đa thức nội suy $P(x)$ có bậc nhỏ hơn hoặc bằng $n$.
+
+\newpage\titls{Khái niệm đa thức nội suy}
+
+\begin{sagesilent}
+ f=-x^2*sin(x) + 2
+ n=5
+ xk=[2*i for i in range(n)]
+ fxk=range(n)
+ yk=[]
+ for i in range(n):
+   fxk[i]=N(f(x=xk[i]),20)
+   # Neu khong chuyen thanh so thuc bang N(.,20) thi fxk[i] la bieu thuc symbolic dai, dua vao tableVD1 se bao loi
+   yk.append((xk[i],fxk[i]))
+# Dung lenh sau tao ra list nhanh hon
+# yk2=[(xk[i],fxk[i]) for i in range(n)]
+ plotfxk=list_plot(yk, size=50, legend_label='($x_k$,$y_k$)')
+ tableVD1=r"\begin{tabular}{l|c|l}"
+ tableVD1+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+ for i in range(n):
+   tableVD1+=latex(i) + r"&" + latex(round(xk[i],2)) + r"&" + latex(fxk[i]) + r"\\"
+ tableVD1+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ:
+
+%    \cen{\sagestr{tableVD1}}
+   
+ \begin{tabular}{lc}
+   \sagestr{tableVD1}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk}
+    \end{tabular}
+ \end{tabular}
+
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+Ta tìm đa thức có bậc nhỏ hơn hay bằng $n$ của hàm số $f(x)$ trên $[x_0, x_n]$, gọi là \textbf{đa thức nội suy Lagrange}.
+
+\blue{Ý tưởng: tạo ra các \textbf{đa thức cơ sở} bằng với $1$ tại điểm $x_k$ và bằng $0$ tại các điểm $x_j, j \neq k$, để dễ dàng đạt được giá trị $y_k$ tại mỗi điểm nút.}
+
+Ta xây dựng các đa thức $p_n^{(k)}(x)$ có bậc bằng $n$ và thỏa điều kiện:
+\begin{align}\label{eq_Lagrange_pk_aim}
+ p_n^{(k)} \big( x_j \big) = \left\{ \begin{array}{lc}
+                                      1 & \qquad j=k \\
+                                      0 & \qquad j \neq k
+                                     \end{array}
+                                     \right.
+\end{align}
+
+Từ các đa thức $p_n^{(k)}(x)$, ta lập đa thức nội suy Lagrange:
+\red{\begin{align}\label{eq_Lagrange_L}
+\mathbf{\mathcal{L}_n(x) = \sum_{k=0}^n p_n^{(k)}(x).y_k}
+\end{align}
+}
+Do \eqref{eq_Lagrange_pk_aim}, đa thức $\mathcal{L}_n(x)$ theo công thức \eqref{eq_Lagrange_L} thỏa mãn yêu cầu $\mathcal{L}_n(x_k)=y_k, \forall k=\overline{0,n}$, và có bậc nhỏ hơn hoặc bằng $n$.
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+\blue{Vấn đề: lập các đa thức $p_n^{(k)}$ như thế nào để thỏa điều kiện \eqref{eq_Lagrange_pk_aim}?}
+
+Đa thức $p_n^{(k)}(x)$ bậc $n$ và có $n$ nghiệm $x_0, \cdots, x_{k-1}, x_{k+1}, x_n$, nên ta có thể viết dưới dạng:
+\begin{align}\label{eq_Lagrange_pk}
+ p_n^{(k)}(x) = C_k(x-x_0) \cdots (x-x_{k-1})(x-x_{k+1}) \cdots (x-x_{n})
+\end{align}
+với hằng số $C_k$.
+
+Để $p_n^{(k)}(x_k)=1$ thì thay $x=x_k$ vào công thức \eqref{eq_Lagrange_pk}, ta tìm được $C_k$:
+\begin{align}
+ C_k=\frac{1}{(x_k-x_0) \cdots (x_k-x_{k-1})(x_k-x_{k+1}) \cdots (x_k-x_{n})}
+\end{align}
+
+Vậy ta tìm được công thức của đa thức $p_n^{(k)}(x)$:
+\red{\begin{align}
+\mathbf{p_n^{(k)}(x)=\frac{(x-x_0) \cdots (x-x_{k-1})(x-x_{k+1}) \cdots (x-x_{n})}{(x_k-x_0) \cdots (x_k-x_{k-1})(x_k-x_{k+1}) \cdots (x_k-x_{n})}}
+\end{align}
+}
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+\begin{sagesilent}
+ n=3
+ xk2=[0,1,3]
+ fxk2=[1,-1,2]
+ #yk2=[(xk2[i],fxk2[i]) for i in range(n)]
+ yk2=zip(xk2,fxk2) # zip: couple pairs of values of the two arrays
+ R = PolynomialRing(QQ, 'x')
+ Lagrange_2 = R.lagrange_polynomial(yk2)
+ plotL2=plot(Lagrange_2, (-1),(4), color='red', legend_label='$\mathcal{L}_2(x)$')
+ # Ref: http://www.sagemath.org/doc/reference/polynomial_rings/sage/rings/polynomial/polynomial_ring.html
+ #Lagrange_2=7/6*x^2-19/6*x+1
+ #plotL2=plot(Lagrange_2, (-1,4), color='red', legend_label='$\mathcal{L}_2(x)$')
+ #plotfxk2=list_plot(yk2, size=50, legend_label='($x_k$,$y_k$)')
+ plotfxk2=list_plot(yk2, size=50)
+ tableVD2=r"\begin{tabular}{l|c|l}"
+ tableVD2+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+ for i in range(n):
+   tableVD2+=latex(i) + r"&" + latex(round(xk2[i],2)) + r"&" + latex(fxk2[i]) + r"\\"
+ tableVD2+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: tính đa thức nội suy Lagrange với các giá trị cho trong bảng số:
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD2}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk2}
+    \end{tabular}
+ \end{tabular}
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+Kết quả: $\mathcal{L}_2(x)=\frac{7}{6}x^2 - \frac{19}{6}x + 1$
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD2}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk2+plotL2}
+    \end{tabular}
+ \end{tabular}
+
+\newpage\titls{Đa thức nội suy Lagrange}
+ 
+Cách dễ nhớ để tính các hệ số của đa thức nội suy Lagrange: lập bảng.
+
+\begin{tabular}{c|cccc|c}
+ $x$ & $x_0$ & $x_1$ & $\cdots$ & $x_n$ & \\ \hline
+ $x_0$ & $\mathbf{x-x_0}$ & $x_0-x_1$ & $\cdots$ & $x_0-x_n$ & $D_0$ \\
+ $x_1$ & $x_1-x_0$ & $\mathbf{x-x_1}$ & $\cdots$ & $x_1-x_n$ & $D_1$ \\
+ $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ & $\cdots$ \\
+ $x_n$ & $x_n-x_0$ & $x_n-x_1$ & $\cdots$ & $\mathbf{x-x_n}$ & $D_n$ \\ \hline
+ & & & & & $\mathbf{w(x)}$
+\end{tabular}
+
+Lấy tích theo hàng ngang thứ $k$ là đa thức $D_k$, còn lấy tích theo đường chéo chính thì ta được $w(x)$. Khi đó đa thức nội suy Lagrange là:
+\red{\begin{align}\label{eq_Lagrange_L_type2}
+\mathbf{\mathcal{L}_n(x) = w(x) \sum_{k=0}^n \frac{y_k}{D_k}}
+\end{align}
+}
+
+Ngoài ra, với mỗi điểm $x \in [x_0,x_n]$ bất kỳ, ta thay giá trị đó vào bảng và dùng công thức \eqref{eq_Lagrange_L_type2} thì tìm ra được giá trị nội suy $\mathcal{L}_n(x)$.
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+Ví dụ: tìm giá trị nội suy tại điểm $x=2$ từ bảng số:
+
+   \cen{\sagestr{tableVD2}}
+% Sử dụng lại ví dụ số 2
+\begin{sagesilent}
+xp=2 
+\end{sagesilent}
+
+\enu{
+\item Dùng công thức vừa tính được ở ví dụ trước: $\mathcal{L}_2(x)=\frac{7}{6}x^2 - \frac{19}{6}x + 1$ 
+\item Lập bảng để vừa xây dựng công thức, vừa tính giá trị nội suy
+}
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+\cen{\begin{tabular}{lr}
+\sagestr{tableVD2}
+  &
+ \begin{tabular}{c|rrr|r}
+ $x=\sage{xp}$ & $\sage{xk2[0]}$ & $\sage{xk2[1]}$ & $\sage{xk2[2]}$ & \\ \hline
+ $\sage{xk2[0]}$ & $\sage{xp-xk2[0]}$ & $\sage{xk2[0]-xk2[1]}$ & $\sage{xk2[0]-xk2[2]}$ & $\sage{(xp-xk2[0])*(xk2[0]-xk2[1])*(xk2[0]-xk2[2])}$ \\
+ $\sage{xk2[1]}$ & $\sage{xk2[1]-xk2[0]}$ & $\sage{xp-xk2[1]}$ & $\sage{xk2[1]-xk2[2]}$ & $\sage{(xk2[1]-xk2[0])*(xp-xk2[1])*(xk2[1]-xk2[2])}$ \\
+ $\sage{xk2[2]}$ & $\sage{xk2[2]-xk2[0]}$ & $\sage{xk2[2]-xk2[1]}$ & $\sage{xp-xk2[2]}$ & $\sage{(xk2[2]-xk2[0])*(xk2[2]-xk2[1])*(xp-xk2[2])}$ \\ \hline
+ & & & & $\sage{(xp-xk2[0])*(xp-xk2[1])*(xp-xk2[2])}$
+ \end{tabular}
+\end{tabular}
+}
+
+Tính giá trị nội suy tại $x=2$:
+\begin{align}
+ \mathcal{L}_2(2)=\sage{(xp-xk2[0])*(xp-xk2[1])*(xp-xk2[2])}\Bigg( \frac{\sage{fxk2[0]}}{\sage{(xp-xk2[0])*(xk2[0]-xk2[1])*(xk2[0]-xk2[2])}} + \frac{\sage{fxk2[1]}}{\sage{(xk2[1]-xk2[0])*(xp-xk2[1])*(xk2[1]-xk2[2])}} + \frac{\sage{fxk2[2]}}{\sage{(xk2[2]-xk2[0])*(xk2[2]-xk2[1])*(xp-xk2[2])}} \Bigg) = \sage{(xp-xk2[0])*(xp-xk2[1])*(xp-xk2[2])*(fxk2[0]/((xp-xk2[0])*(xk2[0]-xk2[1])*(xk2[0]-xk2[2])) + fxk2[1]/((xk2[1]-xk2[0])*(xp-xk2[1])*(xk2[1]-xk2[2])) + fxk2[2]/((xk2[2]-xk2[0])*(xk2[2]-xk2[1])*(xp-xk2[2])))}
+\end{align}
+
+\newpage\titls{Đa thức nội suy Lagrange}
+
+\begin{sagesilent}
+ n=4
+ xk3=[0,1,3,4]
+ fxk3=[1,1,2,-1]
+# yk3=[(xk3[i],fxk3[i]) for i in range(n)]
+ yk3=zip(xk3,fxk3) # zip: couple pairs of values of the two arrays
+ R = PolynomialRing(QQ, 'x')
+ Lagrange_3 = R.lagrange_polynomial(yk3)
+ plotL3=plot(Lagrange_3, (-1),(5), color='red', legend_label='$\mathcal{L}_3(x)$')
+ plotfxk3=list_plot(yk3, size=50, legend_label='($x_k$,$y_k$)')
+ tableVD3=r"\begin{tabular}{l|c|l}"
+ tableVD3+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+ for i in range(n):
+   tableVD3+=latex(i) + r"&" + latex(round(xk3[i],2)) + r"&" + latex(fxk3[i]) + r"\\"
+ tableVD3+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: dùng nội suy Lagrange tính giá trị tại $x=2$ với các giá trị cho trong bảng số:
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD3}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk3+plotL3}
+    \end{tabular}
+ \end{tabular}
+
+ \newpage\titls{Đa thức nội suy Lagrange}
+
+ Lập bảng:
+ 
+ \begin{tabular}{c|rrrr|r}
+ $x=2$ & 0 & 1 & 3 & 4 & \\ \hline
+ 0 & 2 & -1 & -3 & -4 & -24 \\
+ 1 & 1 & 1 & -2 & -3 & 6 \\
+ 3 & 3 & 2 & -1 & -1 & 6 \\
+ 4 & 4 & 3 & 1 & -2 & -24 \\ \hline
+ & & & & & 4
+\end{tabular}
+
+ Tính giá trị nội suy:
+\begin{align*}
+ \mathcal{L}_3(2)=4\Bigg( \frac{1}{24} + \frac{1}{6} + \frac{2}{6} + \frac{-1}{24}\Bigg) = 2
+\end{align*}
+
+Công thức của đa thức nội suy: $\mathcal{L}_3(x)=\sage{Lagrange_3}$
+
+\newpage\titls{Đa thức nội suy Newton}
+
+\blue{Câu hỏi: có cách nào khác để lập bảng và tính toán giá trị của đa thức nội suy tại một điểm $x^*$ không?
+
+Trả lời: ta có thể viết đa thức nội suy dưới dạng \textbf{đa thức nội suy Newton}, và lập bảng để tính.}
+
+Đa thức nội suy Newton được định nghĩa dựa trên \textbf{sai phân hữu hạn}: $\Delta_{y_k}=y_{k+1}-y_k, \Delta_{x_k}=x_{k+1}-x_k$.
+
+Ta giới thiệu khái niệm \textbf{tỉ sai phân cấp 1} của hàm $f$ trên doạn $[x_k,x_{k+1}]$:
+\begin{equation}
+ f[x_k,x_{k+1}]=\frac{\Delta_{y_k}}{\Delta_{x_k}}=\frac{y_{k+1}-y_k}{x_{k+1}-x_k}
+\end{equation}
+và \textbf{tỉ sai phân cấp} $\mathbf{p}$ (áp dụng cho $p=2,3,\cdots$):
+\begin{equation}
+ f[x_k,\cdots,x_{k+p}]=\frac{f[x_{k+1},\cdots,x_{k+p}]-f[x_{k},\cdots,x_{k+p-1}]}{x_{k+p}-x_k}
+\end{equation}
+
+\newpage\titls{Đa thức nội suy Newton}
+
+Công thức của đa thức nội suy Newton:
+\begin{align}\label{eq_Newton}
+ f(x)&=y_0 + f[x_0,x_1](x-x_0) + f[x_0,x_1,x_2](x-x_0)(x-x_1) + \cdots + \nonumber \\
+ &+f[x_0,\cdots,x_n](x-x_0)\cdots (x-x_{n-1}) + \nonumber \\
+ &+f[x,x_0,\cdots,x_n](x-x_0)\cdots (x-x_{n-1})(x-x_{n})
+\end{align}
+
+Ta đặt $\mathcal{R}_n(x)$ là số hạng cuối của \eqref{eq_Newton}, và phần trước là $\mathcal{N}_n^f(x)$:
+\red{\begin{align}
+ \mathcal{N}_n^f(x)&=y_0 + f[x_0,x_1](x-x_0) + f[x_0,x_1,x_2](x-x_0)(x-x_1) + \cdots + \nonumber \\
+ &+f[x_0,\cdots,x_n](x-x_0)\cdots (x-x_{n-1}) \label{eq_Newton_forward}\\
+ \mathcal{R}_n(x)&=f[x,x_0,\cdots,x_n](x-x_0)\cdots (x-x_{n-1})(x-x_{n}) \label{eq_Newton_res}
+\end{align}
+}
+Khi đó ta viết gọn lại:
+\red{\begin{align}\label{eq_Newton2}
+ f(x)=\mathcal{N}_n^f(x)+\mathcal{R}_n(x) \approx \mathcal{N}_n^f(x)
+\end{align}
+}
+
+\newpage\titls{Đa thức nội suy Newton}
+
+Để tính toán giá trị hàm số $f(x)$ theo công thức \eqref{eq_Newton2}, tức  $f(x)\approx \mathcal{N}_n^f(x)$ với sai số là $\mathcal{R}_n(x)$, ta lập \textbf{bảng tỉ sai phân}.
+
+\begin{sagesilent}
+ xp=1.5
+ n=6
+ xk4=[1,2,3,4,5,6]
+ fxk4=[-3,0,15,48,105,192]
+ #[(1, -3), (2, 0), (3, 15), (4, 48), (5, 105), (6, 192)]
+ yk4=zip(xk4,fxk4) # zip: couple pairs of values of the two arrays
+ R = PolynomialRing(RR, "x")
+ bangNewton = R.divided_difference(yk4, full_table=True)
+ Lagrange_4 = R.lagrange_polynomial(yk4)
+ plotL4=plot(Lagrange_4, (-1),(7), color='red', legend_label='$\mathcal{L}_5(x)$')
+ plotfxk4=list_plot(yk4, size=50, legend_label='($x_k$,$y_k$)')
+ tableVD4=r"\begin{tabular}{l|c|l}"
+ tableVD4+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+ for i in range(n):
+   tableVD4+=latex(i) + r"&" + latex(round(xk4[i],2)) + r"&" + latex(fxk4[i]) + r"\\"
+ tableVD4+=r"\end{tabular}"
+\end{sagesilent}
+
+\begin{sagesilent}
+# Now change the full table from Sagemath to my form of representing table
+ bang2=list(list(i for i in range(j,n)) for j in range(n))
+ for j in range(n):            
+    for i in range(j,n):
+        bang2[j][i-j]=bangNewton[i][j]
+# Now create the Latex table
+ tableNewton=r'\begin{tabular}{l|c|' # first column: k, second column: x_k
+ for i in range(n): tableNewton+='c' # n columns for finit difference order 0 to n
+ tableNewton+=r'}'
+ tableNewton+=r'$k$ & $x_k$ & $y_k$'
+# for i in range(n-1): tableNewton+=r' & f[$x_0,\cdots,x_'+str(i+1)+r'$]'
+ for i in range(1,n): tableNewton+=r' & $f_\Delta^'+str(i)+r'$'
+ tableNewton+=r'\\ \hline'
+ for i in range(n):
+   tableNewton+=latex(i) + r' & ' + latex(round(xk4[i],2))
+   for j in range(i+1):
+     tableNewton+= r' & ' + latex(round(bangNewton[i][j],2))
+   for j in range(i+1,n): tableNewton+= r' & '
+   tableNewton+= r'\\'
+ tableNewton+=r'\end{tabular}'
+\end{sagesilent}
+
+Ví dụ: Tính giá trị gần đúng của hàm số tại $x=\sage{round(xp,2)}$, với dữ liệu:
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD4}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk4+plotL4}
+    \end{tabular}
+ \end{tabular}
+
+
+\newpage\titls{Đa thức nội suy Newton}
+
+Kết quả tính bảng tỉ sai phân: (ký hiệu $f_\Delta^k=f[x_0,\cdots,x_k]$)
+
+\sagestr{tableNewton}
+
+% \begin{equation*}
+%  \sage{bangNewton}
+% \end{equation*}
+
+\begin{sagesilent}
+ mathNewton = r' = '+latex(bangNewton[0][0])
+ sohangNewton = [bangNewton[i][i] for i in range(n)]
+ for i in range(1,n):
+   mathNewton+= r' + '+latex(bangNewton[i][i])
+   for j in range(i): 
+     mathNewton+=r'('+latex(round(xp-xk4[j],2))+r')'
+     sohangNewton[i] *= xp-xk4[j] 
+ ketquaNewton = sum(sohangNewton[i] for i in range(n))
+\end{sagesilent}
+
+\begin{align*}
+ f(\sage{round(xp,2)}) &\approx \mathcal{N}_{\sage{n}}^f(\sage{round(xp,2)}) \\
+ &\sagestr{mathNewton} \\
+ &=\sage{round(ketquaNewton,3)}
+\end{align*}
+
+
+\newpage\titls{Đa thức nội suy Newton}
+
+Vài lưu ý:
+\itemi{
+\item Biểu thức $\mathcal{R}_n(x)$ (bậc $n+1$) là sai số của đa thức nội suy Newton.
+\item Công thức \eqref{eq_Newton_forward} gọi là \textbf{công thức Newton tiến (forward)}, ta còn có thể dùng \textbf{công thức Newton lùi (backward)}:
+\begin{align} \label{eq_Newton_backward}
+ \mathcal{N}_n^b(x)&=y_n + f[x_{n-1},x_{n}](x-x_n) + \nonumber \\
+ &+f[x_{n-1},x_{n-1},x_n](x-x_{n-1})(x-x_{n-2}) + \cdots + \nonumber \\
+ &+f[x_0,\cdots,x_n](x-x_1)\cdots (x-x_{n})
+ \end{align}
+\item Do đa thức nội suy bậc $n$ trở xuống là duy nhất (khi đi qua bộ $n+1$ điểm), nên khi xây dựng bằng phương pháp Lagrange và Newton thì sẽ ra kết quả giống nhau: \red{$\mathcal{L}_n(x)=\mathcal{N}_n^f(x)=\mathcal{N}_n^b(x)$}.
+% \begin{equation}
+%   \mathcal{L}_n(x)=\mathcal{N}_n^f(x)=\mathcal{N}_n^b(x)
+%  \end{equation}
+ }
+
+\newpage\titls{Đa thức nội suy spline bậc ba}
+
+\blue{Vấn đề: Nếu có nhiều điểm, phải lập đa thức nội suy bậc cao, phải tính toán nhiều. Có dạng đa thức nội suy nào bậc thấp, linh hoạt hơn?}
+ 
+ \textbf{Định nghĩa spline:}
+ 
+ Một spline bậc ba nội suy của một hàm $f(x)$ trên đoạn $[a,b]$ là hàm $g(x)$ thỏa các điều kiện:
+ \itemi{
+ \item $g(x)$ có \textbf{đạo hàm đến cấp hai liên lục} trên đoạn $[a,b]$.
+ \item Trên mỗi đoạn $[x_k,x_{k+1}], k=0,\cdots, n-1$, ta có $g(x)=g_k(x)$ là một đa thức bậc ba.
+ \item $g(x_k)=f(x_k)=y_k, \forall k$.
+}
+\blue{Tóm lại: spline là đa thức bậc ba trên mỗi khoảng $[x_k,x_{k+1}], k=0,\cdots, n-1$, và có đặc điểm là liên tục, khả vi tại các điểm nối.}
+
+\newpage\titls{Bài toán xấp xỉ hàm thực nghiệm}
+
+\blue{Một vấn đề khác: Giả sử có một tập hợp điểm là từ một hàm đơn giản (ví dụ: đường thẳng), nhưng do có các \textbf{nhiễu} nên có thể nằm lệch. Làm sao tìm một hàm số theo dạng đã biết và \textbf{gần} tập hợp điểm đó nhất? (không nhất thiết phải đi qua tất cả các điểm)
+
+Cách giải quyết: \textbf{Phương pháp bình phương bé nhất} (hoặc: PP bình phương cực tiểu, PP bình phương tối thiểu).}
+
+Cho tập hợp điểm $(x_k,y_k), k=1,\cdots,n$, ta tìm một hàm $f(x)$ sao cho tổng sau là nhỏ nhất:
+\begin{align}
+g(f)= \sum_{k=1}^n [f(x_k)-y_k]^2
+\end{align}
+
+\newpage\titls{Bài toán xấp xỉ hàm thực nghiệm}
+
+Trường hợp thường gặp: hàm $f(x)$ là hàm số tuyến tính (đa thức bậc một), tức là $f(x)=A+Bx$. Bài toán phát biểu là:
+
+\begin{align}
+ \min_{A,B} g(A,B) = \min_{A,B} \sum_{k=1}^n (A+Bx_k-y_k)^2
+\end{align}
+
+\blue{Cách giải: để tìm giá trị $A^*,B^*$ mà $g(A^*,B^*)=\min_{A,B} g(A,B)$, ta tìm đạo hàm của $g$ theo các biến $A,B$, và giải để đạo hàm bằng không:}
+
+\begin{align}
+\left\lbrace\begin{array}{rcccl}
+ \frac{\partial g}{\partial A} &=& 2 \sum_{k=1}^n (A+Bx_k-y_k) &=& 0 \\
+ \frac{\partial g}{\partial B} &=& 2 \sum_{k=1}^n (A+Bx_k-y_k)x_k &=& 0
+\end{array}
+\right.
+\end{align}
+
+\newpage\titls{Bài toán xấp xỉ hàm thực nghiệm}
+
+\blue{
+Ta viết lại thành hệ phương trình tuyến tính với hai ẩn là $A$ và $B$:
+\begin{align}\label{eq_linear_leastsquare}
+\left\lbrace\begin{array}{rcccl}
+ n \mathbf{A} &+& \left(\sum_{k=1}^n x_k \right) \mathbf{B} &=& \sum_{k=1}^n y_k \\
+ \left(\sum_{k=1}^n x_k\right) \mathbf{A} &+& \left(\sum_{k=1}^n x_k^2 \right) \mathbf{B} &=& \sum_{k=1}^n x_k y_k
+\end{array}
+\right.
+\end{align}
+với các giá trị $x_k, y_k, k=\overline{1,n}$ là dữ liệu đã có và đóng vai trò hằng số trong hệ phương trình tuyến tính này. Khi giải hệ phương trình \eqref{eq_linear_leastsquare}, ta sẽ tìm được các giá trị $A^*$ và $B^*$ của hàm xấp xỉ $y=A^* + B^*x$.
+}
+
+\medskip
+
+Tương tự, đối với dạng hàm $f(x)=A p(x) + B q(x)$, ta lập hàm số $g(A,B) = \sum_{k=1}^n [Ap(x_k)+Bq(x_k)-y_k]^2$, và tính các đạo hàm $\frac{\partial g}{\partial A}, \frac{\partial g}{\partial B}$, để tìm ra giá trị $A^*,B^*$ mà tại đó tổng sai số $g(A^*,B^*)$ là nhỏ nhất.
+
+\newpage\titls{Bài toán xấp xỉ hàm thực nghiệm}
+
+\begin{sagesilent}
+a0=2
+b0=0.8
+n=10
+xk=range(n)
+yk=[a0+b0*i+random() for i in range(n)]
+zk=zip(xk,yk)
+plotdata=list_plot(zk, size=50, legend_label='($x_k$,$y_k$)')
+xk2=[xk[i]^2 for i in range(n)]
+matA=matrix([[n,sum(xk)],[sum(xk),sum(xk2)]])
+xkyk=[xk[i]*yk[i] for i in range(n)]
+matB=vector([sum(yk),sum(xkyk)])
+a,b=N(matA\matB)
+plotline=plot(a+b*x,0,n, color='red', legend_label='($y=A+Bx$)')
+
+tableVD5=r"\begin{tabular}{l|c|l}"
+tableVD5+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+for i in range(n):
+  tableVD5+=latex(i) + r"&" + latex(xk[i]) + r"&" + latex(round(yk[i],3)) + r"\\"
+tableVD5+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: lập phương trình đường thẳng $y=A+Bx$ để xấp xỉ tập dữ liệu trong bảng dưới: (phương trình đường thẳng là $y=\sage{round(a,3)}+\sage{round(b,3)}x$)
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD5}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotdata+plotline}
+    \end{tabular}
+ \end{tabular}
+
+%\newpage\titls{Bài tập}
+% 
+% \newpage\titls{Ví dụ bài tập nhóm}
+% 
+% \begin{sagesilent}
+%  n=7
+%  xk3=[0,1,2,3,4,5,6]
+%  fxk3=[1,3,5,0,2,6,3]
+% # yk3=[(xk3[i],fxk3[i]) for i in range(n)]
+%  yk3=zip(xk3,fxk3) # zip: couple pairs of values of the two arrays
+%  R = PolynomialRing(QQ, 'x')
+%  Lagrange_3 = R.lagrange_polynomial(yk3)
+%  plotL3=plot(Lagrange_3, (xk3[0]),(xk3[n-1]), color='red', legend_label='$\mathcal{L}(x)$')
+%  plotfxk3=list_plot(yk3, size=50, legend_label='($x_k$,$y_k$)')
+%  tableVD3=r"\begin{tabular}{l|c|l}"
+%  tableVD3+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+%  for i in range(n):
+%    tableVD3+=latex(i) + r"&" + latex(round(xk3[i],2)) + r"&" + latex(fxk3[i]) + r"\\"
+%  tableVD3+=r"\end{tabular}"
+% \end{sagesilent}
+% 
+% Ví dụ: tìm hệ số Lagrange của hàm số $f(x)$ có các giá trị cho trong bảng số:
+% 
+%  \begin{tabular}{lc}
+%    \sagestr{tableVD3}
+%   & 
+%     \begin{tabular}{c}
+%     \sageplot[scale=0.3]{plotfxk3+plotL3}
+%     \end{tabular}
+%  \end{tabular}
+% 
+% Kết quả: $\sage{Lagrange_3}$
+% 
+% \newpage\titls{Ví dụ bài tập nhóm}
+% 
+% \begin{sagesilent}
+%  n=7
+%  xk3=[0,1,2,3,4,5,6]
+%  fxk3=[1,3,5,0,3,1,5]
+% # yk3=[(xk3[i],fxk3[i]) for i in range(n)]
+%  yk3=zip(xk3,fxk3) # zip: couple pairs of values of the two arrays
+%  R = PolynomialRing(QQ, 'x')
+%  Lagrange_3 = R.lagrange_polynomial(yk3)
+%  plotL3=plot(Lagrange_3, (xk3[0]),(xk3[n-1]), color='red', legend_label='$\mathcal{L}(x)$')
+%  plotfxk3=list_plot(yk3, size=50, legend_label='($x_k$,$y_k$)')
+%  tableVD3=r"\begin{tabular}{l|c|l}"
+%  tableVD3+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+%  for i in range(n):
+%    tableVD3+=latex(i) + r"&" + latex(round(xk3[i],2)) + r"&" + latex(fxk3[i]) + r"\\"
+%  tableVD3+=r"\end{tabular}"
+% \end{sagesilent}
+% 
+% Ví dụ: tìm hệ số Lagrange của hàm số $f(x)$ có các giá trị cho trong bảng số:
+% 
+%  \begin{tabular}{lc}
+%    \sagestr{tableVD3}
+%   & 
+%     \begin{tabular}{c}
+%     \sageplot[scale=0.3]{plotfxk3+plotL3}
+%     \end{tabular}
+%  \end{tabular}
+% 
+%  Kết quả: $\sage{Lagrange_3}$
+%  
+
+\newpage\titls{Bài tập nhóm 3 - Bài 1 (Bảng Newton tiến)}
+
+\begin{sagesilent}
+ xp=1.5
+ n=7
+ xk1=[0,1,2,3,4,5,6]
+ fxk1=[1,3,5,0,3,1,5] # MSSV
+ #[(1, -3), (2, 0), (3, 15), (4, 48), (5, 105), (6, 192)]
+ yk4=zip(xk4,fxk4) # zip: couple pairs of values of the two arrays
+ R = PolynomialRing(RR, "x")
+ bangNewton = R.divided_difference(yk4, full_table=True)
+ Lagrange_4 = R.lagrange_polynomial(yk4)
+ plotL4=plot(Lagrange_4, (-1),(7), color='red', legend_label='$\mathcal{L}_5(x)$')
+ plotfxk4=list_plot(yk4, size=50, legend_label='($x_k$,$y_k$)')
+ tableVD4=r"\begin{tabular}{l|c|l}"
+ tableVD4+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+ for i in range(n):
+   tableVD4+=latex(i) + r"&" + latex(round(xk4[i],2)) + r"&" + latex(fxk4[i]) + r"\\"
+ tableVD4+=r"\end{tabular}"
+\end{sagesilent}
+
+\begin{sagesilent}
+# Now change the full table from Sagemath to my form of representing table
+ bang2=list(list(i for i in range(j,n)) for j in range(n))
+ for j in range(n):            
+    for i in range(j,n):
+        bang2[j][i-j]=bangNewton[i][j]
+# Now create the Latex table
+ tableNewton=r'\begin{tabular}{l|c|' # first column: k, second column: x_k
+ for i in range(n): tableNewton+='c' # n columns for finit difference order 0 to n
+ tableNewton+=r'}'
+ tableNewton+=r'$k$ & $x_k$ & $y_k$'
+# for i in range(n-1): tableNewton+=r' & f[$x_0,\cdots,x_'+str(i+1)+r'$]'
+ for i in range(1,n): tableNewton+=r' & $f_\Delta^'+str(i)+r'$'
+ tableNewton+=r'\\ \hline'
+ for i in range(n):
+   tableNewton+=latex(i) + r' & ' + latex(round(xk4[i],2))
+   for j in range(i+1):
+     tableNewton+= r' & ' + latex(round(bangNewton[i][j],2))
+   for j in range(i+1,n): tableNewton+= r' & '
+   tableNewton+= r'\\'
+ tableNewton+=r'\end{tabular}'
+\end{sagesilent}
+
+Ví dụ: Tính giá trị gần đúng của hàm số tại $x=\sage{round(xp,2)}$, với dữ liệu:
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD4}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk4+plotL4}
+    \end{tabular}
+ \end{tabular}
+
+
+\newpage\titls{Đa thức nội suy Newton}
+
+Kết quả tính bảng tỉ sai phân: (ký hiệu $f_\Delta^k=f[x_0,\cdots,x_k]$)
+
+\sagestr{tableNewton}
+
+
+\label{lastpage}
+\end{document}

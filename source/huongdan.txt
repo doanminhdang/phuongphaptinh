@@ -1,0 +1,23 @@
+Thu muc styles: luu tru template Latex dung cho cac file slides.
+
+Trong cac thu muc source, noi dung chinh o trong file .tex.
+
+Da so cac package su dung trong cac file Latex cua source la co trong kho luu tru CTAN, chi can cai dat texlive ban full la duoc.
+
+* Rieng goi "sagetex" yeu cau phai chay duoc phan mem tinh toan Sagemath, va cai dat goi sagetex cua phan mem nay. Luu y: trong texlive cua Ubuntu co the da co san goi sagetex, nhung goi do da cu va khong tuong thich (do texlive trong repository cua Ubuntu bi tre hon thuc te nhieu), trong cac phien ban moi cua texlive thi nguoi ta da bo goi sagetex di. Can phai cai dat ban sagetex di cung voi phien ban Sagemath thi moi dam bao chay tot duoc.
+
+Quy trinh compile file Latex khi co su dung sagetex (vi du dich file chap1.tex):
+
+Buoc 1: Dich Latex, no se bao loi rang co mot so noi dung chua bien dich (cac noi dung o trong cac khoi lenh \sage{}, \sagesilent{}, \sageplot{} ...).
+Sau buoc nay, trong thu muc do se co them file chap1.sagetex.sage duoc tao ra.
+
+Buoc 2: Dich cac lenh Sagemath, bang cach goi chuong trinh Sagemath theo lenh sau:
+sage chap1.sagetex.sage
+Sau buoc nay, code tinh toan va ve do thi cua Sagemath nam trong file Latex se duoc bien dich.
+
+Buoc 3: Dich Latex lai.
+Sau buoc nay, code tinh toan tao ra boi sagetex se duoc dua vao trong file ket qua bien dich (file .DVI hay .PDF).
+
+Viec bien dich Latex duoc thuc hien tot voi PDFLatex, tuy nhien van co the dung duoc theo quy trinh Latex -> DVItoPDF (dvipdfm), hoac Latex -> DVItoPS (dvips) -> PStoPDF (ps2pdf).
+
+Doan Minh Dang, 2015.07.30

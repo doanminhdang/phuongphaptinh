@@ -1,0 +1,232 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,1in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{sagetex}
+
+\title{Kiểm tra giữa kỳ \\ Phương pháp tính kỹ thuật HK1 2014-2015}
+\author{Name: \hspace*{2in}}
+\author{Doãn Minh Đăng}
+\date{13:30 - 14:20 ngày thứ ba 21/10/2014}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Solution}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large  \Author \par}%
+      \vskip 1em%
+    {\large \Date \par}% 
+  \end{center}\par
+
+\begin{tabular}{|l|l|}
+\hline
+Họ và tên: \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad & MSSV: \qquad \qquad \qquad \qquad \qquad \\
+& \\
+\hline
+Điểm: \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad & \\
+& \\
+\hline
+\end{tabular} 
+
+\section*{Yêu cầu}
+\begin{itemize}
+ \item Sinh viên làm bài ngay trên đề thi này.
+ \item Đây là bài làm cá nhân, không trao đổi với người khác.
+\end{itemize}
+
+\section{Bài 1 (1 điểm)}
+Biết số $A$ có giá trị gần đúng là $a=0.5090$ với sai số tương đối là $\delta_a=0.83\%$. Ta làm tròn $a$ thành $a^*=0.51$. Tính sai số tuyệt đối của $a^*$ khi dùng nó làm số gần đúng cho $A$.
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+
+\section{Bài 2 (1 điểm)}
+Cho hàm số $f=x^3+xy+y^3$. Biết $x=3.6991 \pm 0.0010$ và $y=0.3958 \pm 0.0021$. Tính sai số tuyệt đối của hàm số $f$ tại điểm $(x,y)$ đó.
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+
+\section{Bài 3 (1 điểm)}
+\begin{sagesilent}
+#f(x)=3*x*sin(x)-(x-2)^2
+f(x)=2*x*cos(2*x)-(x-2)^2
+\end{sagesilent}
+Phương trình $f(x)=\sage{f(x)}$ nhận các khoảng nào sau đây làm khoảng cách ly nghiệm:
+
+\begin{tabular}{cccc}
+%a. $[0, 0.5]$ \qquad\qquad & b. $[0.5, 1]$ \qquad\qquad & c. $[1, 1.5]$ \qquad \qquad & d. $[1.5, 2]$ 
+a. $[0, 1]$ \qquad\qquad \qquad\qquad & b. $[1, 2]$ \qquad\qquad \qquad\qquad & c. $[2, 3]$ \qquad \qquad \qquad\qquad & d. $[3, 4]$ \qquad\qquad\qquad\qquad 
+\end{tabular} 
+
+\section{Bài 4 (1 điểm)}
+Vẽ hình minh họa bước thứ nhất cho các phương pháp lặp để giải phương trình phi tuyến, đánh dấu trên đồ thị các giá trị $x_1, a_1, b_1$ (nếu có sử dụng khoảng $[a,b]$ trong phương pháp).
+\begin{sagesilent}
+f = 54*x^6 + 45*x^5 - 102*x^4 - 69*x^3 + 35*x^2 + 16*x -2
+plotf = plot(f,-1,0.7)
+x0=1/3
+cx0=circle((x0,f(x=x0)),0.04,color='red')
+a0=-1/3
+b0=1/3
+ca0=circle((a0,f(x=a0)),0.04,color='red')
+cb0=circle((b0,f(x=b0)),0.04,color='green')
+plota=plotf+cx0
+plotb=plotf+ca0+cb0
+plota.set_aspect_ratio(0.1)
+plotb.set_aspect_ratio(0.1)
+\end{sagesilent}
+
+\begin{tabular}{cc}
+ a. Phương pháp Newton-Raphson, $x_0=\sage{x0}$ & b. Phương pháp dây cung, $a_0=\sage{a0}, b_0=\sage{b0}$ \\
+ \sageplot[scale=.35]{plota} &  \sageplot[scale=.35]{plotb}
+\end{tabular}
+
+
+
+\section{Bài 5 (1 điểm)}
+Thực hiện hai bước đầu tiên theo phương pháp Newton-Raphson để giải các phương trình sau với điểm bắt đầu là $x_0 = 1$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$.
+
+\section{Bài 6 (1 điểm)}
+Sử dụng phương pháp khử Gauss để giải hệ phương trình sau:
+\begin{eqnarray*}
+    2x -2y -z &=& -2\\
+    4x + y -2z &=& 1\\
+    -2x + y -z &=& -3
+  \end{eqnarray*}
+
+\section{Bài 7 (1 điểm)}
+Tính chuẩn một $\|A\|_1$ và chuẩn vô cùng $\|A\|_{\infty}$ của ma trận sau:
+\begin{sagesilent}
+ A=matrix([[-3, -2, -8],[3, -3, 8], [7, 7, 7]])
+\end{sagesilent}
+\begin{equation*}
+ A=\sage{A}
+\end{equation*}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+
+\section{Bài 8 (1 điểm)}
+Cho hệ phương trình:
+\begin{eqnarray*}
+19x_1-2x_2=4\\
+-2x_1+9x_2=4
+\end{eqnarray*}
+Tính ma trận lặp $T_g$ theo phương pháp lặp Gauss-Seidel.
+
+\section{Bài 9 (1 điểm)}
+Cho hệ phương trình:
+\begin{eqnarray*}
+14x_1-2x_2=7\\
+-2x_1+17x_2=5
+\end{eqnarray*}
+Tính ma trận lặp $T_j$ theo phương pháp lặp Jacobi.
+
+\section{Bài 10 (2 điểm)}
+Thiết lập các phương trình để giải quyết các bài toán thực tế sau đây.
+\subsection{Lập phương trình phi tuyến}
+Công ty điện lực Cần Thơ hiện đang quản lý 400 000 đồng hồ điện, trong đó có 50 000 đồng hồ điện tử ("công tơ điện tử"), còn lại là đồng hồ cơ. Tỉ lệ suy giảm của số lượng đồng hồ điện là $e^{-ct}$, với $t$ là thời gian (tính theo tháng), $c$ là hệ số hư hao (hằng số), tức là sau thời gian $t$ thì từ $N$ cái ban đầu sẽ còn lại $Ne^{-ct}$ cái; đối với đồng hồ điện tử thì $c=0.002$, và $c=0.001$ đối với đồng hồ cơ. Công ty này có kế hoạch chuyển đổi dần các đồng hồ cơ thành đồng hồ điện tử. Giả sử chi phí thay mới một đồng hồ điện tử là 5 triệu đồng (giống nhau cho cả hai trường hợp: thay cho đồng hồ cơ, hoặc thay cho đồng hồ điện tử). Mỗi tháng công ty này đầu tư 5 tỉ đồng để bổ sung đồng hồ điện tử mới, theo cách sau: nếu có đồng hồ bị hỏng (cơ, hoặc điện tử) thì ưu tiên thay mới, còn lại thì thay thế dần các đồng hồ cơ bằng đồng hồ điện tử.
+
+Hãy lập phương trình thể hiện số lượng đồng hồ điện tử $f(t)$ và đồng hồ cơ $g(t)$ theo số tháng $t$, lấy $t=0$ ở thời điểm hiện tại.
+
+Tính số lượng đồng hồ điện tử và đồng hồ cơ ở thời điểm 120 tháng.
+
+\subsection{Lập hệ phương trình tuyến tính}
+%http://www.chess.com/news/millionaire-chess-concludes-with-6-figure-check-to-wesley-so-7896
+%http://millionairechess.com/standings/prizes-mc-open.pdf
+Giải thi đấu cờ vua \emph{Millionaire Chess} vừa diễn ra tại Las Vegas, kết quả các kỳ thủ được giải thưởng như sau:
+
+\begin{tabular}{l|c|r}
+Tên kỳ thủ & Hạng & Giá trị giải thưởng \\
+\hline
+SO Wesley & 1 & $x_1$ \\%100k
+ROBSON Ray & 2 & $x_2$ \\%50k
+YU Yangyi & 3 & $x_3$ \\%25k
+ZHOU Jianchao & 4 & $x_4$ \\%14k
+6 kỳ thủ & 5-10 & $x_5$ \\%3334->3000
+12 kỳ thủ & 11-22 & $x_6$ \\%1834->2000
+LE Quang Liem & 23 & $x_7$ \\%1000
+\end{tabular}
+
+Lập hệ phương trình tuyến tính để tính giải thưởng các kỳ thủ trên nhận được, với các thông tin sau đây:
+\begin{enumerate}
+ \item SO Wesley được giải thưởng gấp đôi người hạng nhì, gấp bốn người hạng ba. %x1=2x2; x2=2x3
+ \item YU Yangyi có giải thưởng bằng tổng của ZHOU Jianchao, hai kỳ thủ nhóm 5-10, 2 kỳ thủ nhóm 11-22, và LE Quang Liem cộng lại. %x3=x4+2*x5+2*x6+x7
+ \item Kỳ thủ hạng 4 nhận giải thưởng bằng một phần ba tổng giải thưởng của cả hai nhóm tiếp sau gộp lại. %x4=(6*x5+12*x6)/3
+ \item Mỗi kỳ thủ trong nhóm 5-10 nhận được gấp rưỡi tiền thưởng so với mỗi kỳ thủ ở nhóm 11-22. %x5=1.5*x6
+ \item LE Quang Liem nhận được một nửa giải thưởng so với người xếp ngay trên mình. %x6=2x7
+% \item Tổng cộng các kỳ thủ trong bảng trên nhận được 232 ngàn USD. %sum_x=232 % Dùng phương trình này thì ma trận không còn có dạng tam giác
+ \item Mỗi kỳ thủ cần đóng phí tham dự là 1000 USD, kết quả là LE Quang Liem hòa vốn. %x7=1000 
+\end{enumerate}
+
+% A=[1 1 1 1 6 12 1;
+%   1 -2 0 0 0 0 0;
+%   0 1 -2 0 0 0 0;
+%   0 0 -1 1 2 2 1;
+%   0 0 0 -1 2 4 0;
+%   0 0 0 0 -1 1.5 0;
+%   0 0 0 0 0 1 -2]
+
+% A=[1 -2 0 0 0 0 0;
+%   0 1 -2 0 0 0 0;
+%   0 0 -1 1 2 2 1;
+%   0 0 0 -1 2 4 0;
+%   0 0 0 0 -1 1.5 0;
+%   0 0 0 0 0 1 -2;
+%   0 0 0 0 0 0 1;]
+
+Ma trận $A$ của hệ phương trình này có dạng gì?
+
+\end{document}

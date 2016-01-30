@@ -1,0 +1,236 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,1in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{sagetex}
+
+
+\title{Bài tập nhóm 2 - Phương pháp tính kỹ thuật HK1 2014-2015}
+\author{Name: \hspace*{2in}}
+\author{Doãn Minh Đăng}
+\date{Hạn nộp: 13:30 ngày thứ ba 11/11/2014}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Solution}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large  \Author \par}%
+      \vskip 1em%
+    {\large \Date \par}% 
+  \end{center}\par
+
+\section*{Yêu cầu}
+\begin{itemize}
+ \item Sinh viên có thể ghi kết quả trên giấy viết tay, hoặc đánh máy và in ra. Đối với bài 7, 8 và 9 cần gửi file chương trình cho giảng viên qua email.
+ \item Trên bài làm và trên file chương trình, cần ghi cụ thể tên, mã số sinh viên của các thành viên trong nhóm.
+ \item Sinh viên làm theo nhóm từ 2 đến 3 thành viên.
+ \item Bài nộp trễ sẽ bị trừ 10 điểm cho mỗi ngày trễ hạn.
+ \item Câu hỏi số 10 có bonus, tuy nhiên điểm tối đa cho bài tập nhóm này là 100 điểm, sẽ được quy đổi sang thang điểm 10 khi kết thúc môn học.
+\end{itemize}
+
+
+\section{Bài 1 (10 điểm)}
+\begin{sagesilent}
+A=matrix([[10,-1,2,0],[-1,11,-1,3],[2,-1,10,-1],[0,3,-1,8]]);
+B=matrix([[6],[25],[-11],[15]]);
+\end{sagesilent}
+
+Cho một ma trận $A$ trong Octave, ví dụ:
+\begin{equation}
+ A=\sage{A}
+\end{equation}
+
+Hãy ghi các lệnh Octave dùng để tạo ra các ma trận khác như sau:
+\begin{enumerate}
+ \item $Ak$ là ma trận mà mỗi phần tử đều bằng hằng số $k$ nhân với phần tử cùng vị trí bên ma trận $A$ ($k$ là số cho trước)
+ \item $Ac2$ là vector chứa các phần tử trên cột số 2 của $A$
+ \item $Ar3$ là vector chứa các phần tử trên hàng số 3 của $A$
+ \item $a1$ là ma trận con chứa các phần tử ở hàng 2 đến 4, cột 1 đến 3 của $A$
+ \item $AT$ là ma trận chuyển vị của $A$
+ \item $Ainv$ là ma trận nghịch đảo của $A$ (nếu $A$ là ma trận vuông, khả đảo)
+ \item $A2c$ là ma trận lớn, mà nếu cắt đôi ma trận này theo chiều dài thì mỗi nửa đều là ma trận $A$
+ \item $A2r$ là ma trận lớn, mà nếu cắt đôi ma trận này theo chiều rộng thì mỗi nửa đều là ma trận $A$
+ \item $Aghep$ là một vector hàng, được thành lập bằng cách nối liên tiếp các hàng của ma trận $A$ (câu này có thể dùng một nhóm lệnh)
+ \item Cho vector $B=\sage{B}$, lệnh nào giúp giải nhanh hệ phương trình $AX=B$?
+\end{enumerate}
+
+\section{Bài 2 (10 điểm)}
+
+Ta xem lại bài toán \textbf{Lập hệ phương trình tuyến tính} trong đề thi giữa kỳ:
+
+%http://www.chess.com/news/millionaire-chess-concludes-with-6-figure-check-to-wesley-so-7896
+%http://www.millionairechess.com/2014/mco2014-prizes-open.pdf
+%http://millionairechess.com/standings/prizes-mc-open.pdf
+Giải thi đấu cờ vua \emph{Millionaire Chess} vừa diễn ra tại Las Vegas tháng 10/2014, kết quả các kỳ thủ được giải thưởng như sau:
+
+\begin{center}
+\begin{tabular}{l|c|r}
+Tên kỳ thủ & Hạng & Giá trị giải thưởng \\
+\hline
+SO Wesley & 1 & $x_1$ \\%100k
+ROBSON Ray & 2 & $x_2$ \\%50k
+YU Yangyi & 3 & $x_3$ \\%25k
+ZHOU Jianchao & 4 & $x_4$ \\%14k
+6 kỳ thủ & 5-10 & $x_5$ \\%3334->3000
+12 kỳ thủ & 11-22 & $x_6$ \\%1834->2000
+LE Quang Liem & 23 & $x_7$ \\%1000
+\end{tabular}
+\end{center}
+
+Lập hệ phương trình tuyến tính để tính giải thưởng các kỳ thủ trên nhận được, với các thông tin sau đây:
+\begin{enumerate}
+ \item Tổng cộng các kỳ thủ trong bảng trên nhận được 232 ngàn USD. %sum_x=232 % Dùng phương trình này thì ma trận không còn có dạng tam giác
+ \item SO Wesley được giải thưởng gấp đôi người hạng nhì, gấp bốn người hạng ba. %x1=2x2; x2=2x3
+ \item YU Yangyi có giải thưởng bằng tổng của ZHOU Jianchao, hai kỳ thủ nhóm 5-10, 2 kỳ thủ nhóm 11-22, và LE Quang Liem cộng lại. %x3=x4+2*x5+2*x6+x7
+ \item Kỳ thủ hạng 4 nhận giải thưởng bằng một phần ba tổng giải thưởng của cả hai nhóm tiếp sau gộp lại. %x4=(6*x5+12*x6)/3
+ \item Mỗi kỳ thủ trong nhóm 5-10 nhận được gấp rưỡi tiền thưởng so với mỗi kỳ thủ ở nhóm 11-22. %x5=1.5*x6
+ \item LE Quang Liem nhận được một nửa giải thưởng so với người xếp ngay trên mình. %x6=2x7
+% \item Mỗi kỳ thủ cần đóng phí tham dự là 1000 USD, kết quả là LE Quang Liem hòa vốn. %x7=1000 
+\end{enumerate}
+
+Hãy tìm cách để biến đổi ma trận vừa thành lập được thành một \textbf{ma trận tam giác trên}, với ít thao tác nhất.
+
+\section{Bài 3 (9 điểm)}
+
+Sử dụng phương pháp khử Gauss hoặc Gauss-Jordan để giải các hệ phương trình sau:
+
+\begin{enumerate}[a)]
+\item 
+\begin{eqnarray*}
+    2x -2y -z &=& -2\\
+    4x + y -2z &=& 1\\
+    -2x + y -z &=& -3
+  \end{eqnarray*}
+
+
+\item 
+  \begin{eqnarray*}
+    x + 2y -z &=& 2\\
+       3y + z &=& 4\\
+    2x -y + z &=& 2
+  \end{eqnarray*}
+
+
+\item 
+  \begin{eqnarray*}
+    2x + y -4z &=& -7\\
+    x -y +z &=& -2\\
+    -x + 3y - 2z &=& 6
+  \end{eqnarray*}
+
+\end{enumerate}
+
+
+\section{Bài 4 (6 điểm)}
+
+Sắp xếp lại các hệ phương trình sau để có dạng ma trận đường chéo trội nghiêm ngặt. Áp dụng phương pháp Jacobi tính 2 bước lặp đầu tiên, với vector ban đầu là $[0,\ldots,0]$.
+
+\begin{enumerate}[a)]
+
+\item
+
+  \begin{eqnarray*}
+    u - 8v -2w &=& 1\\
+    u + v + 5w &=& 4 \\
+    3u - v + w &=& -2
+  \end{eqnarray*}
+    
+\item  
+ \begin{eqnarray*}
+    u + 4v &=& 5\\
+    v + 2w &=& 2\\
+    4u + 3w&=& 0
+  \end{eqnarray*}
+  
+\end{enumerate}
+
+\section{Bài 5 (6 điểm)}
+
+Áp dụng phương pháp Gauss-Seidel để giải các hệ phương trình ở bài 4.
+
+\section{Bài 6 (9 điểm)}
+
+Tìm các số điều kiện của các ma trận sau:
+
+\begin{enumerate}[a)]
+
+\item $A = \begin{bmatrix}  1 & 2\\ 3 & 4 \end{bmatrix}$
+
+\item $A = \begin{bmatrix} 1 & 2.01 \\ 3 & 6\end{bmatrix}$
+
+\item $A = \begin{bmatrix} 6 & 3 \\ 4 & 2\end{bmatrix}$
+
+\end{enumerate}
+
+\section{Bài 7 (10 điểm)}
+Viết một chương trình Octave để thực hiện giải thuật khử Gauss, chương trình nhận hai tham số là ma trận vuông $A$ và vector cột $B$, xuất ra nghiệm là vector cột $X$.
+
+Sinh viên nộp chương trình dạng file function \emph{khugauss.m}, file này sẽ được kiểm tra bằng cách cho chạy một số ma trận mẫu có kích thước 3x3, 3x4, 4x3, 4x4, 5x5.
+
+\textbf{Lưu ý}: chương trình này cần kiểm tra các điều kiện để có thể trả lời là hệ phương trình có nghiệm hay không.
+
+\section{Bài 8 (15 điểm)}
+Viết một chương trình Octave để thực hiện phương pháp lặp Jacobi giải hệ phương trình tuyến tính $AX=B$ với $X_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+Sinh viên nộp chương trình dạng file function \emph{ppjacobi.m}, file này sẽ được kiểm tra bằng cách cho chạy một số ma trận mẫu có kích thước 3x3, 3x4, 4x3, 4x4, 5x5.
+
+\textbf{Lưu ý}: cần kiểm tra ma trận có ở dạng đường chéo trội nghiêm ngặt không.
+
+\section{Bài 9 (15 điểm)}
+Viết một chương trình Octave để thực hiện phương pháp lặp Gauss-Seidel giải hệ phương trình tuyến tính $AX=B$ với $X_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+Sinh viên nộp chương trình dạng file function \emph{ppgauss\_seidel.m}, file này sẽ được kiểm tra bằng cách cho chạy một số ma trận mẫu có kích thước 3x3, 3x4, 4x3, 4x4, 5x5.
+
+\textbf{Lưu ý}: cần kiểm tra ma trận có ở dạng đường chéo trội nghiêm ngặt không.
+
+\section{Bài 10 (10+10 điểm)}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần giải một hệ phương trình tuyến tính. Trình bày ví dụ đó, xây dựng hệ phương trình cần giải, và nêu ý nghĩa của việc giải hệ phương trình đó.
+
+Các nhóm sinh viên không được sao chép ý tưởng của nhau. Nếu có ví dụ được hai hay nhiều nhóm cùng sử dụng, điểm số chỉ được tính cho nhóm nào gửi đầu tiên. Các nhóm có thể gửi giải đáp cho bài 10 này nhiều lần qua email trước khi gửi bài báo cáo cuối cùng cho bài tập nhóm này (để đăng ký ý tưởng mình nghĩ ra).
+
+Mỗi ví dụ đúng đắn và trình bày rõ ràng được tính 5 điểm.
+
+\textbf{Bonus}: Nếu báo cáo bài tập nhóm được hoàn thành kịp hạn chót, thì câu này có thể đạt tối đa 20 điểm. Nếu báo cáo bài tập nhóm được gửi trễ hạn, thì câu này chỉ được tối đa 10 điểm.
+
+\end{document}

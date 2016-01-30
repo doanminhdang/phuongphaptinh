@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry} % to change the page dimensions
+\geometry{a4paper,hmargin={1in,1in},vmargin={1in,1in}} %
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{verbatim}
+
+
+\title{Bài tập nhóm 1 - Phương pháp tính kỹ thuật HK1 2014-2015}
+\author{Name: \hspace*{2in}}
+\author{Doãn Minh Đăng}
+\date{Hạn nộp: 23:59 ngày thứ hai 13/10/2014}
+
+
+%----------- HEADERS & FOOTERS -------------
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\makeatletter
+\let\Title\@title
+\let\Author\@author
+\let\Date\@date
+\makeatother
+\fancyhead[LE,RO]{\bfseries\Author}
+\fancyhead[RE,LO]{{\Title}}
+\usepackage{lastpage}
+\cfoot{\thepage\ of \pageref{LastPage}}
+\usepackage{hyperref}
+
+
+%----------- OTHER PACKAGES  -------------
+\usepackage{paralist}
+\setlength{\pltopsep}{1.5ex}
+\setlength{\plitemsep}{0.5ex}
+\setdefaultleftmargin{2.5em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+\newcommand{\Solution}{
+\medskip
+{\bf \underline{Solution}:}
+}
+
+\newcommand{\Collaborators}{
+\medskip
+{\bf \underline{Collaborators}:}
+}
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\thispagestyle{plain}
+
+  \begin{center}%
+    {\LARGE \Title \par}%
+    \vskip 1.5em%
+    {\large  \Author \par}%
+      \vskip 1em%
+    {\large \Date \par}% 
+  \end{center}\par
+
+\section*{Yêu cầu}
+\begin{itemize}
+ \item Sinh viên có thể ghi kết quả trên giấy viết tay, hoặc đánh máy và in ra. Đối với bài 7 và bài 8 cần gửi file chương trình cho giảng viên.
+ \item Trên bài làm và trên file chương trình, cần ghi cụ thể tên, mã số sinh viên của các thành viên trong nhóm.
+ \item Sinh viên làm theo nhóm từ 2 đến 3 thành viên.
+\end{itemize}
+
+
+\section{Bài 1 (5 điểm)}
+Dùng phương pháp chia đôi để tìm nghiệm của phương trình $x^2+3x-8^{-14}=0$ chính xác đến ba chữ số thập phân (chữ số thứ ba sau dấu thập phân là chữ số đáng tin). Mỗi nhóm sinh viên tự chọn khoảng ban đầu $[a,b]$ để triển khai phương pháp chia đôi. Trình bày kết quả theo bảng gồm các giá trị $a_k, b_k, x_k$, dấu của $f(x_k)$.
+
+\section{Bài 2 (5 điểm)}
+Giả sử phương pháp chia đôi được dùng để tìm nghiệm của hàm số $f(x) = 1/x$, với khoảng ban đầu là $[-2,1]$. Trả lời các câu hỏi sau:
+\begin{enumerate}[a)]
+ \item Giải thuật này có hội tụ về một giá trị thực hay không?
+ \item Giá trị đó có phải là nghiệm của phương trình hay không?
+ \item Giải thích tại sao giải thuật này không giúp tìm được nghiệm của hàm số này?
+ \item Phương pháp nào khác giúp tìm được nghiệm của hàm số này? Giải thích.
+\end{enumerate}
+
+\section{Bài 3 (9 điểm)}
+Dùng định lý 6 trong bài giảng chương 2 để kiểm tra xem phương pháp lặp đơn dùng để tìm điểm bất động của hàm số $g(x)$ có hội tụ về nghiệm $p$ được cho hay không:
+
+\begin{enumerate}[a)]
+\item $g(x) = (2x-1)/x^2, p = 1$
+
+\item $g(x) = \cos x + \pi + 1, p = \pi$
+
+\item $g(x) = e^{2x} - 1, p = 0$
+
+\end{enumerate}
+
+\section{Bài 4 (8 điểm)}
+Đối với mỗi phương trình sau đây, tìm hàm số $g(x)$ để chuyển bài toán về dạng tìm điểm bất động của hàm số $g(x)$. Xác định khoảng $[a,b]$ sao cho thỏa mãn điều kiện hội tụ của phương pháp lặp đơn tìm điểm bất động của hàm số $g(x)$ trên khoảng $[a,b]$. Giải thích điều kiện hội tụ được thỏa mãn như thế nào.
+
+\begin{enumerate}[a)]
+\item $x^3-x-1=0$
+
+\item $x=2tanh(x)$ (tanh là hàm tan hyperbolic)
+
+\end{enumerate}
+
+\textbf{Gợi ý}: xem định lý 5 và định lý 6 trong bài giảng chương 2.
+
+\section{Bài 5 (9 điểm)}
+Thực hiện hai bước đầu tiên theo phương pháp dây cung để giải các phương trình sau với khoảng ban đầu là $[1,2]$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$ (chuyển đổi bài toán để tạo $f(x_k)$ theo quy ước giải bài toán $f(x_k)=0$).
+
+\begin{enumerate}[a)]
+\item $x^3 = 2x + 2$
+
+\item $e^x + x = 7$
+
+\item $e^x + \sin x = 4$
+
+\end{enumerate}
+
+\section{Bài 6 (9 điểm)}
+Thực hiện hai bước đầu tiên theo phương pháp Newton-Raphson để giải các phương trình sau với điểm bắt đầu là $x_0 = 1$. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$.
+
+\begin{enumerate}[a)]
+
+\item $x^3 + x^2 - 1 = 0$
+
+\item $x^2 + 1/(x+1) - 3x = 0$
+
+\item $5x - 10 = 0$
+
+\end{enumerate}
+
+\section{Bài 7 (10 điểm)}
+Viết một chương trình Octave để vẽ đồ thị của một hàm số $f(x)$, chương trình nhận bốn tham số bao gồm: khai báo hàm số $f$ từ một function $f=hamso(x)$, điểm bắt đầu vẽ đồ thị $a$ và điểm kết thúc vẽ đồ thị $b$, khoảng cách giữa hai điểm rời rạc hóa trên đồ thị $step$ (nếu người dùng không nhập giá trị $step$ thì cho nó giá trị mặc định là $0.1$).
+
+Sinh viên nộp chương trình dạng file function \emph{vedothi.m}, và hình chụp màn hình khi chạy file này để vẽ được đồ thị một hàm số.
+
+Gợi ý: file chứa hàm số cần được lưu riêng, ví dụ \emph{hamso.m}, và chương trình chính gọi function đó bằng cách nhập tham số kiểu \emph{@hamso}.
+
+\section{Bài 8 (10 điểm)}
+Viết một chương trình Octave để thực hiện một trong các giải thuật: phương pháp lặp đơn, phương pháp dây cung, hoặc phương pháp Newton-Raphson, nhằm tìm nghiệm của hàm số $f(x)$ trong một khoảng bắt đầu $[a,b]$ cho trước hoặc xuất phát từ một điểm $x_0$ cho trước. Sinh viên tự do tham khảo các chương trình mẫu trong sách và cải tiến chúng.
+
+\textbf{Bonus}: Nếu sinh viên có thể ghép thêm lệnh vẽ đồ thị của hàm số để minh họa các bước lặp của giải thuật, thì sẽ được nhân đôi số điểm của bài này.
+
+Sinh viên nộp chương trình dạng file function \emph{giaiphuongtrinh.m}, và hình chụp màn hình khi chạy file này nếu chương trình xuất ra được các bước giải trên đồ thị.
+
+\textbf{Gợi ý}: dùng lệnh \emph{hold on} để cho phép vẽ chồng chập nhiều đồ thị trên một đối tượng figure, trong lệnh plot dùng thêm thông số \emph{color} để chọn màu sắc, ví dụ $plot(x,fx,color='r')$.
+
+\section{Bài 9 (15 điểm)}
+Cho hàm số $f(x) = 54x^6 + 45x^5 - 102x^4 - 69x^3 + 35x^2 + 16x -4$. Vẽ đồ thị hàm số này trên đoạn $[-2,2]$, và dùng một trong các phương pháp số đã học trong chương 2 để tìm toàn bộ 5 nghiệm của phương trình này trên đoạn đó với độ chính xác đến ba chữ số thập phân. Trình bày kết quả theo bảng gồm các giá trị $x_k, f(x_k)$ hội tụ về từng nghiệm.
+
+\textbf{Gợi ý}: cần chọn 5 điểm/khoảng bắt đầu khác nhau để chạy giải thuật sao cho hội tụ về 5 nghiệm khác nhau, sinh viên nên phân tích kỹ đồ thị để tìm điểm/khoảng bắt đầu phù hợp.
+
+\section{Bài 10 (tối đa 20 điểm)}
+Tìm các ví dụ trong thực tế, trong các môn học khác, về việc cần giải một phương trình để tính được một giá trị mong muốn. Trình bày ví dụ đó, xây dựng phương trình cần giải, và nêu ý nghĩa của việc giải phương trình đó.
+
+Các nhóm sinh viên không được sao chép ý tưởng của nhau. Nếu có ví dụ được hai hay nhiều nhóm cùng sử dụng, điểm số chỉ được tính cho nhóm nào gửi đầu tiên. Các nhóm có thể gửi giải đáp cho bài 10 này nhiều lần qua email trước khi gửi bài báo cáo cuối cùng cho bài tập nhóm này (để đăng ký ý tưởng mình nghĩ ra).
+
+Mỗi ví dụ đúng đắn và trình bày rõ ràng được tính 5 điểm.
+
+\end{document}

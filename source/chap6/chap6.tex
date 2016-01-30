@@ -1,0 +1,380 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+%\usepackage{hyperref}
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 6: Giải số các phương trình vi phân}
+\Large{\textbf{Giải gần đúng các phương trình vi phân thường và hệ phương trình vi phân cấp một}}
+
+\enu{
+\item Phát biểu bài toán
+\item Phương pháp Euler
+\item Phương pháp Euler cải tiến
+\item Phương pháp Runge - Kutta
+\item Giải hệ phương trình vi phân cấp một
+%\item Bài tập
+% \item Lập trình giải thuật
+}
+
+\newpage\titls{Phát biểu bài toán}
+
+\textbf{Bài toán Cauchy}, còn gọi là \textbf{bài toán điều kiện ban đầu (IVP - initial value problem)}:
+
+\begin{align}
+ \left\lbrace \begin{array}{l}
+               y'(t) = f(t,y(t)), ~ t \geq t_0 \\
+               y(t_0)=y_0
+              \end{array}
+\right.
+\end{align}
+Bài toán có đạo hàm vi phân ở vế trái, với hàm số $f$ và điều kiện ban đầu $y_0$ được cho trước. \blue{Ta cần giải bài toán này để tìm $y(t_1)$ ở thời điểm $t_1$ mong muốn, dùng \textbf{phương pháp số}}.
+
+Ví dụ ứng dụng: phân tích đáp ứng của mạch điện, phân tích đáp ứng các hệ thống dao động (như con lắc),...
+
+\newpage\titls{Tổng quan các phương pháp}
+
+\itemi{
+\item Phương pháp Euler
+\item Phương pháp Euler cải tiến
+\item Phương pháp Runge - Kutta
+}
+
+\newpage\titls{Phương pháp Euler}
+
+Nhắc lại ý nghĩa hình học của đạo hàm: $y'(\bar{t})$ là hệ số góc tiếp tuyến của hàm số $y(t)$ tại điểm $(\bar{t},y(t))$ (ở đây $t$ là tên biến số, còn $\bar{t}$ là một giá trị nào đó).
+
+\blue{
+Công thức Euler:
+\begin{align}
+ y(t_1) \approx y_0 + (t_1 - t_0) f(t_0,y_0) = y_0 + h f(t_0,y_0)
+\end{align}
+với $h=t_1-t_0$.
+}
+
+Ý nghĩa: xấp xỉ hàm số $y(t)$ trong khoảng $[t_0;t_1]$ bằng tiếp tuyến của nó vẽ tại điểm $(t_0,y_0)$:
+\begin{align}
+ y(t) \approx y_0 + y'(t_0) (t - t_0) = y_0 + f(t_0,y_0)(t-t_0)
+\end{align}
+
+
+\newpage\titls{Phương pháp Euler cải tiến}
+
+Ý tưởng cải tiến: sử dụng thêm đạo hàm tại điểm $t_1$, với hy vọng sự xấp xỉ được chính xác hơn. Thay vì dùng đạo hàm tại $t_0$, ta dùng \textbf{trung bình cộng đạo hàm tại $t_0$ và $t_1$}:
+
+% \begin{align}
+%  y(t_1) \approx y_0 + \frac{y'(t_0)+y'(t_1)}{2} (t_1 - t_0) = y_0 + \frac{f(t_0,y_0)+f(t_1,y(t_1))}{2}(t_1-t_0)
+% \end{align}
+
+\begin{align}
+ y(t_1) \approx y_0 + h\frac{y'(t_0)+y'(t_1)}{2} = y_0 + h\frac{f(t_0,y_0)+f(t_1,y(t_1))}{2}
+\end{align}
+
+Tuy nhiên, giá trị $y(t_1)$ ở vế phải lại là cái chưa biết, nên ta thay $y(t_1)$ ở vế phải bằng giá trị xấp xỉ theo công thức Euler: $y(t_1) \approx y_0 + hf(t_0,y_0)$, để ở vế phải có đủ dữ kiện.
+
+\blue{
+Công thức Euler cải tiến:
+\begin{align}
+ y(t_1) \approx y_0 + h \frac{f(t_0,y_0)+f(t_1,y_0 + hf(t_0,y_0))}{2}
+\end{align}
+với $h=t_1-t_0$.
+}
+
+\newpage\titls{Phương pháp Runge- Kutta}
+
+\blue{Công thức Runge-Kutta bậc 4 (RK4):
+
+\begin{align}
+\left\lbrace \begin{array}{l}
+               y(t_1) \approx y_0 + \frac{1}{6}(K_1 + 2K_2 + 2K_3 + K_4) \\
+               K_1 = h f(t_0,y_0) \\
+               K_2 = h f\left(t_0+\frac{h}{2},y_0 + \frac{K_1}{2}\right) \\
+               K_3 = h f\left(t_0+\frac{h}{2},y_0 + \frac{K_2}{2}\right) \\
+               K_4 = h f\left(t_0+h,y_0 + K_3\right)
+               \end{array}
+\right.
+\end{align}
+}
+
+Sử dụng cách thiết lập công thức Runge-Kutta tổng quát, cho ta lại: với bậc 1, ta được công thức Euler, với bậc 2, ta được công thức Euler cải tiến.
+
+\newpage\titls{Bài tập}
+
+Dùng các công thức Euler, Euler cải tiến, RK4 để tính $y(t_1)$ với $h=0.1$:
+
+\begin{align}
+ \left\lbrace \begin{array}{l}
+               y'(t) = y+t \\
+               y(0)=1
+              \end{array}
+\right.
+\end{align}
+Nghiệm chính xác là: $2 e^t - t - 1$.
+
+\begin{align}
+ \left\lbrace \begin{array}{l}
+               y'(t) = 1+(y-t)^2, ~ 2 \leq t \leq 3 \\
+               y(2)=1
+              \end{array}
+\right.
+\end{align}
+Nghiệm chính xác là: $t+\frac{1}{t-1}$.
+
+\newpage\titls{Chia nhỏ khoảng cần tính }
+
+Khi khoảng cần tính là quá rộng, ta chia nhỏ ra thành nhiều bước: để tính $y(t_0+H)$, ta chia bước nhỏ $h=\frac{H}{n}$ và tính $y(t_k)$ tại $t_k = t_0 + kh$.
+
+\blue{
+Công thức Euler:
+\begin{align*}
+ y(t_k) \approx y_k = y_{k-1} + h f(t_{k-1},y_{k-1})
+\end{align*}
+với $k=1, 2, \cdots, n$.
+
+Công thức Euler cải tiến:
+\begin{align*}
+ y(t_k) \approx y_k = y_{k-1} + h \frac{f(t_{k-1},y_{k-1})+f(t_{k},y_{k-1} + hf(t_{k-1},y_{k-1}))}{2}
+\end{align*}
+với $k=1, 2, \cdots, n$. Hoặc viết lại ở dạng công thức Runge-Kutta bậc 2:
+\begin{align*}
+\left\lbrace \begin{array}{l}
+               K_{1} = h f(t_{k-1},y_{k-1}) \\
+               K_{2} = h f\left(t_{k-1}+h,y_{k-1} + K_{1}\right) \\
+               y(t_k) \approx y_k = y_{k-1} + \frac{1}{2}(K_{1}+K_{2})
+               \end{array}
+\right.
+\end{align*}
+với $k=1, 2, \cdots, n$.
+}
+\newpage\titls{Chia nhỏ khoảng cần tính }
+
+\blue{Công thức Runge-Kutta bậc 4 (RK4):
+
+\begin{align*}
+\left\lbrace \begin{array}{l}
+               K_1 = h f(t_{k-1},y_{k-1}) \\
+               K_2 = h f\left(t_{k-1}+\frac{h}{2},y_{k-1} + \frac{K_1}{2}\right) \\
+               K_3 = h f\left(t_{k-1}+\frac{h}{2},y_{k-1} + \frac{K_2}{2}\right) \\
+               K_4 = h f\left(t_{k-1}+h,y_{k-1} + K_3\right) \\
+               y(t_k) \approx y_k = y_{k-1} + \frac{1}{6}(K_1 + 2K_2 + 2K_3 + K_4)
+               \end{array}
+\right.
+\end{align*}
+với $k=1, 2, \cdots, n$.
+}
+
+\newpage\titls{Hệ phương trình vi phân}
+
+Xét bài toán hệ phương trình vi phân cấp một:
+
+\begin{align}
+ \left\lbrace \begin{array}{l}
+               x'(t) = f(t,x(t),y(t)), ~ t \geq t_0 \\
+               y'(t) = g(t,x(t),y(t)), ~ t \geq t_0 \\
+               x(t_0) = x_0, ~ y(t_0)=y_0
+              \end{array}
+\right.
+\end{align}
+
+Bài toán có đạo hàm vi phân ở vế trái đối với hai hàm số $x(t)$ và $y(t)$, với các hàm số $f, g$ và điều kiện ban đầu $x_0, y_0$ cho trước.
+
+Ví dụ ứng dụng: sự thay đổi của số lượng sinh vật trong quần thể kẻ săn mồi - con mồi, sản lượng trong dây chuyền sản xuất... hoặc giải phương trình vi phân bậc cao.
+
+\newpage\titls{Hệ phương trình vi phân}
+
+\begin{sagesilent}
+t,x,y=var('t','x','y')
+P=desolve_system_rk4([-x/2+y,-x-y/2],[x,y],ics=[0,3,1],ivar=t,end_points=20)
+XY=[ [j,k] for i,j,k in P]
+plotxy=list_plot(XY)
+\end{sagesilent}
+
+Ví dụ: Hệ mô tả chuyển động xoắn ốc: 
+\begin{align}
+ \left\lbrace \begin{array}{l}
+               x'(t) = -x(t)/2 + y(t), ~ t \geq t_0 \\
+               y'(t) = -x(t) - y(t)/2, ~ t \geq t_0 \\
+               x(t_0) = x_0, ~ y(t_0)=y_0
+              \end{array}
+\right.
+\end{align}
+
+Đồ thị: (với $t_0=0, x_0=3,y_0=1$)
+\cen{\sageplot[scale=0.3]{plotxy}}
+
+\newpage\titls{Hệ phương trình vi phân}
+
+Ví dụ: Hệ mô tả quần thể thỏ và sói: 
+\begin{align}
+ \left\lbrace \begin{array}{l}
+               x'(t) = ax(t) -bx(t)y(t), ~ t \geq t_0 \\
+               y'(t) = ebx(t)y(t) - cy(t), ~ t \geq t_0 \\
+               x(t_0) = x_0, ~ y(t_0)=y_0
+              \end{array}
+\right.
+\end{align}
+
+Xem mô phỏng ở 
+
+{http://shodor.org/interactivate/activities/RabbitsAndWolves/}
+
+(ta chọn các tham số về tốc độ phát triển của thỏ và sói, các điều kiện ban đầu, rồi bấm nút ``Start Simulation'' để xem diễn biến của quần thể)
+
+\newpage\titls{Hệ phương trình vi phân}
+
+\blue{
+Giải số bằng công thức Euler:
+ \begin{align*}
+\left\lbrace \begin{array}{l}
+              x(t_k) \approx x_k = x_{k-1} + h f(t_{k-1},x_{k-1},y_{k-1})\\
+              y(t_k) \approx y_k = y_{k-1} + h g(t_{k-1},x_{k-1},y_{k-1})
+             \end{array}
+\right.
+\end{align*}
+ với $k=1, 2, \cdots, n$
+}% 
+
+\newpage\titls{Hệ phương trình vi phân}
+
+\blue{Giải số bằng công thức Euler cải tiến:
+\begin{align*}
+\left\lbrace \begin{array}{l}
+               K_{1x} = h f(t_{k-1},x_{k-1},y_{k-1}) \\
+               K_{1y} = h g(t_{k-1},x_{k-1},y_{k-1}) \\
+               K_{2x} = h f\left(t_{k-1}+h,x_{k-1}+K_{1x},y_{k-1} + K_{1y}\right) \\
+               K_{2y} = h g\left(t_{k-1}+h,x_{k-1}+K_{1x},y_{k-1} + K_{1y}\right) \\
+               x(t_k) \approx x_k = x_{k-1} + \frac{1}{2}(K_{1x}+K_{2x}) \\
+               y(t_k) \approx y_k = y_{k-1} + \frac{1}{2}(K_{1y}+K_{2y})
+               \end{array}
+\right.
+%  x(t_k) &\approx x_k = x_{k-1} + h \Bigg( \frac{f(t_{k-1},x_{k-1},y_{k-1})(t_k - t_{k-1})}{2}\\
+%  & +\frac{f(t_{k},x_{k-1} + f(t_{k-1},x_{k-1},y_{k-1},y_{k-1})(t_k - t_{k-1}))}{2}\\
+%  y(t_k) &\approx y_k = y_{k-1} + h \frac{g(t_{k-1},x_{k-1},y_{k-1})+g(t_{k},x_{k-1},y_{k-1} + g(t_{k-1},x_{k-1},y_{k-1})(t_k - t_{k-1}))}{2}
+\end{align*}
+với $k=1, 2, \cdots, n$
+}
+\newpage\titls{Hệ phương trình vi phân}
+
+\blue{Giải số bằng công thức Runge-Kutta bậc 4 (RK4):
+\begin{align*}
+\left\lbrace \begin{array}{l}
+               K_{1x} = h f(t_{k-1},x_{k-1},y_{k-1}) \\
+               K_{1y} = h g(t_{k-1},x_{k-1},y_{k-1}) \\
+               K_{2x} = h f\left(t_{k-1}+\frac{h}{2},x_{k-1}+\frac{K_{1x}}{2},y_{k-1} + \frac{K_{1y}}{2}\right) \\
+               K_{2y} = h g\left(t_{k-1}+\frac{h}{2},x_{k-1}+\frac{K_{1x}}{2},y_{k-1} + \frac{K_{1y}}{2}\right) \\
+               K_{3x} = h f\left(t_{k-1}+\frac{h}{2},x_{k-1}+\frac{K_{2x}}{2},y_{k-1} + \frac{K_{2y}}{2}\right) \\
+               K_{3y} = h g\left(t_{k-1}+\frac{h}{2},x_{k-1}+\frac{K_{2x}}{2},y_{k-1} + \frac{K_{2y}}{2}\right) \\
+               K_{4x} = h f\left(t_{k-1}+h,x_{k-1}+K_{3x},y_{k-1} + K_{3y}\right)\\
+               K_{4y} = h g\left(t_{k-1}+h,x_{k-1}+K_{3x},y_{k-1} + K_{3y}\right)\\
+               x(t_k) \approx x_k = x_{k-1} + \frac{1}{6}(K_{1x} + 2K_{2x} + 2K_{3x} + K_{4x}) \\
+               y(t_k) \approx y_k = y_{k-1} + \frac{1}{6}(K_{1y} + 2K_{2y} + 2K_{3y} + K_{4y})               
+               \end{array}
+\right.
+\end{align*}
+với $k=1, 2, \cdots, n$
+}
+
+\newpage\titls{Hệ phương trình vi phân}
+
+Giải bài toán phương trình vi phân \textbf{bậc cao} bằng cách \textbf{chuyển về hệ phương trình vi phân bậc một}. Cách làm như sau:
+
+Giả sử ta có phương trình vi phân cấp hai:
+\begin{align*}
+ \left\lbrace \begin{array}{l}
+               x''(t) = F(t,x(t),x'(t)), ~ t \geq t_0 \\
+               x(t_0)=\alpha\\
+               x'(t_0)=\beta               
+              \end{array}
+\right.
+\end{align*}
+
+Ta đặt thêm biến số $y(t)=x'(t)$ để biến đổi về hệ phương trình vi phân cấp một:
+\begin{align*}
+ \left\lbrace \begin{array}{l}
+               x'(t) = y(t), ~ t \geq t_0 ~ \textbf{\textrm{~(tức là~} f(t,x,y) = y)}\\
+               y'(t) = F(t,x(t),y(t)), ~ t \geq t_0 ~ \textbf{\textrm{~(tức là~} g(t,x,y) = F(t,x,y))}\\
+               x(t_0)=\alpha\\
+               y(t_0)=\beta
+              \end{array}
+\right.
+\end{align*}
+
+\newpage\titls{Hệ phương trình vi phân}
+
+Ví dụ: xét một quả nặng khối lượng $m$ treo trên một lò xo có độ cứng $k$, chịu tác động của trọng lực $g$ và lực cản của bộ phận giảm chấn $f=-k_f x'$, với $x$ là tọa độ của vật nặng theo phương thẳng đứng. Dùng phương pháp phân tích lực, ta thu được mô hình động lực học của hệ thống này ở dạng phương trình vi phân bậc hai:
+\begin{align*}
+ \left\lbrace \begin{array}{l}
+               x''(t) = -\frac{k}{m}x(t) - \frac{k_f}{m}x'(t)+g\\
+               x(t_0)=\alpha, ~ x'(t_0)=\beta               
+              \end{array}
+\right.
+\end{align*}
+
+Ta biến đổi về hệ phương trình vi phân cấp một:
+\begin{align*}
+ \left\lbrace \begin{array}{l}
+               x'(t) = y(t)\\
+               y'(t) = -\frac{k}{m}x(t) - \frac{k_f}{m}y(t)+g\\
+               x(t_0)=\alpha, ~ y(t_0)=\beta
+              \end{array}
+\right.
+\end{align*}
+
+\newpage\titls{Hệ phương trình vi phân}
+
+Nghiệm của hệ PTVP này là một phương trình dao động với biên độ giảm dần (có thể tìm được công thức của nghiệm bằng phép biến đổi Laplace). Ta cũng có thể giải bằng phương pháp số, vẽ đồ thị dao động của vật (theo phương thẳng đứng):
+
+\begin{sagesilent}
+g=9.81
+m=1
+k=0.2
+kf=0.1
+
+from sage.calculus.desolvers import desolve_system_rk4
+x,y,t=var('x y t')
+P=desolve_system_rk4([y,-(k/m)*x-(kf/m)*y+g],[x,y],ics=[0,0,0],ivar=t,end_points=100)
+Q=[ [i,j] for i,j,k in P]
+plotmass_spring=list_plot(Q)
+\end{sagesilent}
+
+\cen{\sageplot[scale=0.35]{plotmass_spring}}
+
+\label{lastpage}
+\end{document}

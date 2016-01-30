@@ -1,0 +1,304 @@
+% \newcommand*{\StylePath}{../styles}
+% \input{\StylePath/slides}
+
+\documentclass[12pt]{article}
+% \usepackage[utf8]{vietnam} % type Vietnamese
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,fancybox} % pause.sty cung cap chuc nang pause giong nhu o documentclass beamer, tuy nhien dung o documentclass article nay thi khong co tac dung, nen bo di
+\usepackage{sagetex} % run Sagemath within Latex
+\usepackage{import} % 2014.08.05 so that using \import command instead of \input in the main files
+% because \input or \include only search for the files with relative path to the MAIN tex files,
+% while \import allows the figures inside the ``styles'' folder to be searched as well.
+% see: http://sumitrangwala.wordpress.com/2009/03/09/latex-tips-and-tricks/
+
+\graphicspath{{../styles/}} % khong co graphicspath thi file ../styles/slides.tex khong search duoc cac file logo, although da dung subimport
+% Dung graphicspath la giai phap temporary, vi neu trong slides.tex ma co \input{otherfile.tex} thi no khong search duoc qua relative path
+% Khi do phai kiem tra lam sao su dung duoc \subimport.
+
+% \subimport*{../styles/}{slides} % dung thu ngay 2014.08.05 khong thay tac dung.
+
+\input{../styles/slides}
+
+%% end of slides.tex
+% % \renewcommand{\pause}{}
+% \newcommand{\Hi}{H_\infty}
+
+\begin{document}
+% \def\firstofone#1{#1}
+% \let\uppercase\firstofone
+% \let\MakeUppercase\firstofone
+
+\sdd
+
+% \newpage\titlogo{Tiêu đề có logo lớn}
+
+% \newpage\titf{Tiêu đề có logo khá lớn, dùng làm trang đầu}
+
+% \newpage\titls{Tiêu đề có logo nhỏ}
+
+% spa{1} Tạo một khoảng cách giữa 2 dòng cho dễ nhìn
+
+\newpage\titf{Chương 5: Tính gần đúng đạo hàm và tích phân xác định}
+
+\enu{
+\item Tính gần đúng đạo hàm
+\item Tính gần đúng tích phân xác định
+%\item Bài tập
+% \item Lập trình giải thuật
+}
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+\blue{Vấn đề: với tập giá trị rời rạc $(x_k,y_k)$, ta có hàm số nội suy là $y=f(x)$. Cần tính gần đúng đạo hàm cấp một và cấp hai của $f(x)$ tại các điểm nút $x_k$.}
+\spa{1}
+
+Cách giải quyết:
+\enu{
+\item Lập đa thức nội suy Lagrange rồi tính đạo hàm.
+\item Trong trường hợp các điểm $x_k$ là cách đều nhau, ta có thể dùng các công thức tính nhanh giá trị xấp xỉ của đạo hàm.}
+
+Ứng dụng:
+\itemi{
+\item Tính gần đúng đạo hàm dựa vào bảng giá trị.
+\item Tính giá trị đạo hàm của hàm số phức tạp tại điểm cho trước.}
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+\blue{Nguyên lý: dùng sai phân trong một khoảng đủ nhỏ để tính gần đúng đạo hàm. Xét công thức đạo hàm: $f'(x)=\lim_{\Delta \to 0} \frac{f(x+\Delta)-f(x)}{\Delta}$. Khi tính với giá trị rời rạc, chỉ cần dùng $\Delta$ đủ nhỏ, ta không lấy $\lim$.}
+
+Xét tập hợp giá trị đo đạc được: $(x_1,y_1), \cdots, (x_n,y_n)$.
+
+Công thức sai phân tiến:
+\begin{align}
+ f'(x_k) \approx \frac{y_{k+1}-y_k}{x_{k+1}-x_k}
+\end{align}
+
+Công thức sai phân lùi:
+\begin{align}
+ f'(x_k) \approx \frac{y_{k}-y_{k-1}}{x_{k}-x_{k-1}}
+\end{align}
+
+Công thức sai phân hướng tâm, khi $x_{k+1}-x_{k}=x_{k}-x_{k-1}=h$:
+\begin{align}
+ f'(x_k) \approx \frac{y_{k+1}-y_{k-1}}{2h}
+\end{align}
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+Đánh giá sai số:
+
+\begin{align}
+ f(x+h)=f(x)+hf'(x)+\frac{h^2}{2}f''(x)+\cdots
+\end{align}
+
+Với $x_k=x, x_{k+1}=x+h$:
+\begin{align}
+ f'(x_k)=\frac{f(x_{k+1})-f(x_k)}{h}-\frac{h}{2}f''(x)+\cdots
+\end{align}
+
+Vậy sai số của công thức sai phân tiến là $\mathcal{O}(h)$.
+
+Tương tự, sai số của công thức sai phân lùi cũng là $\mathcal{O}(h)$.
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+Đánh giá sai số đối với công thức sai phân hướng tâm:
+\begin{align*}
+ f(x_{k+1})=f(x_k+h)=f(x_k)+hf'(x_k)+\frac{h^2}{2}f''(x_k)+\frac{h^3}{3!}f'''(x_k) \cdots \\
+ f(x_{k-1})=f(x_k-h)=f(x_k)-hf'(x_k)+\frac{h^2}{2}f''(x_k)-\frac{h^3}{3!}f'''(x_k) \cdots
+\end{align*}
+Lấy hai phương trình trừ cho nhau để lập công thức tính đạo hàm:
+\begin{align}
+ f'(x_k) = \frac{f(x_{k+1})-f(x_{k-1})}{2h} - \frac{h^2}{3!}f'''(x_k)  - \frac{h^4}{5!}f^{(5)}(x_k) - \cdots  
+\end{align}
+
+Tức là sai số của công thức sai phân hướng tâm ở bậc $\mathcal{O}(h^2)$.
+
+Khi $h$ càng nhỏ thì $h^2 << h$, do đó sai số của công thức sai phân hướng tâm là nhỏ hơn so với sai phân tiến hoặc sai phân lùi.
+
+\blue{Khi nào có điều kiện thì ta ưu tiên dùng công thức sai phân hướng tâm.}
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+\begin{sagesilent}
+ f1=1/x
+ f2=2/x^2
+ f3=3/x^3
+ plot_sosanhsaiso=plot(f1,1,5,color='blue',legend_label='$\mathcal{O}(h)$')+plot(f2,1,5,color='green',legend_label='$\mathcal{O}(h^2)$')+plot(f3,1,5,color='red',legend_label='$\mathcal{O}(h^3)$')
+\end{sagesilent}
+
+Ý nghĩa của \textbf{số bậc của hàm số sai số}:
+
+\sageplot[scale=0.4]{plot_sosanhsaiso}
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+\begin{sagesilent}
+ n=5
+ tk2=[0,0.5,1,1.5,2]
+ yk2=[0,0.19,0.26,0.29,0.31]
+ tableVD1=r"\begin{tabular}{l|c|l|l|l}"
+ tableVD1+=r"$k$ & $t_k$ & $y_k$ & $f'(t_k)$ & $f''(t_k)$ \\ \hline"
+ for i in range(n):
+   tableVD1+=latex(i) + r"&" + latex(round(tk2[i],2)) + r"&" + latex(round(yk2[i],2)) + r"& & \\"
+ tableVD1+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: tính đạo hàm cấp một và cấp hai tại các điểm $t_k$ bằng các công thức: sai phân tiến, sai phân lùi, sai phân hướng tâm, với bảng giá trị dưới đây:
+
+\sagestr{tableVD1}
+
+Lưu ý: Ở các đầu mút không đủ thông tin để tính giá trị đạo hàm thì bỏ qua.
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+\begin{sagesilent}
+ n=300
+ step=0.01
+ f=sin(10*x)
+ xk=[step*i for i in range(n)]
+ yk=[f(x=xk[i]) for i in range(n)]
+ zk=zip(xk,yk)
+ plotf=plot(f,0,n*step)
+ plotz=list_plot(zk,size=50)
+ step2=0.3
+ n2=10
+ xk2=[step2*i for i in range(n2)]
+ yk2=[f(x=xk2[i]) for i in range(n2)]
+ zk2=zip(xk2,yk2)
+ plotz2=list_plot(zk2,size=50,color='red')
+\end{sagesilent}
+
+Lưu ý về việc chọn các điểm rời rạc:
+
+Nếu khoảng cách $h$ giữa hai điểm lớn thì nhiều khả năng bị mất thông tin:
+
+\sageplot[scale=0.4]{plotf+plotz2}
+
+\newpage\titls{Tính gần đúng đạo hàm}
+
+Lưu ý về việc chọn các điểm rời rạc:
+
+Khi lấy giá trị rời rạc, khoảng cách $h$ càng nhỏ càng giữ được nhiều thông tin của hàm số ban đầu
+
+\sageplot[scale=0.3]{plotf+plotz}
+
+Trong kỹ thuật xử lý tín hiệu: tần số lấy mẫu cần lớn hơn hoặc bằng hai lần tần số của tín hiệu (thực tế người ta lấy mẫu ở tần số cao hơn khoảng 6 lần).
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+\blue{Vấn đề: Tính gần đúng tích phân xác định
+\begin{equation}\label{eq_prob_tichphan}
+ I = \int_a^b f(x) dx
+\end{equation}
+trong đó $f(x)$ là hàm số xác định và khả tích trên đoạn $[a,b]$.}
+
+Ví dụ: 
+\itemi{
+\item Tính năng lượng khi chạy động cơ điện và có bảng kết quả đo đạc.
+\item Tính tích phân của hàm số phức tạp.
+}
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+Các cách tính gần đúng tích phân \eqref{eq_prob_tichphan}:
+
+\itemi{
+\item Chia đoạn $[a,b]$ thành $n$ khoảng cách đều (gọi là \textbf{phép phân hoạch đều}): $h=\frac{b-a}{n}, x_0=a, x_k=x_0+kh, \forall k \in \{0,\cdots,n\}$.
+\item Tính tích phân gần đúng trên mỗi khoảng bằng công thức xấp xỉ:
+\enu{
+\item Hình chữ nhật
+\item Hình thang
+\item Hình parabol
+}
+\item Tính tổng các giá trị xấp xỉ.
+}
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+\begin{sagesilent}
+ n=5
+ xk3=[0,1,2,3,4]
+ fxk3=[1,1,2,1,3]
+# yk3=[(xk3[i],fxk3[i]) for i in range(n)]
+ yk3=zip(xk3,fxk3) # zip: couple pairs of values of the two arrays
+ R = PolynomialRing(QQ, 'x')
+ Lagrange_3 = R.lagrange_polynomial(yk3)
+ plotL3=plot(Lagrange_3, (xk3[0]),(xk3[n-1]), color='red', legend_label='$\mathcal{L}(x)$')
+ plotfxk3=list_plot(yk3, size=50, legend_label='($x_k$,$y_k$)')
+ tableVD3=r"\begin{tabular}{l|c|l}"
+ tableVD3+=r"$k$ & $x_k$ & $y_k$ \\ \hline"
+ for i in range(n):
+   tableVD3+=latex(i) + r"&" + latex(round(xk3[i],2)) + r"&" + latex(fxk3[i]) + r"\\"
+ tableVD3+=r"\end{tabular}"
+\end{sagesilent}
+
+Ví dụ: hàm số $f(x)$ có các giá trị cho trong bảng số:
+
+ \begin{tabular}{lc}
+   \sagestr{tableVD3}
+  & 
+    \begin{tabular}{c}
+    \sageplot[scale=0.4]{plotfxk3+plotL3}
+    \end{tabular}
+ \end{tabular}
+
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+\textbf{Công thức Newton-Cotes}
+
+Ý tưởng: xấp xỉ hàm $f(x)$ trên đoạn $[a,b]$ bằng đa thức nội suy Lagrange $\mathcal{L}_n(x)$ và tính:
+\begin{align}\label{eq_prob_approx}
+ I = \int_a^b f(x) dx \approx I^* = \int_a^b \mathcal{L}_n(x) dx
+\end{align}
+Với phép phân hoạch đều, công thức Lagrange có dạng (đặt $q=\frac{x-x_0}{h}$):
+\begin{align}\label{eq_lagrange_deu}
+ \mathcal{L}_n(x) = \sum_{k=0}^n \frac{(-1)^{n-k} q(q-1)\cdots (q-n)}{k!(n-k)!(q-k)}y_k
+\end{align}
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+\textbf{Công thức Newton-Cotes}
+
+Thay \eqref{eq_lagrange_deu} vào \eqref{eq_prob_approx}, ta được:
+\begin{align}\label{eq_newtoncotes}
+ I = \int_a^b f(x) dx \approx I^* = (b-a) \sum_{k=0}^n H_k y_k
+\end{align}
+với:
+\begin{align}
+H_k = \frac{(-1)^{n-k}}{k!(n-k)!n} \int_0^n \frac{q(q-1)\cdots (q-n)}{q-k} dq
+\end{align}
+Ta gọi \eqref{eq_newtoncotes} là \textbf{công thức Newton-Cotes}, các hệ số $H_k$ gọi là \textbf{hệ số Cotes}, có các tính chất:
+\begin{align}
+ \sum_{k=0}^n H_k &= H_0 + H_1 + \cdots + H_n = 1 \\
+ H_k &= H_{n-k}, \forall k=\overline{0,n}
+\end{align}
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+Các cách tính toán xấp xỉ:
+
+\enu{
+\item Hình chữ nhật: \textbf{công thức hình chữ nhật}: $I^*=hy_0$
+\item Hình thang: \textbf{công thức hình thang}: $I^*=h\frac{y_0+y_1}{2}$
+\item Hình parabol: \textbf{công thức Simpson}: $I^*=\frac{h}{3}(y_0+4 y_1 + y_2)$
+}
+
+\newpage\titls{Tính gần đúng tích phân xác định}
+
+Ví dụ: tính tích phân gần đúng 
+
+\enu{
+\item $\int_0^1 \frac{dx}{1+x}$, công thức hình thang, chia 5 khoảng (chính xác: $\ln(2) \approx 0.6931$)%, gần đúng: 0.6956)
+\item $\int_0^1 \frac{dx}{1+x}$, công thức Simpson, chia 5 khoảng
+\item $\int_1^5 \frac{dx}{x}$, công thức hình thang, chia 4 khoảng (chính xác: $\ln(5) \approx 1.6094$)%, gần đúng: 1.6222)
+\item $\int_1^5 \frac{dx}{x}$, công thức Simpson, chia 4 khoảng
+}
+ %\newpage\titls{Bài tập}
+
+
+\label{lastpage}
+\end{document}
