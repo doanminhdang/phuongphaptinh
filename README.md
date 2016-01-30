@@ -18,7 +18,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/
 ####  Lợi ích: 
 Với giải thuật đã được lập trình sẵn trong file Latex, chỉ cần nhập các giá trị tham số mới rồi biên dịch lại file Latex (có thêm một lệnh gọi chương trình Sagemath để tính toán lại), thì giải thuật sẽ được chạy và các giá trị mới được TỰ ĐỘNG chèn vào file PDF đầu ra (bao gồm cả việc: tự sinh ra đồ thị mới và chèn hình ảnh vào kết quả, tự vẽ bảng kết quả với những số liệu mới...).
 
-#### Những gì cần thiết:
+#### Những phần mềm cần thiết:
 - Sử dụng hệ điều hành Linux (Sagemath không chạy trên Windows)
 - Cần cài đặt được phần mềm Sagemath (http://www.sagemath.org), đây là phần mềm tính toán giống kiểu Mathematica, Maple, dựa trên ngôn ngữ lập trình Python
 - Cài đặt Latex
